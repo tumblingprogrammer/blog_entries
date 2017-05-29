@@ -8,6 +8,10 @@ By doing that, we will be going after the following objectives:
 
 ### Summary
 
+### Conventions throughout this article
+
+Please review the conventions page, which will help you understand how I communicate with you through this blog.
+
 Let's dive in.
 
 Let's call our project `djangoboilerplate`.  Note: we will be using pythonanywhere.com to host the boilerplate project to make sure that it runs fine, and to test our deployment strategy; I made sure to grab the username already :)
