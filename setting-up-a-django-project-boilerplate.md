@@ -269,6 +269,38 @@ Below are the listings of the resulting `base.py`, `local.py`, and `production.p
     
 Not many changes at the moment, but we have attained a degree of separation between development and production, which we will now expand. Note the `from .base import *` line, which is not part of the original `settings.py` file.  We need it to extend the `base.py` settings into `local.py` and `production.py`.
 
+Within the `settings.py` file, let's refactor the block of `INSTALLED_APPS` codes as follows. While at it, let's add our `main` app to our list of `LOCAL_APPS`.
+
+**Before**:
+
+    INSTALLED_APPS = (
+        'django.contrib.admin',
+        'django.contrib.auth',
+        'django.contrib.contenttypes',
+        'django.contrib.sessions',
+        'django.contrib.messages',
+        'django.contrib.staticfiles',
+    )
+
+**after**:
+
+    DJANGO_APPS = [
+        'django.contrib.admin',
+        'django.contrib.auth',
+        'django.contrib.contenttypes',
+        'django.contrib.sessions',
+        'django.contrib.messages',
+        'django.contrib.staticfiles',
+    ]
+    THIRD_PARTY_APPS = [
+    ]
+    LOCAL_APPS = [
+        'main',
+    ]
+    INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
+
+We have gained clarity and degree of separation between the different apps making up our boilerplate application.
+
 Now, how do we go about telling django which settings file to use?  For that, we will need to set an environment variable that we can use to programmatically instruct django to use the proper settings file.
 
 We'll call our variable `DJANGO_EXECUTION_ENVIRONMENT`. On our local environment, its value will be `LOCAL` and on our deployment environment, it will be `PRODUCTION`.
@@ -331,6 +363,19 @@ The below code block tells django which settings file to use, depending on the v
     if DJANGO_EXECUTION_ENVIRONMENT == 'PRODUCTION':
         os.environ.setdefault("DJANGO_SETTINGS_MODULE", "config.settings.production")
     ...    
+
+Now, let's change the contents of `wsgi.py` from:
+
+    import os
+    
+    from django.core.wsgi import get_wsgi_application
+    
+    os.environ.setdefault("DJANGO_SETTINGS_MODULE", "config.settings")
+    
+    application = get_wsgi_application()
+
+to:
+
 
 
 
