@@ -309,7 +309,7 @@ For Mac OS (my development OS of choice), I just simply run `nano -w ~/.bash_pro
 
     export DJANGO_EXECUTION_ENVIRONMENT="LOCAL"
 
-Once I save the changes, I run `source ~/.bash_profile` on the command line, and then test that it worked by running `echo $DJANGO_EXECUTION_ENVIRONMENT`, the result of which, if successful, is `LOCAL`. 
+Once I save the changes, I run `source ~/.bash_profile` on the command line, and then test that it worked by running `echo $DJANGO_EXECUTION_ENVIRONMENT`, the result of which, if successful, is `LOCAL`. {{ expand / test storing the variable in the virtualenv wrapper }}
 
 If you use a system other than Mac OS, switch ASAP! :) Nah, just kidding. A relevant google search will point you in the right direction.
 
@@ -363,6 +363,31 @@ The below code block tells django which settings file to use, depending on the v
     if DJANGO_EXECUTION_ENVIRONMENT == 'PRODUCTION':
         os.environ.setdefault("DJANGO_SETTINGS_MODULE", "config.settings.production")
     ...    
+
+Let's run `manage.py runserver` to make sure that django is working OK. We should see the typical `Welcome to django!` page.
+
+It's time to run `git add .` + `git status` (always double check what's being committed) + `git commit -m "refactor settings (base + local | production)"`.
+
+### django's SECRET_KEY
+
+One of the main reasons we are doing all this refactoring / re-arranging is security {{ expand on this }}.
+
+Well, we now know how to store variables in our environment. This time around, though, we will use a different procedure to accomplish that. We'll see why in a bit.
+
+By now you should be using virtualenv wrapper (highly recommended!). By now I assume also that for every application you setup a different virtual environment (highly recommended too!). Go to the bin folder of your `virtualenv` and edit the `postactivate` file as follows:
+
+    #!/bin/bash
+    # This hook is sourced after this virtualenv is activated.
+    
+    #your DJANGO_SECRET_KEY variable goes here
+    export DJANGO_SECRET_KEY="_)2pb4uyb!v=_t#+9=i_))^8&-^ok_aa9mb_ptapty0l2olgdt"
+
+As the second line informs us, whatever is in that file will be sourced post activation of the virtual environment. Go ahead and copy the key that django generated for you when you executed `django-admin startproject djangoboilerplate`. {{ verify }}
+
+Let's store one for `SECRET_KEY` by following the steps we took before {{ link to the section? }}. 
+
+
+
 
 
 Let's work on the `base.py` file now.
