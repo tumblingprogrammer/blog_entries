@@ -282,7 +282,7 @@ Within the `settings.py` file, let's refactor the block of `INSTALLED_APPS` code
         'django.contrib.staticfiles',
     )
 
-**after**:
+**After**:
 
     DJANGO_APPS = [
         'django.contrib.admin',
@@ -363,26 +363,6 @@ The below code block tells django which settings file to use, depending on the v
     if DJANGO_EXECUTION_ENVIRONMENT == 'PRODUCTION':
         os.environ.setdefault("DJANGO_SETTINGS_MODULE", "config.settings.production")
     ...    
-
-Now, let's change the contents of `wsgi.py` from:
-
-    import os
-    
-    from django.core.wsgi import get_wsgi_application
-    
-    os.environ.setdefault("DJANGO_SETTINGS_MODULE", "config.settings")
-    
-    application = get_wsgi_application()
-
-to:
-
-
-
-
-
-
-    
-
 
 
 Let's work on the `base.py` file now.
