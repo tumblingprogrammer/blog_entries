@@ -384,14 +384,31 @@ By now you should be using virtualenv wrapper (highly recommended!). By now I as
 
 As the second line informs us, whatever is in that file will be sourced post activation of the virtual environment. Go ahead and copy the key that django generated for you when you executed `django-admin startproject djangoboilerplate`. {{ verify }}
 
-The reason I use my virtual environment to store django's `SECRET_KEY` is that I make it different for each django application.  Hence, as I activate the app's virtual environment, I get the app's unique key.  As for the `DJANGO_EXECUTION_ENVIRONMENT` variable, its value is always the same (i.e., `LOCAL`) regardless of the application, and as such I store it in my system's `.bash_profile` and make it available system-wide.
+The reason I use my virtual environment to store django's `SECRET_KEY` is that I make it different for each django application.  Hence, as I activate the app's virtual environment, I get the app's unique key.  As for the `DJANGO_EXECUTION_ENVIRONMENT` variable, its value (i.e., `LOCAL`) is always the same regardless of the application, and as such I store it in my system's `.bash_profile` and make it available system-wide.
 
-Make sure that what you just did works by deactivating and reactivating your virtual environment, and then by running `echo $DJANGO_SECRET_KEY` on your command line.
+Make sure that what you just did works by deactivating and reactivating your virtual environment, and then by running `echo $DJANGO_SECRET_KEY` on your command line. It should output your secret key.
 
-Let's store one for `SECRET_KEY` by following the steps we took before {{ link to the section? }}. 
+Next, edit your `settings/base.py` file so it goes from
 
+    import os
+    ...
+    SECRET_KEY = '_)2pb4uyb!v=_t#+9=i_))^8&-^ok_aa9mb_ptapty0l2olgdt'
+    ...
 
+to
 
+    import os
+    from manage import get_env_variable
+    DJANGO_SECRET_KEY = get_env_variable('DJANGO_SECRET_KEY')
+    ...
+    SECRET_KEY = DJANGO_SECRET_KEY
+    ...
+
+Let's run `manage.py runserver` to make sure that django is working OK. We should see the typical `Welcome to django!` page.
+
+It's time to run `git add .` + `git status` (always double check what's being committed) + `git commit -m "hide django's secret key"`.
+
+There you have it. Your django's secret key is indeed secret now, and not out for the world to see when, for instance, you decide to upload your code to github :)
 
 
 Let's work on the `base.py` file now.
