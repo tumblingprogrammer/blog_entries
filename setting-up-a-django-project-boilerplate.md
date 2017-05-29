@@ -374,15 +374,19 @@ One of the main reasons we are doing all this refactoring / re-arranging is secu
 
 Well, we now know how to store variables in our environment. This time around, though, we will use a different procedure to accomplish that. We'll see why in a bit.
 
-By now you should be using virtualenv wrapper (highly recommended!). By now I assume also that for every application you setup a different virtual environment (highly recommended too!). Go to the bin folder of your `virtualenv` and edit the `postactivate` file as follows:
+By now you should be using virtualenv wrapper (highly recommended!). By now I assume also that for every application you setup a different virtual environment (highly recommended too!). Go to the bin folder of your `virtualenv`.  For me, the path to the bin folder looks like `/Users/puma/.virtualenvs/djangoboilerplate/bin`.  Within it there is a file called `postactivate`; edit it as follows:
 
     #!/bin/bash
     # This hook is sourced after this virtualenv is activated.
     
     #your DJANGO_SECRET_KEY variable goes here
-    export DJANGO_SECRET_KEY="_)2pb4uyb!v=_t#+9=i_))^8&-^ok_aa9mb_ptapty0l2olgdt"
+    export DJANGO_SECRET_KEY="YOUR_SECRET_KEY_GOES_HERE "
 
 As the second line informs us, whatever is in that file will be sourced post activation of the virtual environment. Go ahead and copy the key that django generated for you when you executed `django-admin startproject djangoboilerplate`. {{ verify }}
+
+The reason I use my virtual environment to store django's `SECRET_KEY` is that I make it different for each django application.  Hence, as I activate the app's virtual environment, I get the app's unique key.  As for the `DJANGO_EXECUTION_ENVIRONMENT` variable, its value is always the same (i.e., `LOCAL`) regardless of the application, and as such I store it in my system's `.bash_profile` and make it available system-wide.
+
+Make sure that what you just did works by deactivating and reactivating your virtual environment, and then by running `echo $DJANGO_SECRET_KEY` on your command line.
 
 Let's store one for `SECRET_KEY` by following the steps we took before {{ link to the section? }}. 
 
