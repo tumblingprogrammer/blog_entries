@@ -283,6 +283,61 @@ If you use a system other than Mac OS, switch ASAP! :) Nah, just kidding. A rele
 
 We'll cover the deployment portion (i.e., how to set the environment variable in our production environment) when we get to it.
 
+Now, let's tell django which settings file to use. Let's change the contents of our `manage.py` file from:
+
+    import os
+    import sys
+    
+    
+    if __name__ == "__main__":
+        os.environ.setdefault("DJANGO_SETTINGS_MODULE", "config.settings")
+        from django.core.management import execute_from_command_line
+        execute_from_command_line(sys.argv)
+
+to:
+
+    import os
+    import sys
+    
+    
+    from django.core.exceptions import ImproperlyConfigured
+    
+    
+    def get_env_variable(var_name):
+        try:
+            return os.environ[var_name]
+        except KeyError:
+            error_msg = "Set the {} environment variable".format(var_name)
+            raise ImproperlyConfigured(error_msg)
+    
+    
+    if __name__ == "__main__":
+        DJANGO_EXECUTION_ENVIRONMENT = get_env_variable('DJANGO_EXECUTION_ENVIRONMENT')
+        if DJANGO_EXECUTION_ENVIRONMENT == 'LOCAL':
+            os.environ.setdefault("DJANGO_SETTINGS_MODULE", "config.settings.local")
+        if DJANGO_EXECUTION_ENVIRONMENT == 'PRODUCTION':
+            os.environ.setdefault("DJANGO_SETTINGS_MODULE", "config.settings.production")
+        from django.core.management import execute_from_command_line
+        execute_from_command_line(sys.argv)
+
+We added the function `get_env_variable` allows us to humanize the error message given by django if for some reason it can't read the environment variable. 
+
+The below code block tells django which settings file to use, depending on the value of the `DJANGO_EXECUTION_ENVIRONMENT` variable.
+
+    ...
+    DJANGO_EXECUTION_ENVIRONMENT = get_env_variable('DJANGO_EXECUTION_ENVIRONMENT')
+    if DJANGO_EXECUTION_ENVIRONMENT == 'LOCAL':
+        os.environ.setdefault("DJANGO_SETTINGS_MODULE", "config.settings.local")
+    if DJANGO_EXECUTION_ENVIRONMENT == 'PRODUCTION':
+        os.environ.setdefault("DJANGO_SETTINGS_MODULE", "config.settings.production")
+    ...    
+
+
+
+
+
+    
+
 
 
 Let's work on the `base.py` file now.
