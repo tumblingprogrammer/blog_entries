@@ -269,6 +269,24 @@ Below are the listings of the resulting `base.py`, `local.py`, and `production.p
     
 Not many changes at the moment, but we have attained a degree of separation between development and production, which we will now expand. Note the `from .base import *` line, which is not part of the original `settings.py` file.  We need it to extend the `base.py` settings into `local.py` and `production.py`.
 
+Now, how do we go about telling django which settings file to use?  For that, we will need to set an environment variable that we can use to programmatically instruct django to use the proper settings file.
+
+We'll call our variable `DJANGO_EXECUTION_ENVIRONMENT`. On our local environment, its value will be `LOCAL` and on our deployment environment, it will be `PRODUCTION`.
+
+For Mac OS (my development OS of choice), I just simply run `nano -w ~/.bash_profile` on the command line, and add the following line to my `.bash_profile` file:
+
+    export DJANGO_EXECUTION_ENVIRONMENT="LOCAL"
+
+Once I save the changes, I run `source ~/.bash_profile` on the command line, and then test that it worked by running `echo $DJANGO_EXECUTION_ENVIRONMENT`, the result of which, if successful, is `LOCAL`. 
+
+If you use a system other than Mac OS, switch ASAP! :) Nah, just kidding. A relevant google search will point you in the right direction.
+
+We'll cover the deployment portion (i.e., how to set the environment variable in our production environment) when we get to it.
+
+
+
+Let's work on the `base.py` file now.
+
 
 
 
