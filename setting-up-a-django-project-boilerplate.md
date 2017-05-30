@@ -416,26 +416,12 @@ There you have it. Your django's secret key is indeed secret now, and not out fo
 This is what our layout looks like at the moment:
 
     |____djangoboilerplate
+    | |____.init
     | |____config
-    | | |______init__.py
-    | | |____db.sqlite3
-    | | |____settings
-    | | | |______init__.py
-    | | | |____base.py
-    | | | |____local.py
-    | | | |____production.py
-    | | |____urls.py
-    | | |____wsgi.py
+    | | |____ (... config files)
     | |____db.sqlite3
     | |____main
-    | | |______init__.py
-    | | |____admin.py
-    | | |____apps.py
-    | | |____migrations
-    | | | |______init__.py
-    | | |____models.py
-    | | |____tests.py
-    | | |____views.py
+    | | |____(... main  files)
     | |____manage.py
     | |____requirements.txt
 
