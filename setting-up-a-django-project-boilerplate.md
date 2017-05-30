@@ -89,9 +89,6 @@ So, while under the root folder, let's run `manage.py startapp main`. Once it's 
 	|____djangoboilerplate
 	| |____djangoboilerplate
 	| | |______init__.py
-	| | |______pycache__
-	| | | |______init__.cpython-35.pyc
-	| | | |____settings.cpython-35.pyc
 	| | |____settings.py
 	| | |____urls.py
 	| | |____wsgi.py
@@ -413,6 +410,40 @@ Let's run `manage.py runserver` to make sure that django is working OK. We shoul
 It's time to run `git add .` + `git status` (always double check what's being committed) + `git commit -m "hide django's secret key"`.
 
 There you have it. Your django's secret key is indeed secret now, and not out for the world to see when, for instance, you decide to upload your code to github :)
+
+### Further refactoring our layout
+
+This is what our layout looks like at the moment:
+
+    |____djangoboilerplate
+    | |____config
+    | | |______init__.py
+    | | |____db.sqlite3
+    | | |____settings
+    | | | |______init__.py
+    | | | |____base.py
+    | | | |____local.py
+    | | | |____production.py
+    | | |____urls.py
+    | | |____wsgi.py
+    | |____db.sqlite3
+    | |____main
+    | | |______init__.py
+    | | |____admin.py
+    | | |____apps.py
+    | | |____migrations
+    | | | |______init__.py
+    | | |____models.py
+    | | |____tests.py
+    | | |____views.py
+    | |____manage.py
+    | |____requirements.txt
+
+### Requirements files
+
+Along with having separate settings for our development and production environments, along with that it is a best practice to have separate requirements files to separate development from production packages.
+
+
 
 
 Let's work on the `base.py` file now.
