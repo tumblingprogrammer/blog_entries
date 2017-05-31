@@ -173,11 +173,8 @@ Below are the listings of the resulting `base.py`, `local.py`, and `production.p
 `base.py`:
 
     import os
-    
     BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-    
-    SECRET_KEY = '_)2pb4uyb!v=_t#+9=i_))^8&-^ok_aa9mb_ptapty0l2olgdt'
-    
+    SECRET_KEY = 'ew9vz)1fm2vwhca^2lq5d-g0+g_27!pih!z6(97=@vb7vip-!n'
     INSTALLED_APPS = (
         'django.contrib.admin',
         'django.contrib.auth',
@@ -186,7 +183,6 @@ Below are the listings of the resulting `base.py`, `local.py`, and `production.p
         'django.contrib.messages',
         'django.contrib.staticfiles',
     )
-    
     MIDDLEWARE_CLASSES = (
         'django.contrib.sessions.middleware.SessionMiddleware',
         'django.middleware.common.CommonMiddleware',
@@ -197,9 +193,7 @@ Below are the listings of the resulting `base.py`, `local.py`, and `production.p
         'django.middleware.clickjacking.XFrameOptionsMiddleware',
         'django.middleware.security.SecurityMiddleware',
     )
-    
     ROOT_URLCONF = 'config.urls'
-    
     TEMPLATES = [
         {
             'BACKEND': 'django.template.backends.django.DjangoTemplates',
@@ -215,22 +209,18 @@ Below are the listings of the resulting `base.py`, `local.py`, and `production.p
             },
         },
     ]
-    
     WSGI_APPLICATION = 'config.wsgi.application'
-    
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.sqlite3',
             'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
         }
     }
-    
     LANGUAGE_CODE = 'en-us'
     TIME_ZONE = 'UTC'
     USE_I18N = True
     USE_L10N = True
     USE_TZ = True
-    
     STATIC_URL = '/static/'
 
 `local.py`:
@@ -245,7 +235,158 @@ Below are the listings of the resulting `base.py`, `local.py`, and `production.p
     
 Not many changes at the moment, but we have attained a degree of separation between development and production, which we will now expand. Note the `from .base import *` line, which is not part of the original `settings.py` file.  We need it to extend the `base.py` settings into `local.py` and `production.py`.
 
-Within the `settings.py` file, let's refactor the block of `INSTALLED_APPS` codes as follows. While at it, let's add our `main` app to our list of `LOCAL_APPS`.
+Now, how do we go about telling django which settings file to use?  For that, we will need to set an environment variable that we can use to programmatically instruct django to use the proper settings file.
+
+We'll call our variable `DJANGO_EXECUTION_ENVIRONMENT`. On our local environment, its value will be `LOCAL` and on our deployment environment, it will be `PRODUCTION`.
+
+For Mac OS (my development OS of choice), I just simply run `nano -w ~/.bash_profile` on the command line, and add the following line to my `.bash_profile` file:
+
+    export DJANGO_EXECUTION_ENVIRONMENT="LOCAL"
+
+Once I save the changes, I run `source ~/.bash_profile` on the command line, and then test that it worked by running `echo $DJANGO_EXECUTION_ENVIRONMENT`, the result of which, if successful, is `LOCAL`.
+
+If you use a system other than Mac OS, switch ASAP! :) Nah, just kidding. A relevant google search will point you in the right direction.
+
+We'll cover the deployment portion (i.e., how to set the environment variable in our production environment) when we get to it.
+
+Now, let's tell django which settings file to use. Let's change the contents of our `manage.py` file from:
+
+    import os
+    import sys
+    
+    if __name__ == "__main__":
+        os.environ.setdefault("DJANGO_SETTINGS_MODULE", "config.settings")
+        try:
+            from django.core.management import execute_from_command_line
+        except ImportError:
+            # The above import may fail for some other reason. Ensure that the
+            # issue is really that Django is missing to avoid masking other
+            # exceptions on Python 2.
+            try:
+                import django
+            except ImportError:
+                raise ImportError(
+                    "Couldn't import Django. Are you sure it's installed and "
+                    "available on your PYTHONPATH environment variable? Did you "
+                    "forget to activate a virtual environment?"
+                )
+            raise
+        execute_from_command_line(sys.argv)
+
+to:
+
+    import os
+    import sys
+    
+    from django.core.exceptions import ImproperlyConfigured
+    
+    def get_env_variable(var_name):
+        try:
+            return os.environ[var_name]
+        except KeyError:
+            error_msg = "Set the {} environment variable".format(var_name)
+            raise ImproperlyConfigured(error_msg)
+            
+    if __name__ == "__main__":
+        DJANGO_EXECUTION_ENVIRONMENT = get_env_variable('DJANGO_EXECUTION_ENVIRONMENT')
+        if DJANGO_EXECUTION_ENVIRONMENT == 'LOCAL':
+            os.environ.setdefault("DJANGO_SETTINGS_MODULE", "config.settings.local")
+        if DJANGO_EXECUTION_ENVIRONMENT == 'PRODUCTION':
+            os.environ.setdefault("DJANGO_SETTINGS_MODULE", "config.settings.production")
+        from django.core.management import execute_from_command_line
+        execute_from_command_line(sys.argv)
+
+We added the function `get_env_variable`, which allows us to humanize the error message given by django if for some reason it can't read the environment variable. 
+
+The below code block tells django which settings file to use, depending on the value of the `DJANGO_EXECUTION_ENVIRONMENT` variable.
+
+    ...
+    DJANGO_EXECUTION_ENVIRONMENT = get_env_variable('DJANGO_EXECUTION_ENVIRONMENT')
+    if DJANGO_EXECUTION_ENVIRONMENT == 'LOCAL':
+        os.environ.setdefault("DJANGO_SETTINGS_MODULE", "config.settings.local")
+    if DJANGO_EXECUTION_ENVIRONMENT == 'PRODUCTION':
+        os.environ.setdefault("DJANGO_SETTINGS_MODULE", "config.settings.production")
+    ...    
+
+We can safely move somewhere else (or delete) the `settings.py` file.
+
+Our layout now should look as follows:
+
+    |____djangoboilerplate
+    | |____apps
+    | | |____config
+    | | | |______init__.py
+    | | | |____db.sqlite3
+    | | | |____settings
+    | | | | |______init__.py
+    | | | | |____base.py
+    | | | | |____local.py
+    | | | | |____production.py
+    | | | |____urls.py
+    | | | |____wsgi.py
+    | | |____db.sqlite3
+    | | |____manage.py
+    | |____docs
+    | | |____readme.md
+    | |____requirements
+    | | |____requirements.txt
+
+If you notice, you will see that there are two `db.sqlite3` files.  django automatically dropped a `db.sqlite3` file as a result of our refactoring the `settings.py` file into  `settings + base.py | local.py | production.py`. We can safely delete the bottom one.
+
+Let's run `manage.py runserver` to make sure that django is working OK. We should see the typical `Welcome to django!` page. We should also notice that django is telling us again that there are unapplied migrations.  Let's execute `.manage.py migrate` to get rid of that warning.
+
+Let's commit and call the commitment "refactor settings.py into settings + base | local | production".
+
+### django's SECRET_KEY
+--------------------------------
+
+One of the main reasons we are doing all this refactoring / re-arranging is security {{ expand on this }}.
+
+We now know how to store variables in our environment. This time around, though, we will use a different procedure to accomplish that. We'll see why in a bit.
+
+By now you should be using virtualenv wrapper (highly recommended!). By now I assume also that for every application you setup a different virtual environment (highly recommended too!). We will store django's sectret key in the virtual environment.  Go to the bin folder of your `virtualenv`.  For me, the path to the bin folder looks like `/Users/puma/.virtualenvs/djangoboilerplate/bin`.  Within it there is a file called `postactivate`; edit it as follows:
+
+    #!/bin/bash
+    # This hook is sourced after this virtualenv is activated.
+    
+    #your DJANGO_SECRET_KEY variable goes here
+    export DJANGO_SECRET_KEY="YOUR_SECRET_KEY_GOES_HERE"
+
+As the second line informs us, whatever is in that file will be sourced post activation of the virtual environment. Go ahead and copy the key that django generated for you when you executed `django-admin startproject djangoboilerplate`. {{ verify }}
+
+The reason I use my virtual environment to store django's `SECRET_KEY` is that I make it different for each django application.  Hence, as I activate the app's virtual environment, I get the app's unique key.  As for the `DJANGO_EXECUTION_ENVIRONMENT` variable, its value (i.e., `LOCAL`) is always the same regardless of the application, and as such I store it in my system's `.bash_profile` and make it available system-wide.
+
+Make sure that what you just did works by deactivating and reactivating your virtual environment, and then by running `echo $DJANGO_SECRET_KEY` on your command line. It should output your secret key.
+
+Next, edit your `settings/base.py` file so it goes from
+
+    import os
+    ...
+    SECRET_KEY = '_)2pb4uyb!v=_t#+9=i_))^8&-^ok_aa9mb_ptapty0l2olgdt'
+    ...
+
+to
+
+    import os
+    
+    from manage import get_env_variable 
+    # the above is the function that we added to manage.py
+    # to humanize potential configuration errors
+    
+    DJANGO_SECRET_KEY = get_env_variable('DJANGO_SECRET_KEY')
+    ...
+    SECRET_KEY = DJANGO_SECRET_KEY
+    ...
+
+Let's run `manage.py runserver` to make sure that django is working OK. We should see the typical `Welcome to django!` page.
+
+Let's commit and call the commitment "hide django's secret key".
+
+There you have it. Your django's secret key is indeed secret now, and not out for the world to see when, for instance, you decide to upload your code to github :)
+
+### Distinguishing between django, local, and third party applications
+-----------------
+Within the `base.py` file, let's refactor the block of `INSTALLED_APPS` codes as follows.
 
 **Before**:
 
@@ -271,120 +412,12 @@ Within the `settings.py` file, let's refactor the block of `INSTALLED_APPS` code
     THIRD_PARTY_APPS = [
     ]
     LOCAL_APPS = [
-        'main',
     ]
     INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
 
 We have gained clarity and degree of separation between the different apps making up our boilerplate application.
 
-Now, how do we go about telling django which settings file to use?  For that, we will need to set an environment variable that we can use to programmatically instruct django to use the proper settings file.
-
-We'll call our variable `DJANGO_EXECUTION_ENVIRONMENT`. On our local environment, its value will be `LOCAL` and on our deployment environment, it will be `PRODUCTION`.
-
-For Mac OS (my development OS of choice), I just simply run `nano -w ~/.bash_profile` on the command line, and add the following line to my `.bash_profile` file:
-
-    export DJANGO_EXECUTION_ENVIRONMENT="LOCAL"
-
-Once I save the changes, I run `source ~/.bash_profile` on the command line, and then test that it worked by running `echo $DJANGO_EXECUTION_ENVIRONMENT`, the result of which, if successful, is `LOCAL`. {{ expand / test storing the variable in the virtualenv wrapper }}
-
-If you use a system other than Mac OS, switch ASAP! :) Nah, just kidding. A relevant google search will point you in the right direction.
-
-We'll cover the deployment portion (i.e., how to set the environment variable in our production environment) when we get to it.
-
-Now, let's tell django which settings file to use. Let's change the contents of our `manage.py` file from:
-
-    import os
-    import sys
-    
-    
-    if __name__ == "__main__":
-        os.environ.setdefault("DJANGO_SETTINGS_MODULE", "config.settings")
-        from django.core.management import execute_from_command_line
-        execute_from_command_line(sys.argv)
-
-to:
-
-    import os
-    import sys
-    
-    
-    from django.core.exceptions import ImproperlyConfigured
-    
-    
-    def get_env_variable(var_name):
-        try:
-            return os.environ[var_name]
-        except KeyError:
-            error_msg = "Set the {} environment variable".format(var_name)
-            raise ImproperlyConfigured(error_msg)
-    
-    
-    if __name__ == "__main__":
-        DJANGO_EXECUTION_ENVIRONMENT = get_env_variable('DJANGO_EXECUTION_ENVIRONMENT')
-        if DJANGO_EXECUTION_ENVIRONMENT == 'LOCAL':
-            os.environ.setdefault("DJANGO_SETTINGS_MODULE", "config.settings.local")
-        if DJANGO_EXECUTION_ENVIRONMENT == 'PRODUCTION':
-            os.environ.setdefault("DJANGO_SETTINGS_MODULE", "config.settings.production")
-        from django.core.management import execute_from_command_line
-        execute_from_command_line(sys.argv)
-
-We added the function `get_env_variable` allows us to humanize the error message given by django if for some reason it can't read the environment variable. 
-
-The below code block tells django which settings file to use, depending on the value of the `DJANGO_EXECUTION_ENVIRONMENT` variable.
-
-    ...
-    DJANGO_EXECUTION_ENVIRONMENT = get_env_variable('DJANGO_EXECUTION_ENVIRONMENT')
-    if DJANGO_EXECUTION_ENVIRONMENT == 'LOCAL':
-        os.environ.setdefault("DJANGO_SETTINGS_MODULE", "config.settings.local")
-    if DJANGO_EXECUTION_ENVIRONMENT == 'PRODUCTION':
-        os.environ.setdefault("DJANGO_SETTINGS_MODULE", "config.settings.production")
-    ...    
-
-Let's run `manage.py runserver` to make sure that django is working OK. We should see the typical `Welcome to django!` page.
-
-It's time to run `git add .` + `git status` (always double check what's being committed) + `git commit -m "refactor settings (base + local | production)"`.
-
-### django's SECRET_KEY
-
-One of the main reasons we are doing all this refactoring / re-arranging is security {{ expand on this }}.
-
-Well, we now know how to store variables in our environment. This time around, though, we will use a different procedure to accomplish that. We'll see why in a bit.
-
-By now you should be using virtualenv wrapper (highly recommended!). By now I assume also that for every application you setup a different virtual environment (highly recommended too!). Go to the bin folder of your `virtualenv`.  For me, the path to the bin folder looks like `/Users/puma/.virtualenvs/djangoboilerplate/bin`.  Within it there is a file called `postactivate`; edit it as follows:
-
-    #!/bin/bash
-    # This hook is sourced after this virtualenv is activated.
-    
-    #your DJANGO_SECRET_KEY variable goes here
-    export DJANGO_SECRET_KEY="YOUR_SECRET_KEY_GOES_HERE "
-
-As the second line informs us, whatever is in that file will be sourced post activation of the virtual environment. Go ahead and copy the key that django generated for you when you executed `django-admin startproject djangoboilerplate`. {{ verify }}
-
-The reason I use my virtual environment to store django's `SECRET_KEY` is that I make it different for each django application.  Hence, as I activate the app's virtual environment, I get the app's unique key.  As for the `DJANGO_EXECUTION_ENVIRONMENT` variable, its value (i.e., `LOCAL`) is always the same regardless of the application, and as such I store it in my system's `.bash_profile` and make it available system-wide.
-
-Make sure that what you just did works by deactivating and reactivating your virtual environment, and then by running `echo $DJANGO_SECRET_KEY` on your command line. It should output your secret key.
-
-Next, edit your `settings/base.py` file so it goes from
-
-    import os
-    ...
-    SECRET_KEY = '_)2pb4uyb!v=_t#+9=i_))^8&-^ok_aa9mb_ptapty0l2olgdt'
-    ...
-
-to
-
-    import os
-    from manage import get_env_variable
-    DJANGO_SECRET_KEY = get_env_variable('DJANGO_SECRET_KEY')
-    ...
-    SECRET_KEY = DJANGO_SECRET_KEY
-    ...
-
-Let's run `manage.py runserver` to make sure that django is working OK. We should see the typical `Welcome to django!` page.
-
-It's time to run `git add .` + `git status` (always double check what's being committed) + `git commit -m "hide django's secret key"`.
-
-There you have it. Your django's secret key is indeed secret now, and not out for the world to see when, for instance, you decide to upload your code to github :)
+As usual, let's test that django runs OK (we'll develop a test battery for our boilerplate app later). If it runs amoothly, let's commit and call our commitment "distinguish between django, local, and third party applications".
 
 
 
