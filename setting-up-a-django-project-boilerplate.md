@@ -425,7 +425,9 @@ Similar to what we did with `settings.py`, we will refactor our `requirements.tx
 
 Let's add the following files to the `requirements` folder: `base.txt`, `local.txt`, and `production.txt`.
 
-The logic will be similar too:
+Let's commit and call the commitment `"add base.txt, local.txt, and production.txt requirement files"`.
+
+As far as figuring out where packages belong, the logic will be similar too:
 
     Is this package needed for both development and production? 
         Yes:
@@ -437,16 +439,46 @@ The logic will be similar too:
             Else:
                 It goes into production.txt
 
-The workflow is as follows:
+Let's install `django-bootstrap3` to illustrate the workflow, which is as follows:
 
 1. Start with a fresh git commitment (i.e., no changes yet to be committed);
-2. We start with a baseline `requirements.txt`, which resides under folder `requirements`;
-2. Install the new package (don't do bundle installation of packages [i.e., `pip install package_1 package_2`]; I recommend doing it one by one so you can keep proper track of dependencies);
-3. In the command line, and under folder `requirements`, execute `pip freeze > requirements.txt`;
-4. 
-4. 
+2. Start with a baseline file `requirements.txt`, which resides under folder `requirements`; it's imperative that it's kept up to date (i.e., follow step 4 below everytime that a new package is installed); at the moment, the contents of our `requirements.txt` haven't changed:
 
-So far, the packages that 
+        appdirs==1.4.3
+        Django==1.11.1
+        packaging==16.8
+        pyparsing==2.2.0
+        pytz==2017.2
+        six==1.10.0
+
+    The above are required for the local and production environments, so they go into our `base.txt` file. 
+
+3. Install the new package (don't do bundle installation of packages [i.e., `pip install package_1 package_2`]; I recommend doing it one by one so you can keep proper track of dependencies); for illustration purposes; execute `pip install django-bootstrap3`;
+4. In the command line, and under folder `requirements`, execute `pip freeze > requirements.txt`;
+5. Your IDE will likely tell you that there is a new line, and will highlight it for you; if you don't have an IDE, running a `git diff` on the `requirements.txt` file will tell you what new lines were added. The listing is below, showing our brand new package listed there.
+
+        appdirs==1.4.3
+        Django==1.11.1
+        django-bootstrap3==8.2.3
+        packaging==16.8
+        pyparsing==2.2.0
+        pytz==2017.2
+        six==1.10.0
+
+6. We can go ahead and copy the `django-bootstrap3==8.2.3` line into our `base.txt` file, for the package will be required by both our production and local environments. The contents of `base.txt` at the moment are as follows:
+
+        # python and django packages
+        appdirs==1.4.3
+        Django==1.11.1
+        packaging==16.8
+        pyparsing==2.2.0
+        pytz==2017.2
+        six==1.10.0
+        
+        django-bootstrap3==8.2.3
+
+    Notice how I leave a one line space between packages. Later on we will see how some of them will have dependencies, and having that separation is useful.
+
 
 
 
