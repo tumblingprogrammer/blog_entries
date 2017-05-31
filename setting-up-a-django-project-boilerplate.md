@@ -111,7 +111,7 @@ Our layout should now look like the following:
     | |____requirements
     | | |____requirements.txt
 
-Lets' commit the changes: `git add .` + `git status` (reminder: verify!) + `git commit -m "add docs and requirements folders and files".
+Lets' commit the changes: `git add .` + `git status` (reminder: verify!) + `git commit -m "add docs and requirements folders and files"`.
 
 Let's refactor the second tier `apps` folder and rename it as `config`, which is a more fitting name for that folder.
 
@@ -139,7 +139,7 @@ Our layout at the moment should look as follows:
 
 No more duplicate folders. Good bye confusion.
 
-Let's commit and call it the commitment "rename second tier apps folder as config".
+Let's commit and call it the commitment `"rename second tier apps folder as config"`.
 
 ### The settings module
 ___________________
@@ -335,7 +335,7 @@ If you notice, you will see that there are two `db.sqlite3` files.  django autom
 
 Let's run `manage.py runserver` to make sure that django is working OK. We should see the typical `Welcome to django!` page. We should also notice that django is telling us again that there are unapplied migrations.  Let's execute `.manage.py migrate` to get rid of that warning.
 
-Let's commit and call the commitment "refactor settings.py into settings + base | local | production".
+Let's commit and call the commitment `"refactor settings.py into settings + base | local | production"`.
 
 ### django's SECRET_KEY
 --------------------------------
@@ -380,7 +380,7 @@ to
 
 Let's run `manage.py runserver` to make sure that django is working OK. We should see the typical `Welcome to django!` page.
 
-Let's commit and call the commitment "hide django's secret key".
+Let's commit and call the commitment `"hide django's secret key"`.
 
 There you have it. Your django's secret key is indeed secret now, and not out for the world to see when, for instance, you decide to upload your code to github :)
 
@@ -417,7 +417,7 @@ Within the `base.py` file, let's refactor the block of `INSTALLED_APPS` codes as
 
 We have gained clarity and degree of separation between the different apps making up our boilerplate application.
 
-As usual, let's test that django runs OK (we'll develop a test battery for our boilerplate app later). If it runs amoothly, let's commit and call our commitment "distinguish between django, local, and third party applications".
+As usual, let's test that django runs OK (we'll develop a test battery for our boilerplate app later). If it runs amoothly, let's commit and call our commitment `"distinguish between django, local, and third party applications"`.
 
 
 
