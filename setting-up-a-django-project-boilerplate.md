@@ -477,7 +477,13 @@ Let's install `django-bootstrap3` to illustrate the workflow, which is as follow
         
         django-bootstrap3==8.2.3
 
-    Notice how I leave a one line space between packages. Later on we will see how some of them will have dependencies, and having that separation is useful.
+    Notice how I leave a one line space between packages. Later on we will see how some of them will have dependencies, and having that separation is useful. 
+    
+Let's add `-r base.txt` at the top of the contents of both the `local.txt` and `production.txt` files, which will tell `pip` to extend the requirements found in the `base.txt` file.  That's all we have in those two files, for now.
+
+We now have the backbone to distinguish between local, production, and common packages. We'll be adding packages later as we complete our boilerplate, and we will see the workflow in action again.
+
+For now, let's commit and call the commitment `"separate base, local, and production packages"`.
 
 
 
