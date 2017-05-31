@@ -419,6 +419,37 @@ We have gained clarity and degree of separation between the different apps makin
 
 As usual, let's test that django runs OK (we'll develop a test battery for our boilerplate app later). If it runs amoothly, let's commit and call our commitment `"distinguish between django, local, and third party applications"`.
 
+### Distinguishing between development and production requirements
+-----------------
+Similar to what we did with `settings.py`, we will refactor our `requirements.txt` in such a way that we keep track of and use the right packages packages for our development and production enviroments.
+
+Let's add the following files to the `requirements` folder: `base.txt`, `local.txt`, and `production.txt`.
+
+The logic will be similar too:
+
+    Is this package needed for both development and production? 
+        Yes:
+            It goes into base.txt
+        Else:
+            Is it needed for development only?
+            Yes:
+                It goes into local.txt
+            Else:
+                It goes into production.txt
+
+The workflow is as follows:
+
+1. Start with a fresh git commitment (i.e., no changes yet to be committed);
+2. We start with a baseline `requirements.txt`, which resides under folder `requirements`;
+2. Install the new package (don't do bundle installation of packages [i.e., `pip install package_1 package_2`]; I recommend doing it one by one so you can keep proper track of dependencies);
+3. In the command line, and under folder `requirements`, execute `pip freeze > requirements.txt`;
+4. 
+4. 
+
+So far, the packages that 
+
+
+
 
 
 
