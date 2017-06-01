@@ -485,68 +485,147 @@ We now have the backbone to distinguish between local, production, and common pa
 
 For now, let's commit and call the commitment `"separate base, local, and production packages"`.
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 ### Setting up the main app
----
-Every app has a part that acts as the main or core portion of the application that acts as the head that glues all apps together.  We will call this app the **_main_** app.  Some developers call it the **_core_** app.  I have stuck with **_main_** to avoid confusion with, for instance, the **_django.core_** library during module import operations. 
+------------
+Every app has a part that functions as the main or core portion of the application that acts as the glue that keeps all apps together.  We will call this app the `main` app.  Some developers call it the `core` app.  I have stuck with `main` to avoid confusion with, for instance, the `django.core` library during module import operations. One could argue that `main` could be problematic too, given that, for instance, it could be clash with the line `if __name__ == "__main__":` found in django's `manage.py`. It looks like we ran out of meaningful words for such an app.
 
-So, while under the apps folder in the terminal, let's run `manage.py startapp main`. Once it's done, our structure should look as follows.  Note that for clarity and brevity, I have omitted the `.git` related files and folders.  
+At any rate, while under the `apps` folder in the terminal, let's run `manage.py startapp main`. Once it's done, our structure should look as follows.  
 
-	|____djangoboilerplate
-	| |____djangoboilerplate
-	| | |______init__.py
-	| | |____settings.py
-	| | |____urls.py
-	| | |____wsgi.py
-	| |____main
-	| | |______init__.py
-	| | |____admin.py
-	| | |____apps.py
-	| | |____migrations
-	| | | |______init__.py
-	| | |____models.py
-	| | |____tests.py
-	| | |____views.py
-	| |____manage.py
-	| |____requirements.txt
+    |____djangoboilerplate
+    | |____apps
+    | | |____config
+    | | | |______init__.py
+    | | | |____db.sqlite3
+    | | | |____settings
+    | | | | |______init__.py
+    | | | | |____base.py
+    | | | | |____local.py
+    | | | | |____production.py
+    | | | |____urls.py
+    | | | |____wsgi.py
+    | | |____main
+    | | | |______init__.py
+    | | | |____admin.py
+    | | | |____apps.py
+    | | | |____migrations
+    | | | | |______init__.py
+    | | | |____models.py
+    | | | |____tests.py
+    | | | |____views.py
+    | | |____manage.py
+    | |____docs
+    | | |____readme.md
+    | |____requirements
+    | | |____base.txt
+    | | |____local.txt
+    | | |____production.txt
+    | | |____requirements.txt
 
-Let's run the django server to make sure that it is ready to roll by running `manage.py runserver`.  django will warn us about unapplied migrations (let's ignore that) but we should see the typical `Welcome to django!` page on our browser of choice if we point it to `http://127.0.0.1:8000/`.
+Within the `../settings/base.py` file, let's register our application with django by changing:
 
-![welcome to django page](/media/2017/welcome_to_jango.png "welcome to django page")
+    ...
+    LOCAL_APPS = [
+    ]
+    ...
 
-Let's go ahead and run `manage.py migrate` to get rid of django's warning about unapplied migrations.
+to 
 
-Let's run `git commit` to capture our newly created **_main_** app related files. Below is the result of running `git add .` and then `git status`:
+    ...
+    LOCAL_APPS = [
+        'main',
+    ]
+    ...
 
-	new file:   main/__init__.py
-	new file:   main/admin.py
-	new file:   main/apps.py
-	new file:   main/migrations/__init__.py
-	new file:   main/models.py
-	new file:   main/tests.py
-	new file:   main/views.py
+We'll continue setting up our `main` app at a later time. 
 
-Let's go ahead and commit: `git commit -m "add main app"`.
+For now, let's commit and call our commitment `"add main app"` (don't forget to run `git add .`, `git status` and double checking what's being committed).
+
+### Setting up our application system folders in `../settings/base.py`
+--------------------
+We will install `django-environ` to enhance our app's ability to interact with the system environment. More info on `django-environ` can be found here {{ add link }}
+
+Let's follow the workflow that we discussed in our **_Distinguishing between development and production requirements_** section. 
+
+First, this package will be needed for both development and production.
+
+We are starting with a fresh commitment. So, from the command line, and assuming that your `djangoboilerplate` virtual environment is active, run `pip install django-environ==0.4.3`  {{ do the version for bootstrap as well }}. Once the installation process is over, let's go into the `requirements` folder on the command line and run `pip freeze > requirements.txt`. A new line pops up in our `requirements.txt` file, which reads `django-environ==0.4.3`.  Let's copy that line into the `../requirements/base.txt` file, which now should look as follows:
+
+    # python and django packages
+    appdirs==1.4.3
+    Django==1.11.1
+    packaging==16.8
+    pyparsing==2.2.0
+    pytz==2017.2
+    six==1.10.0
+    
+    django-bootstrap3==8.2.3
+    
+    django-environ==0.4.3
+
+Note that there is no need to add `django-environ` to the list of third party apps within the `../settings/base.py` file.  We can import it directly where needed by invoking `import environ`.
+
+Let's commit, and call our commitment `"add django-environ"`.
+
+### Setting up our templates, static, media directories
+--------------------
+Let's add the following folders and files within our `apps` folder:
+
+    | | |____media
+    | | | |____twitter48.png
+    | | |____static
+    | | | |____css
+    | | | | |____global.css
+    | | | |____img
+    | | | | |____twitter48.png
+    | | | |____js
+    | | | | |____global.js
+    
+Our layout should now look like the following:
+
+    |____djangoboilerplate
+    | |____apps
+    | | |____config
+    | | | |______init__.py
+    | | | |____db.sqlite3
+    | | | |____settings
+    | | | | |______init__.py
+    | | | | |____base.py
+    | | | | |____local.py
+    | | | | |____production.py
+    | | | |____urls.py
+    | | | |____wsgi.py
+    | | |____main
+    | | | |______init__.py
+    | | | |____admin.py
+    | | | |____apps.py
+    | | | |____migrations
+    | | | | |______init__.py
+    | | | |____models.py
+    | | | |____tests.py
+    | | | |____views.py
+    | | |____media
+    | | | |____twitter48.png
+    | | |____static
+    | | | |____css
+    | | | | |____global.css
+    | | | |____img
+    | | | | |____twitter48.png
+    | | | |____js
+    | | | | |____global.js
+    | | |____manage.py
+    | |____docs
+    | | |____readme.md
+    | |____requirements
+    | | |____base.txt
+    | | |____local.txt
+    | | |____production.txt
+    | | |____requirements.txt
+
+Let's commit and call our commitment `"add media and static folders"`.
+
+
+
+
 
 What we have done so far is pretty standard boilerplate django.  We will now get into tailoring the structure and the setup to make it more secure and deployment friendlier.
 
