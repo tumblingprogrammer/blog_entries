@@ -652,6 +652,41 @@ By now our full blown layout should look like the following:
 
 Now, let's edit `../settings/base.py` so it goes from:
 
+    ...
+    BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    ...
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        }
+    }
+    ...
+
+to
+
+    ...
+    import environ
+    ...
+    ROOT_DIR = environ.Path(__file__) - 4
+    APPS_DIR = ROOT_DIR.path('apps')
+    TEMPLATE_DIR = str(APPS_DIR.path('templates'))
+    STATIC_DIR = str(APPS_DIR.path('static'))
+    DATABASE_FILE_NAME = str(APPS_DIR.path('db.sqlite3')) # Not needed if using other db
+    STATICFILES_DIRS = [STATIC_DIR, ]
+    STATIC_ROOT = str(ROOT_DIR.path('staticfiles'))
+    MEDIA_DIR = str(APPS_DIR.path('media'))
+    MEDIA_ROOT = MEDIA_DIR
+    MEDIA_URL = '/media/'
+    ...
+
+
+
+
+
+
+"find path -print | sed -e 's;[^/]*/;|____;g;s;____|; |;g'"
+
 
 
 
