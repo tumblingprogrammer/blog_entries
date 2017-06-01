@@ -540,7 +540,7 @@ We'll continue setting up our `main` app at a later time.
 
 For now, let's commit and call our commitment `"add main app"` (don't forget to run `git add .`, `git status` and double checking what's being committed).
 
-### Setting up our application system folders in `../settings/base.py`
+### Setting up our application system folders
 --------------------
 We will install `django-environ` to enhance our app's ability to interact with the system environment. More info on `django-environ` can be found here {{ add link }}
 
@@ -585,6 +585,33 @@ Our layout should now look like the following:
     |____djangoboilerplate
     | |____apps
     | | |____config
+    | | | |____(...)
+    | | |____main
+    | | | |____(...)
+    | | |____manage.py
+    | | |____media
+    | | | |____twitter48.png
+    | | |____static
+    | | | |____css
+    | | | | |____global.css
+    | | | |____img
+    | | | | |____twitter48.png
+    | | | |____js
+    | | | | |____global.js
+    | |____docs
+    | | |____readme.md
+    | |____requirements
+    | | |____(...)
+
+Let's commit and call our commitment `"add media and static folders"`.
+
+While at it, let's add a `templates` folder under the `apps` folder, and a `staticfiles` folder under the root folder (i.e., the `djangoboilerplate` folder). `templates` is where we will store our html templates.  We will use `staticfiles` as the destination where we will tell django to collect static files to serve them to our users. If you go into the `.gitignore` file, you will find toward the bottom a `/staticfiles/` line, by which we tell `git` to ignore the contents of that folder. That's by design as those files exist somewhere else and are collected there by django just for web serving purposes (we'll tackle the collection at a later time). 
+
+By now our full blown layout should look like the following:
+
+    |____djangoboilerplate
+    | |____apps
+    | | |____config
     | | | |______init__.py
     | | | |____db.sqlite3
     | | | |____settings
@@ -603,6 +630,7 @@ Our layout should now look like the following:
     | | | |____models.py
     | | | |____tests.py
     | | | |____views.py
+    | | |____manage.py
     | | |____media
     | | | |____twitter48.png
     | | |____static
@@ -612,7 +640,7 @@ Our layout should now look like the following:
     | | | | |____twitter48.png
     | | | |____js
     | | | | |____global.js
-    | | |____manage.py
+    | | |____templates
     | |____docs
     | | |____readme.md
     | |____requirements
@@ -620,8 +648,17 @@ Our layout should now look like the following:
     | | |____local.txt
     | | |____production.txt
     | | |____requirements.txt
+    | |____staticfiles
 
-Let's commit and call our commitment `"add media and static folders"`.
+Now, let's edit `../settings/base.py` so it goes from:
+
+
+
+
+
+
+
+
 
 
 
