@@ -668,17 +668,141 @@ to
     ...
     import environ
     ...
-    ROOT_DIR = environ.Path(__file__) - 4
-    APPS_DIR = ROOT_DIR.path('apps')
-    TEMPLATE_DIR = str(APPS_DIR.path('templates'))
-    STATIC_DIR = str(APPS_DIR.path('static'))
-    DATABASE_FILE_NAME = str(APPS_DIR.path('db.sqlite3')) # Not needed if using other db
-    STATICFILES_DIRS = [STATIC_DIR, ]
-    STATIC_ROOT = str(ROOT_DIR.path('staticfiles'))
-    MEDIA_DIR = str(APPS_DIR.path('media'))
-    MEDIA_ROOT = MEDIA_DIR
+    ROOT_DIR = str(environ.Path(__file__) - 4)
+    APPS_DIR = str(os.path.join(ROOT_DIR,'apps'))
+    TEMPLATES_DIR = str(os.path.join(APPS_DIR,'templates'))
+    STATIC_DIR = str(os.path.join(APPS_DIR,'static'))
+    MEDIA_ROOT = str(os.path.join(APPS_DIR,'media'))
+    DATABASE_FILE_NAME = str(os.path.join(APPS_DIR,'db.sqlite3'))
+    STATIC_ROOT = str(os.path.join(ROOT_DIR,'staticfiles'))
     MEDIA_URL = '/media/'
+    STATICFILES_DIRS = [STATIC_DIR, ]
     ...
+
+Most of the code above is self-explanatory.  Basically, we are telling django where stuff will reside, including static files, media files (which is normally made up of files uploaded by users), as well as the full path (including the file name) of our database file (in our case, we are using SQLite).
+
+Worth noticing is line `ROOT_DIR = str(environ.Path(__file__) - 4)`, by which we tell django to use the directory four levels above the `base.py` file as the `ROOT_DIR` (or our `djangoboilerplate` directory), which becomes the basis of all subsequent directories.
+
+We can test all the above by executing the below python3+ script:
+
+    import os
+    import environ
+    
+    # edit the below line so it matches your base.py; 
+    # below is what mine looks like
+    file ="/Users/puma/Desktop/projects/articles/final/djangoboilerplate/apps/config/settings/base.py"
+
+    ROOT_DIR = str(environ.Path(file) - 4)
+    print(ROOT_DIR)
+    APPS_DIR = str(os.path.join(ROOT_DIR,'apps'))
+    print(APPS_DIR)
+    TEMPLATES_DIR = str(os.path.join(APPS_DIR,'templates'))
+    print(TEMPLATES_DIR)
+    STATIC_DIR = str(os.path.join(APPS_DIR,'static'))
+    print(STATIC_DIR)
+    MEDIA_ROOT = str(os.path.join(APPS_DIR,'media'))
+    print(MEDIA_ROOT)
+    DATABASE_FILE_NAME = str(os.path.join(APPS_DIR,'db.sqlite3'))
+    print(DATABASE_FILE_NAME)
+    STATIC_ROOT = str(os.path.join(ROOT_DIR,'staticfiles'))
+    print(STATIC_ROOT)
+    
+When I execute the script, I get the following:
+
+    /Users/puma/Desktop/projects/articles/final/djangoboilerplate
+    /Users/puma/Desktop/projects/articles/final/djangoboilerplate/apps
+    /Users/puma/Desktop/projects/articles/final/djangoboilerplate/apps/templates
+    /Users/puma/Desktop/projects/articles/final/djangoboilerplate/apps/static
+    /Users/puma/Desktop/projects/articles/final/djangoboilerplate/apps/media
+    /Users/puma/Desktop/projects/articles/final/djangoboilerplate/apps/db.sqlite3
+    /Users/puma/Desktop/projects/articles/final/djangoboilerplate/staticfiles
+
+Which is excatly what I need.
+
+We can now edit the `base.py`, like so:
+
+**Templates** @ `base.py`
+
+    ...
+    TEMPLATES = [
+        {
+            'BACKEND': 'django.template.backends.django.DjangoTemplates',
+            'DIRS': [
+                TEMPLATES_DIR,
+            ],
+            'APP_DIRS': True,
+            'OPTIONS': {
+                'context_processors': [
+                    'django.template.context_processors.debug',
+                    'django.template.context_processors.request',
+                    'django.contrib.auth.context_processors.auth',
+                    'django.contrib.messages.context_processors.messages',
+                ],
+            },
+        },
+    ]
+    ...
+    
+**Database** @ `base.py`
+
+    ...
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': DATABASE_FILE_NAME,
+        }
+    }
+    ...
+
+If you run the django server now, you will notice that another `db.sqlite3` file pops up under the `apps` folder, and that, again, we have unapplied migrations.  What has happened is that, via the new `DATABASE_FILE_NAME` we told django to store the database under that folder, as opposed to under the `config` folder, and django went ahead and created a brand new one there -hence the unapplied migrations.  It makes more sense to store under the `apps` folder, and we will live it there.  We can safely remove the old one, and apply migrations to get rid of django's warning.
+
+Our layout should look as follows:
+
+    |____djangoboilerplate
+    | |____apps
+    | | |____config
+    | | | |______init__.py
+    | | | |____settings
+    | | | | |______init__.py
+    | | | | |____base.py
+    | | | | |____local.py
+    | | | | |____production.py
+    | | | |____urls.py
+    | | | |____wsgi.py
+    | | |____db.sqlite3
+    | | |____main
+    | | | |______init__.py
+    | | | |____admin.py
+    | | | |____apps.py
+    | | | |____migrations
+    | | | | |______init__.py
+    | | | |____models.py
+    | | | |____tests.py
+    | | | |____views.py
+    | | |____manage.py
+    | | |____media
+    | | | |____twitter48.png
+    | | |____static
+    | | | |____css
+    | | | | |____global.css
+    | | | |____img
+    | | | | |____twitter48.png
+    | | | |____js
+    | | | | |____global.js
+    | | |____templates
+    | |____docs
+    | | |____readme.md
+    | |____requirements
+    | | |____base.txt
+    | | |____local.txt
+    | | |____production.txt
+    | | |____requirements.txt
+    | |____staticfiles
+
+It's time to commit our changes.  Let's call this commitment `"add templates_dir and staticfiles folders; refactor our database location"`.
+
+
+
 
 
 
