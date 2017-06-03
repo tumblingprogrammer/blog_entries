@@ -1,4 +1,4 @@
-On this article we will setup a django project boilerplate that we can quickly use to develop and deploy django applications.  Among other things, we will  go beyond the default project layout structure that `django-admin startproject [project_name]` creates when we execute that command.
+On this tutorial we will setup a django project boilerplate that we can quickly use to develop and deploy django applications.  Among other things, we will  go beyond the default project layout structure that `django-admin startproject [project_name]` creates when we execute that command.  
 
 By doing that, we will be going after the following objectives:
 
@@ -8,25 +8,32 @@ By doing that, we will be going after the following objectives:
 
 ### Summary
 
-### Conventions throughout this article
-
-Please review the conventions page, which will help you understand how I communicate with you through this blog.
+### Conventions throughout this tutorial
+-----
+Please review the [conventions page](http://www.tumblingprogrammer.com/blog/edit-entry/conventions-used-in-tumbling-programmer-dot-com/ "tumbling programmer's conventions page"), which will help you understand how I communicate with you through this blog.
 
 Let's dive in.
 
-Let's call our project `djangoboilerplate`.  Note: we will be using pythonanywhere.com to host the boilerplate project to make sure that it runs fine, and to test our deployment strategy; I made sure to grab the username already :)
+### The project
+-----
+Let's call our project `djangoboilerplate`.  Note: we will be using pythonanywhere.com to host the boilerplate project to make sure that it runs fine, and to test our deployment strategy.
 
-This tutorial assumes...
+### Assumptions
+______
 
-1. virtual environment with python (I used 3.5.2 for this article) 
+This tutorial assumes that you have at least completed the [django turorial](https://docs.djangoproject.com/en/1.11/intro/tutorial01/), and are familiar with the following:
 
-2. django has been installed (
+1. Installing python.
+2. Setting up a virtual environment, and more spicifically, [virtualenvwrapper](http://virtualenvwrapper.readthedocs.io/en/latest/install.html).
+3. Running commands from the CLI (command line interface), or the terminal; more specifically, throughout this tutorial, when I ask you to execute `manage.py runserver` on the terminal, please be aware that there are several ways to do that, depending on how your environment is setup; for example, in my system (Mac OS), I have it setup so I only have to type `./manage.py runserver`; you may have to type `python manage.py runserver` on yours.
+4. Installing and working with the [git](https://git-scm.com/) distributed version control system (or similar). 
 
-3. mac and windows
+### Installing our virtual environment and django
+_____
 
-Let's install our virtual environment and call it **_djangoboilerplate_** : `mkvirtualenv --python=python3 djangoboilerplate`. Once it runs, make sure that your newly created environment is activated (if not already activated) by executing `workon djangoboilerplate`. 
+Let's install our virtual environment and call it `djangoboilerplate` : `mkvirtualenv --python=python3.5.2 djangoboilerplate`. Once it runs, make sure that your newly created environment is activated (if not already activated) by executing `workon djangoboilerplate`. 
 
-Now, let's install django by running `pip install django`.
+Now, let's install django by running `pip install django=1.11.1`.
 
 Now go to the location where your boilerplate project will reside, and create a folder called `djangoboilerplate`. Going forward, we will refer to it as the `root folder`. Open a terminal window within the root folder, activate the `djangoboilerplate` virtual environment, and execute `django-admin startproject apps`. If successful, you would have a newly created folder called `apps` within your `djangoboilerplate` folder. 
 
@@ -43,11 +50,11 @@ Inside of it, you should see the following file structure:
 
 Let's run the django server to make sure that it is ready to roll by going into the top `apps` folder and executing `manage.py runserver`.  django will warn us about unapplied migrations (let's ignore that) but we should see the typical `Welcome to django!` page on our browser of choice if we point it to `http://127.0.0.1:8000/`.
 
-![welcome to django page](/media/2017/welcome_to_jango.png "welcome to django page")
+![welcome to django page](https://www.tumblingprogrammer.com/media/2017/06/welcome_to_django.png "welcome to django page")
 
 Let's go ahead and run `manage.py migrate` to get rid of django's warning about unapplied migrations. When we migrate, django adds a `db.sqlite3` file within the second tier `apps` folder, which is the file of the `sqlite` database that we will use on our boilerplate application.
 
-Let's go back into the root folder, and let's initialize a `git` repository by executing `git init`.  By now you probably have a `.gitignore` file that you use on your projects.  If not, feel free to grab mine from here {{  link  }}. Go ahead and put a copy of the `.gitignore` file under the root folder. Our file structure should now look like the below structure.  Remember, per the conventions page {{ link }}, certain files (inlcuding git and python cache files, are omitted). 
+Let's go back into the root folder, and let's initialize a `git` repository by executing `git init`.  By now you probably have a `.gitignore` file that you use on your projects.  If not, feel free to grab mine from [here](https://www.tumblingprogrammer.com/media/global/.gitignore "tumbling programmer's .gitignore file"). Go ahead and put a copy of the `.gitignore` file under the root folder. Our file structure should now look like the below structure.  Remember, per the [conventions page](http://www.tumblingprogrammer.com/blog/edit-entry/conventions-used-in-tumbling-programmer-dot-com/ "tumbling programmer's conventions page"), certain files (including git and python cache files, are omitted). 
 
     |____djangoboilerplate
     | |____apps
@@ -82,9 +89,9 @@ Let's go ahead and add the following folders and files to the root folder:
         readme.md
     requirements
     
-We can edit the above `readme.md` markdown file add the following `### This folder will contain project-wide documentation`. We'll leave it at that.
+Let's edit the above `readme.md` markdown file add the following `### This folder will contain project-wide documentation`. We'll leave it at that.
 
-Now, on the command line go into the `requirements` folder and execute `pip freeze > requirements.txt`. A new file will be created there, listing the packages that we have installed so far by running the `mkvirtualenv --python=python3 djangoboilerplate` and `pip install django` commands.  The packages are:
+Now, on the command line go into the `requirements` folder and execute `pip freeze > requirements.txt`. A new file will be created there, listing the packages that we have installed when we ran `mkvirtualenv --python=python3.5.2 djangoboilerplate` and `pip install django=1.11.1` commands.  The packages are:
 
 	appdirs==1.4.3
 	Django==1.11.1
@@ -115,11 +122,11 @@ Lets' commit the changes: `git add .` + `git status` (reminder: verify!) + `git 
 
 Let's refactor the second tier `apps` folder and rename it as `config`, which is a more fitting name for that folder.
 
-For the refactoring to work, we must search for the string `apps` within the files under the first tier `apps` folder, and replace the relevant instances with the word `config`.  PyCharm, my favorite python development IDE, has a very handy tool to do just that; a snippet of the instances that PyCharm finds is shown below.  You could also use `grep`, for instance.
+For the refactoring to work, we must search for the string `apps` within the files under the first tier `apps` folder, and replace the relevant instances with the word `config`.  [PyCharm](https://www.jetbrains.com/pycharm/), my favorite python development IDE, has a very handy tool to do just that; a snippet of the instances that PyCharm finds is shown below.  You could also use `grep`, for instance.
 
-![PyCharm refactoring results](/media/2017/pycharm_refactor_boilerplate_to_config.png "PyCharm refactoring results").
+![PyCharm refactoring results](https://www.tumblingprogrammer.com/media/2017/06/pycharm_refactor_boilerplate_to_config.png "PyCharm refactoring results")
 
-Once we swap `apps` for `config`, we run the server (i.e., execute `manage.py runserver`) to make sure that our refactoring works OK, and we get the typical `Welcome to django!` page.
+Once we swap `apps` for `config`, we run the server (i.e., execute `manage.py runserver`) to make sure that our refactoring works OK; we should get the typical `Welcome to django!` page.
 
 Our layout at the moment should look as follows:
 
@@ -139,7 +146,7 @@ Our layout at the moment should look as follows:
 
 No more duplicate folders. Good bye confusion.
 
-Let's commit and call it the commitment `"rename second tier apps folder as config"`.
+Let's commit and call the commitment `"rename second tier apps folder as config"`.
 
 ### The settings module
 ___________________
@@ -168,7 +175,7 @@ We can now go through the contents of the `settings.py` file generated by django
             Else:
                 It goes into production.py
 
-Below are the listings of the resulting `base.py`, `local.py`, and `production.py` files resulting from following the logic I just described.
+Below are the listings of the `base.py`, `local.py`, and `production.py` files resulting from following the logic I just described.
 
 `base.py`:
 
@@ -235,6 +242,8 @@ Below are the listings of the resulting `base.py`, `local.py`, and `production.p
     
 Not many changes at the moment, but we have attained a degree of separation between development and production, which we will now expand. Note the `from .base import *` line, which is not part of the original `settings.py` file.  We need it to extend the `base.py` settings into `local.py` and `production.py`.
 
+By keeping `DEBUG = True` limited to our local environment, when we deploy we don't have to worry about editing django's settings file to turn `DEBUG` off which, for security reasons, [is very important to do](https://docs.djangoproject.com/en/1.11/ref/settings/#debug). 
+
 Now, how do we go about telling django which settings file to use?  For that, we will need to set an environment variable that we can use to programmatically instruct django to use the proper settings file.
 
 We'll call our variable `DJANGO_EXECUTION_ENVIRONMENT`. On our local environment, its value will be `LOCAL` and on our deployment environment, it will be `PRODUCTION`.
@@ -243,7 +252,7 @@ For Mac OS (my development OS of choice), I just simply run `nano -w ~/.bash_pro
 
     export DJANGO_EXECUTION_ENVIRONMENT="LOCAL"
 
-Once I save the changes, I run `source ~/.bash_profile` on the command line, and then test that it worked by running `echo $DJANGO_EXECUTION_ENVIRONMENT`, the result of which, if successful, is `LOCAL`.
+Once I save the changes, I run `source ~/.bash_profile` on the command line, and then test that it worked by running `echo $DJANGO_EXECUTION_ENVIRONMENT`, the result of which, if successful, should be `LOCAL`.
 
 If you use a system other than Mac OS, switch ASAP! :) Nah, just kidding. A relevant google search will point you in the right direction.
 
@@ -296,7 +305,7 @@ to:
         from django.core.management import execute_from_command_line
         execute_from_command_line(sys.argv)
 
-We added the function `get_env_variable`, which allows us to humanize the error message given by django if for some reason it can't read the environment variable. 
+We added the function `get_env_variable`, which allows us to humanize the error message given by django if for some reason it can't read the environment variable. Thanks to the folks at [two scoops press](https://www.twoscoopspress.com/) for this and other valuable tips.  Buy their book if you haven't done that.  
 
 The below code block tells django which settings file to use, depending on the value of the `DJANGO_EXECUTION_ENVIRONMENT` variable.
 
@@ -340,11 +349,11 @@ Let's commit and call the commitment `"refactor settings.py into settings + base
 ### django's SECRET_KEY
 --------------------------------
 
-One of the main reasons we are doing all this refactoring / re-arranging is security {{ expand on this }}.
+One of the main reasons we are doing all this refactoring / re-arranging is security.  As an example, by storing our `SECRET_KEY` in a file being tracked by `git` (and potentially being uploaded to a public repository like github, we may be exposing it.  Refer to [django's documentation as to why it is important to keep it secret](https://docs.djangoproject.com/en/1.11/ref/settings/#secret-key).   
 
 We now know how to store variables in our environment. This time around, though, we will use a different procedure to accomplish that. We'll see why in a bit.
 
-By now you should be using virtualenv wrapper (highly recommended!). By now I assume also that for every application you setup a different virtual environment (highly recommended too!). We will store django's sectret key in the virtual environment.  Go to the bin folder of your `virtualenv`.  For me, the path to the bin folder looks like `/Users/puma/.virtualenvs/djangoboilerplate/bin`.  Within it there is a file called `postactivate`; edit it as follows:
+By now you should be using virtualenv wrapper (highly recommended!). By now I assume also that for every application you setup a different virtual environment (highly recommended too!). We will store django's secret key in our virtual environment.  Go to the bin folder of your `virtualenv`.  For me, the path to the bin folder looks like `/Users/puma/.virtualenvs/djangoboilerplate/bin`.  Within it there is a file called `postactivate`; edit it as follows:
 
     #!/bin/bash
     # This hook is sourced after this virtualenv is activated.
@@ -352,9 +361,9 @@ By now you should be using virtualenv wrapper (highly recommended!). By now I as
     #your DJANGO_SECRET_KEY variable goes here
     export DJANGO_SECRET_KEY="YOUR_SECRET_KEY_GOES_HERE"
 
-As the second line informs us, whatever is in that file will be sourced post activation of the virtual environment. Go ahead and copy the key that django generated for you when you executed `django-admin startproject djangoboilerplate`. {{ verify }}
+As the second line informs us, whatever is in that file will be sourced post activation of the virtual environment. Go ahead and copy the key that django generated for you when you executed `django-admin startproject apps`.
 
-The reason I use my virtual environment to store django's `SECRET_KEY` is that I make it different for each django application.  Hence, as I activate the app's virtual environment, I get the app's unique key.  As for the `DJANGO_EXECUTION_ENVIRONMENT` variable, its value (i.e., `LOCAL`) is always the same regardless of the application, and as such I store it in my system's `.bash_profile` and make it available system-wide.
+The reason I use the virtual environment to store django's `SECRET_KEY` is that I make it different for each django application.  Hence, as I activate the app's virtual environment, I get the app's unique key.  As for the `DJANGO_EXECUTION_ENVIRONMENT` variable, its value (i.e., `LOCAL`) is always the same regardless of the application, and as such I store it in my system's `.bash_profile` and make it available system-wide.
 
 Make sure that what you just did works by deactivating and reactivating your virtual environment, and then by running `echo $DJANGO_SECRET_KEY` on your command line. It should output your secret key.
 
@@ -362,7 +371,7 @@ Next, edit your `settings/base.py` file so it goes from
 
     import os
     ...
-    SECRET_KEY = '_)2pb4uyb!v=_t#+9=i_))^8&-^ok_aa9mb_ptapty0l2olgdt'
+    SECRET_KEY = '...SECRET_KEY_GENERATED_BY_DJANGO...'
     ...
 
 to
@@ -370,8 +379,8 @@ to
     import os
     
     from manage import get_env_variable 
-    # the above is the function that we added to manage.py
-    # to humanize potential configuration errors
+    # the above is the function that we added to...
+    # ...manage.py to humanize potential configuration errors
     
     DJANGO_SECRET_KEY = get_env_variable('DJANGO_SECRET_KEY')
     ...
@@ -417,17 +426,17 @@ Within the `base.py` file, let's refactor the block of `INSTALLED_APPS` codes as
 
 We have gained clarity and degree of separation between the different apps making up our boilerplate application.
 
-As usual, let's test that django runs OK (we'll develop a test battery for our boilerplate app later). If it runs amoothly, let's commit and call our commitment `"distinguish between django, local, and third party applications"`.
+As usual, let's test that django runs OK.  If it runs amoothly, let's commit and call our commitment `"distinguish between django, local, and third party applications"`.
 
 ### Distinguishing between development and production requirements
 -----------------
-Similar to what we did with `settings.py`, we will refactor our `requirements.txt` in such a way that we keep track of and use the right packages packages for our development and production enviroments.
+Similar to what we did with `settings.py`, we will refactor our `requirements.txt` in such a way that we keep track of and use the right packages for our development and production enviroments.
 
 Let's add the following files to the `requirements` folder: `base.txt`, `local.txt`, and `production.txt`.
 
 Let's commit and call the commitment `"add base.txt, local.txt, and production.txt requirement files"`.
 
-As far as figuring out where packages belong, the logic will be similar too:
+As far as figuring out where packages belong, the logic that we applied to refactor the `settings.py` file will be similar too:
 
     Is this package needed for both development and production? 
         Yes:
@@ -453,19 +462,19 @@ Let's install `django-bootstrap3` to illustrate the workflow, which is as follow
 
     The above are required for the local and production environments, so they go into our `base.txt` file. 
 
-3. Install the new package (don't do bundle installation of packages [i.e., `pip install package_1 package_2`]; I recommend doing it one by one so you can keep proper track of dependencies); for illustration purposes; execute `pip install django-bootstrap3`;
+3. Install the new package (don't do bundle installation of packages [i.e., `pip install package_1 package_2`]; I recommend doing it one by one so you can keep proper track of dependencies); let's activate our virtual environment (if not already activated) and execute `pip install django-bootstrap3`;
 4. In the command line, and under folder `requirements`, execute `pip freeze > requirements.txt`;
-5. Your IDE will likely tell you that there is a new line, and will highlight it for you; if you don't have an IDE, running a `git diff` on the `requirements.txt` file will tell you what new lines were added. The listing is below, showing our brand new package listed there.
+5. If you are using an IDE that integrates with git, it's likely capable of telling you that there is a new line, and will highlight it for you; if you don't have an IDE, running a `git diff` on the `requirements.txt` file will tell you what new lines were added. The listing is below, showing our brand new package listed there.
 
         appdirs==1.4.3
         Django==1.11.1
-        django-bootstrap3==8.2.3
+        django-bootstrap3==8.2.3 #the recently added package
         packaging==16.8
         pyparsing==2.2.0
         pytz==2017.2
         six==1.10.0
 
-6. We can go ahead and copy the `django-bootstrap3==8.2.3` line into our `base.txt` file, for the package will be required by both our production and local environments. The contents of `base.txt` at the moment are as follows:
+6. We can go ahead and copy the `django-bootstrap3==8.2.3` line into our `base.txt` file, for the package will be required by both our production and local environments. File `base.txt` at the moment reads as follows:
 
         # python and django packages
         appdirs==1.4.3
