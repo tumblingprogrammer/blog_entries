@@ -1088,10 +1088,78 @@ and `<script src="{% static 'js/global.js' %}"></script>` to the code within `ba
 
 If we run our django server, we should get the following, which show that we have successfully linked `global.js` and `global.css`, and that they are ready to receive and serve code.
 
-Let's go ahead and comment out line `alert("js is working");` on our `global.js` file (you can later use this line to further test your environment and to make sure that things are working properly, if in doubt).
+{{ js picture }}
+
+Our `centered-text` class in `home.html` now works.
+
+{{ css picture }}
+
+Let's go ahead and comment out line `alert("js is working");` in our `global.js` file (you can later use this line to further test your environment and to make sure that things are working properly, if in doubt).
 
 Let's commit and call our commitment `"link javascript and css; link staticfiles"`.
+
+### Getiing `django-livereload-server` up and running
+---------
+`django-livereload-server` (more info here {{ad link }}) watches for changes on the files that make up your app, including `html`, `css`, `javascript`, and django files.  Once it catches the changes, it reloads your browser automatically so you don't have to constantly hit reload on it.
+
+First, let's install it.  As usual, we will follow the workflow that we described under section {{ }}. This will be a local only package, and we are starting with a fresh commitment (you can verify that by running `git status`, which should result in a `nothing to commit, working tree clean` statement on your terminal {{ move this above and don't repeat it here }}.
+
+With our `djangoboilerplate` virtual environment activated, let's run `pip install django-livereload-server==0.2.3`.
+
+On the terminal, let's navigate into our `requirements` folder and run `pip freeze > requirements.txt`.  A `git diff` on the file will tell us that the following lines were added to it:
+
+    beautifulsoup4==4.6.0
+    django-livereload-server==0.2.3
+    tornado==4.5.1
+
+Let's add them, to our `requirements/local.txt` file, which now should read as follows:
+
+    -r base.txt
     
+    django-livereload-server==0.2.3
+    beautifulsoup4==4.6.0
+    tornado==4.5.1
+
+Notice how I placed `django-livereload-server==0.2.3` on top, by which I signify that the bottom two are required by `django-livereload-server`.
+
+Let's edit our `settings/local.py` file so it reads as follows:
+
+    from .base import *
+    
+    DEBUG = True
+    
+    MIDDLEWARE_CLASSES += (
+        'livereload.middleware.LiveReloadScript',
+    )
+    INSTALLED_APPS += [
+        'livereload',
+    ]
+    
+Stop your django server if it's running, run `manage.py livereload` (leave it running), and on another terminal tab, run your django server.  Open your home page on your browser. Keep your browser visible.
+
+Let's open our `home.html` file and add the following block of code right below the `jumbotron`:
+
+    <div class="container-fluid">
+        <h3>This is the home of a django project boilerplate</h3>
+        <p>You can find the article / tutorial that explains how it got created by visiting
+            <a href="https://www.tumblingprogrammer.com/setting-up-a-django-project-boilerplate/">
+                https://www.tumblingprogrammer.com/setting-up-a-django-project-boilerplate/</a></p>
+        <p>You can find the source code for it at <a href="https://github.com/tumblingprogrammer/djangoboilerplate">
+            https://github.com/tumblingprogrammer/djangoboilerplate</a></p>
+    </div>
+    <hr>
+    
+As soon as you save the changes on your `home.html` file, you should automatically see the changes on your browser, which should look as follows:
+
+{{ image }}
+
+Let's commit and call the commitment `"add django-livereload-server"`.
+
+
+
+
+
+
 
 
 
