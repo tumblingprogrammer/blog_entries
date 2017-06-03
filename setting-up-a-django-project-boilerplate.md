@@ -1155,6 +1155,82 @@ As soon as you save the changes on your `home.html` file, you should automatical
 
 Let's commit and call the commitment `"add django-livereload-server"`.
 
+### Getting `django-fontawesome` up and running
+--------
+I usually find myself needing more icons than the ones that twitter bootstrap's glyphicons offer.  Fontawesome {{ link }} comes to the rescue.
+
+This package will go into the `base.txt` requirements file.
+
+First, we activate our virtual environment (if not already activated), and run `pip install django-fontawesome==0.3.1`. `pip` will install it, along with `PyYAML==3.12`, which is required by `django-fontawesome`.
+
+Once we update it, our `requirements/base.txt` should read as follows:
+
+    # python and django packages
+    appdirs==1.4.3
+    Django==1.11.1
+    packaging==16.8
+    pyparsing==2.2.0
+    pytz==2017.2
+    six==1.10.0
+    
+    django-bootstrap3==8.2.3
+    
+    django-environ==0.4.3
+    
+    django-fontawesome==0.3.1
+    PyYAML==3.12
+
+Let's edit our `settings.base.py` file, as follows:
+
+    ...
+    THIRD_PARTY_APPS = [
+        'bootstrap3',
+        'fontawesome',
+    ]
+    ...
+
+Now we need to add `{% load fontawesome %}` `{% fontawesome_stylesheet %}` to our `base.html` file, like so:
+
+    {% extends 'bootstrap3/bootstrap3.html' %}
+    {% load bootstrap3 %}
+    {% load staticfiles %}
+    {% load fontawesome %}
+    ...
+    {% block bootstrap3_extra_head %}
+        <link rel="stylesheet" href="{% static 'css/global.css' %}"/>
+        {% fontawesome_stylesheet %}
+        {% bootstrap_javascript %}
+        {% block head %}
+        {% endblock %}
+    {% endblock %}
+    ...
+
+In our `home.html` file, let's add `{% load fontawesome %}` and some html to test that the installation works, like so:
+
+    {% extends "base.html" %}
+    {% load bootstrap3 %}
+    {% load fontawesome %}
+    ...    
+        <p class="centered-text"><span class="text-muted">This is a bootstrapped text - if different from the one above 
+            (i.e., it is greyish),
+            Bootstrap works!</span></p>
+        <p class="centered-text">If you can see a user icon {% fontawesome_icon 'user' %} here, font awesome works!</p>
+    ...
+
+If everything goes well, your home page will show the following at the bottom of it:
+{{ link to image }}
+
+Let's commit and call our commitment `"add fontawesome"`.
+
+
+
+
+
+
+
+
+
+
 
 
 
