@@ -1112,7 +1112,7 @@ On the terminal, let's navigate into our `requirements` folder and run `pip free
     django-livereload-server==0.2.3
     tornado==4.5.1
 
-Let's add them, to our `requirements/local.txt` file, which now should read as follows:
+Let's add them to our `requirements/local.txt` file, which now should read as follows:
 
     -r base.txt
     
@@ -1120,7 +1120,7 @@ Let's add them, to our `requirements/local.txt` file, which now should read as f
     beautifulsoup4==4.6.0
     tornado==4.5.1
 
-Notice how I placed `django-livereload-server==0.2.3` on top, by which I signify that the bottom two are required by `django-livereload-server`.
+Notice how I placed `django-livereload-server==0.2.3` on top, by which I signify that the bottom two are required by `django-livereload-server`.  It's just a convention I use.  When you install the requirements from a `txt` file, the order in which they are placed shouldn't really matter (unless there were conflicts between required packages).
 
 Let's edit our `settings/local.py` file so it reads as follows:
 
@@ -1154,6 +1154,8 @@ As soon as you save the changes on your `home.html` file, you should automatical
 {{ image }}
 
 Let's commit and call the commitment `"add django-livereload-server"`.
+
+
 
 
 
