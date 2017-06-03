@@ -1242,7 +1242,72 @@ At this point, we don't need to make migrations or migrate because we have used 
 
 Let's commit and call our commitment `"add DatesBaseModel"`.
 
+### Serving `media` and `static` files
+-------------
+Let's edit our `base.py` file from:
 
+    ...
+    MEDIA_ROOT = str(os.path.join(APPS_DIR,'media'))
+    ...
+
+to
+
+    ...
+    MEDIA_DIR = str(os.path.join(APPS_DIR,'media'))
+    MEDIA_ROOT = MEDIA_DIR
+    ...
+
+{{ need to expand on this }}
+
+Let's also edit our `config/urls.py` file from:
+
+    from django.conf.urls import url, include
+    from django.contrib import admin
+    
+    urlpatterns = [
+        url(r'^admin/', admin.site.urls),
+        url(r'', include('main.urls')),
+    ]
+
+to 
+
+    from django.conf.urls import url, include
+    from django.contrib import admin
+    from manage import get_env_variable
+    from django.conf import settings
+    from django.conf.urls.static import static
+    
+    urlpatterns = [
+        url(r'^admin/', admin.site.urls),
+        url(r'', include('main.urls')),
+    ]
+
+    DJANGO_EXECUTION_ENVIRONMENT = get_env_variable('DJANGO_EXECUTION_ENVIRONMENT')
+    if DJANGO_EXECUTION_ENVIRONMENT == 'LOCAL':
+        urlpatterns = urlpatterns + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+Let's also edit our `home.html` file as follows:
+
+{% extends "base.html" %}
+{% load bootstrap3 %}
+{% load fontawesome %}
+{% load static %}
+...
+    <p class="centered-text">If you can see a user icon {% fontawesome_icon 'user' %} here, font awesome works!</p>
+
+    <hr>
+    <div class="container-fluid">
+        <p>Our media server works if you can successfully see twitter's logo here:
+            <a href="https://twitter.com/tumblingprgrmmr" title="tumbling programmer's twitter account">
+                <img src="media/twitter48.png" alt="twitter logo"></a>
+        </p>
+        <p>Static-serving files works too if you can successfully see twitter's logo here:
+            <a href="https://twitter.com/tumblingprgrmmr" title="tumbling programmer's twitter account">
+                <img src="{% static 'img/twitter48.png'%}" alt="twitter logo"></a>
+        </p>
+    </div>
+{% endblock %}
+...
 
 
 
