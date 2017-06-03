@@ -1086,7 +1086,11 @@ and `<script src="{% static 'js/global.js' %}"></script>` to the code within `ba
         {% endblock %}
     {% endblock %}
 
+If we run our django server, we should get the following, which show that we have successfully linked `global.js` and `global.css`, and that they are ready to receive and serve code.
 
+Let's go ahead and comment out line `alert("js is working");` on our `global.js` file (you can later use this line to further test your environment and to make sure that things are working properly, if in doubt).
+
+Let's commit and call our commitment `"link javascript and css; link staticfiles"`.
     
 
 
