@@ -1338,6 +1338,9 @@ If all goes well, you should see the below info at the bottom of your home page:
 
 {{ link to screenshot }}
 
+Let's commit and call our commitment `"finalize and test media and static file serving "`.
+
+
 
 {{ add note about images here or above [they are ignored by git ] }}
 
