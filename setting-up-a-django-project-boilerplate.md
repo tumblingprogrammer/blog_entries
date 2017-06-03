@@ -855,8 +855,195 @@ You'll notice that we have some `bootstrap` tags in our `home.html` file.  They 
 
 For now, let's commit and call our commitment "add home view".
 
+Our layout at the moment should look as follows:
+
+    |____djangoboilerplate
+    | |____apps
+    | | |____config
+    | | | |______init__.py
+    | | | |____settings
+    | | | | |______init__.py
+    | | | | |____base.py
+    | | | | |____local.py
+    | | | | |____production.py
+    | | | |____urls.py
+    | | | |____wsgi.py
+    | | |____db.sqlite3
+    | | |____main
+    | | | |______init__.py
+    | | | |____admin.py
+    | | | |____apps.py
+    | | | |____migrations
+    | | | | |______init__.py
+    | | | |____models.py
+    | | | |____tests.py
+    | | | |____urls.py
+    | | | |____views.py
+    | | |____manage.py
+    | | |____media
+    | | | |____twitter48.png
+    | | |____static
+    | | | |____css
+    | | | | |____global.css
+    | | | |____img
+    | | | | |____twitter48.png
+    | | | |____js
+    | | | | |____global.js
+    | | |____templates
+    | | | |____main
+    | | | | |____home.html
+    | |____docs
+    | | |____readme.md
+    | |____requirements
+    | | |____base.txt
+    | | |____local.txt
+    | | |____production.txt
+    | | |____requirements.txt
+    | |____staticfiles
+
+
 ### Twitter bootstrap
 ---------------
+So far we have installed `bootstrap` on our virtual environment, but we haven't told django about it.  We will do so shortly, and while at it, we will also add other settings that will enable `bootstrap` to work properly.  Let's go ahead and add edit the `settings/base.py` file as follows:
+
+    ...
+    THIRD_PARTY_APPS = [
+        'bootstrap3',
+    ]
+    ...
+    # Bootstrap settings
+    BOOTSTRAP3 = {
+    
+        # The URL to the jQuery JavaScript file
+        'jquery_url': '//code.jquery.com/jquery-3.1.1.min.js',
+    
+        # The Bootstrap base URL
+        'base_url': '//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/',
+    
+        # The complete URL to the Bootstrap CSS file (None means derive it from base_url)
+        'css_url': None,
+    
+        # The complete URL to the Bootstrap CSS file (None means no theme)
+        # 'theme_url': None,
+        'theme_url': '//maxcdn.bootstrapcdn.com/bootswatch/3.3.7/readable/bootstrap.min.css',
+    
+        # The complete URL to the Bootstrap JavaScript file (None means derive it from base_url)
+        'javascript_url': None,
+    
+        # Put JavaScript in the HEAD section of the HTML document (only relevant if you use bootstrap3.html)
+        'javascript_in_head': False,
+    
+        # Include jQuery with Bootstrap JavaScript (affects django-bootstrap3 template tags)
+        'include_jquery': True,
+    
+        # Label class to use in horizontal forms
+        'horizontal_label_class': 'col-md-3',
+    
+        # Field class to use in horizontal forms
+        'horizontal_field_class': 'col-md-9',
+    
+        # Set HTML required attribute on required fields, for Django <= 1.8 only
+        'set_required': True,
+    
+        # Set HTML disabled attribute on disabled fields, for Django <= 1.8 only
+        'set_disabled': False,
+    
+        # Set placeholder attributes to label if no placeholder is provided
+        'set_placeholder': True,
+    
+        # Class to indicate required (better to set this in your Django form)
+        'required_css_class': '',
+    
+        # Class to indicate error (better to set this in your Django form)
+        'error_css_class': 'has-error',
+    
+        # Class to indicate success, meaning the field has valid input (better to set this in your Django form)
+        'success_css_class': 'has-success',
+    
+        # Renderers (only set these if you have studied the source and understand the inner workings)
+        'formset_renderers': {
+            'default': 'bootstrap3.renderers.FormsetRenderer',
+        },
+        'form_renderers': {
+            'default': 'bootstrap3.renderers.FormRenderer',
+        },
+        'field_renderers': {
+            'default': 'bootstrap3.renderers.FieldRenderer',
+            'inline': 'bootstrap3.renderers.InlineFieldRenderer',
+        },
+    }
+
+I tend to out `bootstrap` settings toward the end of the `settings/base.py` file.
+
+You can find out more about `django-bootstrap` here: {{ https://django-bootstrap3.readthedocs.io/en/latest/settings.html }}. 
+
+`bootstrap` should be good to go.  To fully take advantage of it, let's add a base template that inherits from `bootstrap` base template.
+
+### The base template
+----------------
+Let's add a `base.html` file directly under the `templates` folder, and let's add the following code to it:
+
+    {% extends 'bootstrap3/bootstrap3.html' %}
+    {% load bootstrap3 %}
+    
+    {% block bootstrap3_title %}
+        {% block title %}
+        {% endblock %} - django boilerplate App
+    {% endblock %}
+    
+    {% block bootstrap3_extra_head %}
+        {% bootstrap_javascript %}
+        {% block head %}        
+        {% endblock %}
+    {% endblock %}
+    
+    {% block bootstrap3_content %}
+        {% block content %}
+        {% endblock %}
+    {% endblock %}
+    
+    {% block bootstrap3_extra_script %}
+        {% block scripts %}
+        {% endblock %}
+    {% endblock %}
+
+Now let's edit the `home.html` template so it reads as follows:
+
+    {% extends "base.html" %}
+    {% load bootstrap3 %}
+    
+    {% block title %} Home
+    {% endblock %}
+    
+    {% block head %}
+    {% endblock %}
+    
+    {% block content %}
+        <div class="jumbotron centered-text">
+            <h1>Hello djangonaut!</h1>
+        </div>
+        <p class="centered-text">This is regular text (i.e., with no Bootstrap applied)</p>
+        <p class="centered-text"><span class="text-muted">This is a bootstrapped text - if different from the one above (i.e., it is greyish),
+            Bootstrap works!</span></p>
+    {% endblock %}
+    
+    {% block scripts %}
+    {% endblock %}
+
+If we run our django server and hit the home page, we should see the following:
+
+{{ bootsrapped image }}
+
+Let's commit and call our commitment `"finish bootstrap, add base.html"`.
+
+We accomplished a lot in the previous steps, including:
+* templating;
+* loading static files into our templates;
+* linked to our `global.css` and `global.js` files (we will test them next);
+
+
+
+
 
 
 
