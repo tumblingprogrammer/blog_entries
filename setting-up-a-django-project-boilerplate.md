@@ -7,15 +7,18 @@ By doing that, we will be going after the following objectives:
 2. etc.
 
 ### Summary
+_____
+
 
 ### Conventions throughout this tutorial
------
+_____
+
 Please review the [conventions page](http://www.tumblingprogrammer.com/blog/edit-entry/conventions-used-in-tumbling-programmer-dot-com/ "tumbling programmer's conventions page"), which will help you understand how I communicate with you through this blog.
 
 Let's dive in.
 
 ### The project
------
+_____
 Let's call our project `djangoboilerplate`.  Note: we will be using pythonanywhere.com to host the boilerplate project to make sure that it runs fine, and to test our deployment strategy.
 
 ### Assumptions
@@ -347,7 +350,7 @@ Let's run `manage.py runserver` to make sure that django is working OK. We shoul
 Let's commit and call the commitment `"refactor settings.py into settings + base | local | production"`.
 
 ### django's SECRET_KEY
---------------------------------
+_____
 
 One of the main reasons we are doing all this refactoring / re-arranging is security.  As an example, by storing our `SECRET_KEY` in a file being tracked by `git` (and potentially being uploaded to a public repository like github, we may be exposing it.  Refer to [django's documentation as to why it is important to keep it secret](https://docs.djangoproject.com/en/1.11/ref/settings/#secret-key).   
 
@@ -394,7 +397,7 @@ Let's commit and call the commitment `"hide django's secret key"`.
 There you have it. Your django's secret key is indeed secret now, and not out for the world to see when, for instance, you decide to upload your code to github :)
 
 ### Distinguishing between django, local, and third party applications
------------------
+_____
 Within the `base.py` file, let's refactor the block of `INSTALLED_APPS` codes as follows.
 
 **Before**:
@@ -429,7 +432,7 @@ We have gained clarity and degree of separation between the different apps makin
 As usual, let's test that django runs OK.  If it runs amoothly, let's commit and call our commitment `"distinguish between django, local, and third party applications"`.
 
 ### Distinguishing between development and production requirements
------------------
+_____
 Similar to what we did with `settings.py`, we will refactor our `requirements.txt` in such a way that we keep track of and use the right packages for our development and production enviroments.
 
 Let's add the following files to the `requirements` folder: `base.txt`, `local.txt`, and `production.txt`.
@@ -462,7 +465,7 @@ Let's install `django-bootstrap3` to illustrate the workflow, which is as follow
 
     The above are required for the local and production environments, so they go into our `base.txt` file. 
 
-3. Install the new package (don't do bundle installation of packages [i.e., `pip install package_1 package_2`]; I recommend doing it one by one so you can keep proper track of dependencies); let's activate our virtual environment (if not already activated) and execute `pip install django-bootstrap3`;
+3. Install the new package (don't do bundle installation of packages [i.e., `pip install package_1 package_2`]; I recommend doing it one by one so you can keep proper track of dependencies); let's activate our virtual environment (if not already activated) and execute `pip install django-bootstrap3==8.2.3`;
 4. In the command line, and under folder `requirements`, execute `pip freeze > requirements.txt`;
 5. If you are using an IDE that integrates with git, it's likely capable of telling you that there is a new line, and will highlight it for you; if you don't have an IDE, running a `git diff` on the `requirements.txt` file will tell you what new lines were added. The listing is below, showing our brand new package listed there.
 
@@ -494,11 +497,59 @@ We now have the backbone to distinguish between local, production, and common pa
 
 For now, let's commit and call the commitment `"separate base, local, and production packages"`.
 
-### Setting up the main app
-------------
-Every app has a part that functions as the main or core portion of the application that acts as the glue that keeps all apps together.  We will call this app the `main` app.  Some developers call it the `core` app.  I have stuck with `main` to avoid confusion with, for instance, the `django.core` library during module import operations. One could argue that `main` could be problematic too, given that, for instance, it could be clash with the line `if __name__ == "__main__":` found in django's `manage.py`. It looks like we ran out of meaningful words for such an app.
 
-At any rate, while under the `apps` folder in the terminal, let's run `manage.py startapp main`. Once it's done, our structure should look as follows.  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+### Setting up the `main` app
+_____
+
+Every app has a part that functions as the main or core portion of the application that acts as the glue that keeps all apps together.  We will call this app the `main` app.  Some developers call it the `core` app.  I have stuck with `main` to avoid confusion with, for instance, the `django.core` library during module import operations. One could argue that `main` could be problematic too, given that, for instance, it could clash with the line `if __name__ == "__main__":` found in django's `manage.py`. It looks like we are out of meaningful words for such an app.
+
+At any rate, while under the `apps` folder in the terminal, let's run `manage.py startapp main`. Once it's done, our structure should look as follows:  
 
     |____djangoboilerplate
     | |____apps
@@ -530,7 +581,7 @@ At any rate, while under the `apps` folder in the terminal, let's run `manage.py
     | | |____production.txt
     | | |____requirements.txt
 
-Within the `../settings/base.py` file, let's register our application with django by changing:
+Within the `settings/base.py` file, let's register our application with django by changing:
 
     ...
     LOCAL_APPS = [
@@ -550,14 +601,14 @@ We'll continue setting up our `main` app at a later time.
 For now, let's commit and call our commitment `"add main app"` (don't forget to run `git add .`, `git status` and double checking what's being committed).
 
 ### Setting up our application system folders
---------------------
-We will install `django-environ` to enhance our app's ability to interact with the system environment. More info on `django-environ` can be found here {{ add link }}
+_____
+We will install `django-environ` to enhance our app's ability to interact with the system environment. More info on `django-environ` can be found [here](https://github.com/joke2k/django-environ).
 
 Let's follow the workflow that we discussed in our **_Distinguishing between development and production requirements_** section. 
 
 First, this package will be needed for both development and production.
 
-We are starting with a fresh commitment. So, from the command line, and assuming that your `djangoboilerplate` virtual environment is active, run `pip install django-environ==0.4.3`  {{ do the version for bootstrap as well }}. Once the installation process is over, let's go into the `requirements` folder on the command line and run `pip freeze > requirements.txt`. A new line pops up in our `requirements.txt` file, which reads `django-environ==0.4.3`.  Let's copy that line into the `../requirements/base.txt` file, which now should look as follows:
+We are starting with a fresh commitment. So, from the command line, and assuming that your `djangoboilerplate` virtual environment is active, run `pip install django-environ==0.4.3`. Once the installation process is over, let's go into the `requirements` folder on the command line and run `pip freeze > requirements.txt`. A new line pops up in our `requirements.txt` file, which reads `django-environ==0.4.3`.  Let's copy that line into the `../requirements/base.txt` file, which now should look as follows:
 
     # python and django packages
     appdirs==1.4.3
@@ -576,7 +627,7 @@ Note that there is no need to add `django-environ` to the list of third party ap
 Let's commit, and call our commitment `"add django-environ"`.
 
 ### Setting up our templates, static, media directories
---------------------
+_____
 Let's add the following folders and files within our `apps` folder:
 
     | | |____media
@@ -811,7 +862,7 @@ Our layout should look as follows:
 It's time to commit our changes.  Let's call this commitment `"add templates_dir and staticfiles folders; refactor our database location"`.
 
 ### A home page
-----------
+_____
 It's time to setup our home page.  Under the `templates` folder, lets add a folder called `main` to host our `main` app templates. Within the `main` folder, let's add a `home.html` file.  For now, let's just add the following code to it:
 
     <!DOCTYPE html>
@@ -912,7 +963,7 @@ Our layout at the moment should look as follows:
 
 
 ### Twitter bootstrap
----------------
+_____
 So far we have installed `bootstrap` on our virtual environment, but we haven't told django about it.  We will do so shortly, and while at it, we will also add other settings that will enable `bootstrap` to work properly.  Let's go ahead and add edit the `settings/base.py` file as follows:
 
     ...
@@ -989,7 +1040,7 @@ You can find out more about `django-bootstrap` here: {{ https://django-bootstrap
 `bootstrap` should be good to go.  To fully take advantage of it, let's add a base template that inherits from `bootstrap` base template.
 
 ### The base template
-----------------
+_____
 Let's add a `base.html` file directly under the `templates` folder, and let's add the following code to it:
 
     {% extends 'bootstrap3/bootstrap3.html' %}
@@ -1046,7 +1097,7 @@ If we run our django server and hit the home page, we should see the following:
 Let's commit and call our commitment `"finish bootstrap, add base.html"`.
 
 ### Linking our static files
---------
+_____
 Let's edit `global.css` as follows:
 
     /* global css code goes here */
@@ -1107,8 +1158,8 @@ Let's go ahead and comment out line `alert("js is working");` in our `global.js`
 
 Let's commit and call our commitment `"link javascript and css; link staticfiles"`.
 
-### Getiing `django-livereload-server` up and running
----------
+### Getting `django-livereload-server` up and running
+_____
 `django-livereload-server` (more info here {{ad link }}) watches for changes on the files that make up your app, including `html`, `css`, `javascript`, and django files.  Once it catches the changes, it reloads your browser automatically so you don't have to constantly hit reload on it.
 
 First, let's install it.  As usual, we will follow the workflow that we described under section {{ }}. This will be a local only package, and we are starting with a fresh commitment (you can verify that by running `git status`, which should result in a `nothing to commit, working tree clean` statement on your terminal {{ move this above and don't repeat it here }}.
@@ -1165,7 +1216,7 @@ As soon as you save the changes on your `home.html` file, you should automatical
 Let's commit and call the commitment `"add django-livereload-server"`.
 
 ### Getting `django-fontawesome` up and running
---------
+_____
 I usually find myself needing more icons than the ones that twitter bootstrap's glyphicons offer.  Fontawesome {{ link }} comes to the rescue.
 
 This package will go into the `base.txt` requirements file.
@@ -1232,7 +1283,7 @@ If everything goes well, your home page will show the following at the bottom of
 Let's commit and call our commitment `"add fontawesome"`.
 
 ### Creating our `DatesBaseModel`
------ 
+_____
 Let's add one handy model to our `main` app models. Edit `main/models.py` so it reads as follows:
 
     from django.db import models
@@ -1252,7 +1303,7 @@ At this point, we don't need to make migrations or migrate because we have used 
 Let's commit and call our commitment `"add DatesBaseModel"`.
 
 ### Serving `media` and `static` files
--------------
+_____
 Let's edit our `base.py` file from:
 
 {{ delete the below? }}
@@ -1414,15 +1465,16 @@ Let's commit and call our commitment `"finalize and test media and static file s
 What we have done so far is pretty standard boilerplate django.  We will now get into tailoring the structure and the setup to make it more secure and deployment friendlier.
 
 ### Our target structure
----
+_____
 Once we are done with the reconfiguration, we should have a structure that resembles the below:
 
 	placeholder for resulting structure
 
 ### Workflow
-- - - - - -
+_____
 
 ### django configuration
+_____
 
 Let's refactor the **_djangoboilerplate_** folder and rename it as **_config_**. 
 
