@@ -1222,6 +1222,30 @@ If everything goes well, your home page will show the following at the bottom of
 
 Let's commit and call our commitment `"add fontawesome"`.
 
+### Creating our `DatesBaseModel`
+----- 
+Let's add one handy model to our `main` app models. Edit `main/models.py` so it reads as follows:
+
+    from django.db import models
+    
+    # models created with this base will inherit created_date and modified_date automatically
+    class DatesBaseModel(models.Model):
+        created_date = models.DateTimeField(auto_now_add=True)
+        modified_date = models.DateTimeField(auto_now=True)
+    
+        class Meta:
+            abstract = True
+
+As the comment above explains, if we were to extend this model (as in `class Entry(DatesBaseModel):`), the "extension" model (`Entry`, in our example) will automatically have the fields `created_date` and `modified_date`.  Handy indeed.  We could use the same approach if, for instance, we had models that had address fields in common.  In general, we look for common denominators, throw those denominators into a base model, and extend that base model as needed.
+
+At this point, we don't need to make migrations or migrate because we have used the `abstract = True` (more info on that here https://docs.djangoproject.com/en/1.11/topics/db/models/#abstract-base-classes {{ add link }}).
+
+Let's commit and call our commitment `"add DatesBaseModel"`.
+
+
+
+
+
 
 
 
