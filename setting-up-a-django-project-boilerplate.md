@@ -801,6 +801,73 @@ Our layout should look as follows:
 
 It's time to commit our changes.  Let's call this commitment `"add templates_dir and staticfiles folders; refactor our database location"`.
 
+### A home page
+----------
+It's time to setup our home page.  Under the `templates` folder, lets add a folder called `main` to host our `main` app templates. Within the `main` folder, let's add a `home.html` file.  For now, let's just add the following code to it:
+
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>djangoboilerplate</title>
+    </head>
+    <body>
+        <div class="jumbotron centered-text">
+            <h1>Hello djangonaut!</h1>
+        </div>
+        <p class="centered-text">This is regular text (i.e., with no Bootstrap applied)</p>
+        <p class="centered-text"><span class="text-muted">This is a bootstrapped text - if different from the one above (i.e., it is greyish),
+            Bootstrap works!</span></p>
+    </body>
+    </html>
+
+We need to add a `urls.py` file under the `main` folder to hold the `urls` for our `main` app. Let's add the following code to it:
+
+    from django.conf.urls import url
+    from . import views
+    
+    urlpatterns = [
+        url(r'^$', views.home, name='home'),
+    ]    
+
+Let's edit the `settings/urls.py` so it includes the urls in `main/urls.py`, like so:
+
+    from django.conf.urls import url, include
+    from django.contrib import admin
+    
+    urlpatterns = [
+        url(r'^admin/', admin.site.urls),
+        url(r'', include('main.urls')),  
+    ]
+
+Finally, we need to create our view.  Let's edit the `main/views.py` as follows:
+
+    from django.shortcuts import render
+    
+    def home(request):
+        return render(request, 'main/home.html', context=None)
+
+If everything goes well, you should be able to see the screen below once you run your django server.
+
+{{ link to image }}
+
+You'll notice that we have some `bootstrap` tags in our `home.html` file.  They don't render properly at the moment because we haven't completly setup `bootstrap`. We'll do that next.
+
+For now, let's commit and call our commitment "add home view".
+
+### Twitter bootstrap
+---------------
+
+
+
+
+
+
+
+
+
+
+
 
 
 
