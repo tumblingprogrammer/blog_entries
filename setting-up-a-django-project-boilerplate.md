@@ -1246,6 +1246,8 @@ Let's commit and call our commitment `"add DatesBaseModel"`.
 -------------
 Let's edit our `base.py` file from:
 
+{{ delete the below? }}
+
     ...
     MEDIA_ROOT = str(os.path.join(APPS_DIR,'media'))
     ...
@@ -1258,6 +1260,27 @@ to
     ...
 
 {{ need to expand on this }}
+
+Let's add `"django.template.context_processors.media",` to our list of context processors in `settings/base.py` file, like so:
+
+    TEMPLATES = [
+        {
+            'BACKEND': 'django.template.backends.django.DjangoTemplates',
+            'DIRS': [
+                TEMPLATES_DIR,
+            ],
+            'APP_DIRS': True,
+            'OPTIONS': {
+                'context_processors': [
+                    'django.template.context_processors.debug',
+                    'django.template.context_processors.request',
+                    'django.contrib.auth.context_processors.auth',
+                    'django.contrib.messages.context_processors.messages',
+                    "django.template.context_processors.media",
+                ],
+            },
+        },
+    ]
 
 Let's also edit our `config/urls.py` file from:
 
@@ -1286,28 +1309,39 @@ to
     if DJANGO_EXECUTION_ENVIRONMENT == 'LOCAL':
         urlpatterns = urlpatterns + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
-Let's also edit our `home.html` file as follows:
+Let's edit our `home.html` file as follows:
 
-{% extends "base.html" %}
-{% load bootstrap3 %}
-{% load fontawesome %}
-{% load static %}
-...
-    <p class="centered-text">If you can see a user icon {% fontawesome_icon 'user' %} here, font awesome works!</p>
+    {% extends "base.html" %}
+    {% load bootstrap3 %}
+    {% load fontawesome %}
+    {% load staticfiles %}
+    ...
+        <p class="centered-text">If you can see a user icon {% fontawesome_icon 'user' %} here, font awesome works!</p>
+    
+        <hr>
+        <div class="container-fluid">
+            <p>Our media server works if you can successfully see twitter's logo here:
+                <a href="https://twitter.com/tumblingprgrmmr" title="tumbling programmer's twitter account">
+                    <img src="{{ MEDIA_URL }}twitter48.png" alt="twitter logo"></a>
+            </p>
+            <p>Static-serving files works too if you can successfully see twitter's logo here:
+                <a href="https://twitter.com/tumblingprgrmmr" title="tumbling programmer's twitter account">
+                    <img src="{% static 'img/twitter48.png'%}" alt="twitter logo"></a>
+            </p>
+        </div>
+    {% endblock %}
+    ...
 
-    <hr>
-    <div class="container-fluid">
-        <p>Our media server works if you can successfully see twitter's logo here:
-            <a href="https://twitter.com/tumblingprgrmmr" title="tumbling programmer's twitter account">
-                <img src="media/twitter48.png" alt="twitter logo"></a>
-        </p>
-        <p>Static-serving files works too if you can successfully see twitter's logo here:
-            <a href="https://twitter.com/tumblingprgrmmr" title="tumbling programmer's twitter account">
-                <img src="{% static 'img/twitter48.png'%}" alt="twitter logo"></a>
-        </p>
-    </div>
-{% endblock %}
-...
+Adding `"django.template.context_processors.media"` to our list of context processors in our `settings/base.py` file is what makes possible to use the dynamic url `{{ MEDIA_URL }}` to serve media files.
+
+If all goes well, you should see the below info at the bottom of your home page:
+
+{{ link to screenshot }}
+
+
+{{ add note about images here or above [they are ignored by git ] }}
+
+
 
 
 
