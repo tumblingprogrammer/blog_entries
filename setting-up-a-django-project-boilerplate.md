@@ -1389,7 +1389,7 @@ Let's commit and call our commitment `"add error templates"`.
 _____
 Below is what the resulting layout looks like:
 
-***At a High level***
+***At a high level***
 
 	|____djangoboilerplate
 	| |____apps
