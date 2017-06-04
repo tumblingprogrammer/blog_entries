@@ -544,6 +544,12 @@ For now, let's commit and call the commitment `"separate base, local, and produc
 
 
 
+
+
+
+
+
+
 ### Setting up the `main` app
 _____
 
@@ -608,7 +614,9 @@ Let's follow the workflow that we discussed in our **_Distinguishing between dev
 
 First, this package will be needed for both development and production.
 
-We are starting with a fresh commitment. So, from the command line, and assuming that your `djangoboilerplate` virtual environment is active, run `pip install django-environ==0.4.3`. Once the installation process is over, let's go into the `requirements` folder on the command line and run `pip freeze > requirements.txt`. A new line pops up in our `requirements.txt` file, which reads `django-environ==0.4.3`.  Let's copy that line into the `../requirements/base.txt` file, which now should look as follows:
+We are starting with a fresh commitment (you can verify that by running `git status`, which should result in a `nothing to commit, working tree clean` statement on your terminal).
+
+So, from the command line, and assuming that your `djangoboilerplate` virtual environment is active, run `pip install django-environ==0.4.3`. Once the installation process is over, let's go into the `requirements` folder on the command line and run `pip freeze > requirements.txt`. A new line pops up in our `requirements.txt` file, which reads `django-environ==0.4.3`.  Let's copy that line into the `requirements/base.txt` file, which now should look as follows:
 
     # python and django packages
     appdirs==1.4.3
@@ -622,11 +630,11 @@ We are starting with a fresh commitment. So, from the command line, and assuming
     
     django-environ==0.4.3
 
-Note that there is no need to add `django-environ` to the list of third party apps within the `../settings/base.py` file.  We can import it directly where needed by invoking `import environ`.
+Note that there is no need to add `django-environ` to the list of third party apps within the `settings/base.py` file.  We can import it directly where needed by invoking `import environ`.
 
 Let's commit, and call our commitment `"add django-environ"`.
 
-### Setting up our templates, static, media directories
+### Setting up our templates, static, and media directories
 _____
 Let's add the following folders and files within our `apps` folder:
 
@@ -665,7 +673,7 @@ Our layout should now look like the following:
 
 Let's commit and call our commitment `"add media and static folders"`.
 
-While at it, let's add a `templates` folder under the `apps` folder, and a `staticfiles` folder under the root folder (i.e., the `djangoboilerplate` folder). `templates` is where we will store our html templates.  We will use `staticfiles` as the destination where we will tell django to collect static files to serve them to our users. If you go into the `.gitignore` file, you will find toward the bottom a `/staticfiles/` line, by which we tell `git` to ignore the contents of that folder. That's by design as those files exist somewhere else and are collected there by django just for web serving purposes (we'll tackle the collection at a later time). 
+While at it, let's add a `templates` folder under the `apps` folder, and a `staticfiles` folder under the root folder (i.e., the `djangoboilerplate` folder). `templates` is where we will store our html templates.  We will use `staticfiles` as the destination where we will tell django to collect static files to serve them to our users. If you go into the `.gitignore` file, you will find toward the bottom a `/staticfiles/` line, by which we tell `git` to ignore the contents of that folder. That's by design as those files exist somewhere else and are collected there by django just for web serving purposes. 
 
 By now our full blown layout should look like the following:
 
@@ -710,17 +718,10 @@ By now our full blown layout should look like the following:
     | | |____requirements.txt
     | |____staticfiles
 
-Now, let's edit `../settings/base.py` so it goes from:
+Now, let's edit `settings/base.py` so it goes from:
 
     ...
     BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-    ...
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.sqlite3',
-            'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-        }
-    }
     ...
 
 to
@@ -781,7 +782,7 @@ Which is excatly what I need.
 
 We can now edit the `base.py`, like so:
 
-**Templates** @ `base.py`
+`TEMPLATES` @ `settings/base.py`
 
     ...
     TEMPLATES = [
@@ -803,7 +804,7 @@ We can now edit the `base.py`, like so:
     ]
     ...
     
-**Database** @ `base.py`
+`DATABASES` @ `base.py`
 
     ...
     DATABASES = {
@@ -814,7 +815,7 @@ We can now edit the `base.py`, like so:
     }
     ...
 
-If you run the django server now, you will notice that another `db.sqlite3` file pops up under the `apps` folder, and that, again, we have unapplied migrations.  What has happened is that, via the new `DATABASE_FILE_NAME` we told django to store the database under that folder, as opposed to under the `config` folder, and django went ahead and created a brand new one there -hence the unapplied migrations.  It makes more sense to store under the `apps` folder, and we will live it there.  We can safely remove the old one, and apply migrations to get rid of django's warning.
+If you run the django server now, you will notice that another `db.sqlite3` file pops up under the `apps` folder, and that, again, we have unapplied migrations.  What has happened is that, via the new `DATABASE_FILE_NAME`, we told django to store the database under that folder, as opposed to under the `config` folder, and django went ahead and created a brand new `db.sqlite3` there -hence the unapplied migrations.  It makes more sense to store it under the `apps` folder, and we will keep it there.  We can safely remove the old one, and apply migrations to get rid of django's warning.
 
 Our layout should look as follows:
 
@@ -907,13 +908,13 @@ Finally, we need to create our view.  Let's edit the `main/views.py` as follows:
     def home(request):
         return render(request, 'main/home.html', context=None)
 
-If everything goes well, you should be able to see the screen below once you run your django server.
+If everything goes well, you should see the screen below on your browser once you run your django server.
 
-{{ link to image }}
+![tumbling programmer's django project boilerplate home page](https://www.tumblingprogrammer.com/media/2017/06/hello_djangonaut_plain.png "tumbling programmer's django project boilerplate home page")
 
-You'll notice that we have some `bootstrap` tags in our `home.html` file.  They don't render properly at the moment because we haven't completly setup `bootstrap`. We'll do that next.
+You may have noticed that we have some `bootstrap` classes in our `home.html` file (like `jumbotron`, or `text-muted`.  They don't render properly at the moment because we haven't completely setup `bootstrap`. We'll do that later.
 
-For now, let's commit and call our commitment "add home view".
+For now, let's commit and call our commitment `"add home view"`.
 
 Our layout at the moment should look as follows:
 
@@ -964,7 +965,7 @@ Our layout at the moment should look as follows:
 
 ### Twitter bootstrap
 _____
-So far we have installed `bootstrap` on our virtual environment, but we haven't told django about it.  We will do so shortly, and while at it, we will also add other settings that will enable `bootstrap` to work properly.  Let's go ahead and add edit the `settings/base.py` file as follows:
+So far we have installed `bootstrap` on our virtual environment, but we haven't told django about it.  We will do so shortly, and while at it, we will also add other settings that will enable `bootstrap` to work properly.  Let's go ahead and edit the `settings/base.py` file as follows:
 
     ...
     THIRD_PARTY_APPS = [
@@ -1033,9 +1034,9 @@ So far we have installed `bootstrap` on our virtual environment, but we haven't 
         },
     }
 
-I tend to out `bootstrap` settings toward the end of the `settings/base.py` file.
+I tend to put `bootstrap` settings toward the end of the `settings/base.py` file.  Note that you don't have to have all the above settings in the `settings/base.py` file.   
 
-You can find out more about `django-bootstrap` here: {{ https://django-bootstrap3.readthedocs.io/en/latest/settings.html }}. 
+You can find out more about `django-bootstrap` [here](https://django-bootstrap3.readthedocs.io/en/latest/settings.html). 
 
 `bootstrap` should be good to go.  To fully take advantage of it, let's add a base template that inherits from `bootstrap` base template.
 
@@ -1092,7 +1093,9 @@ Now let's edit the `home.html` template so it reads as follows:
 
 If we run our django server and hit the home page, we should see the following:
 
-{{ bootsrapped image }}
+![tumbling programmer's django project boilerplate bootstrapped home page](https://www.tumblingprogrammer.com/media/2017/06/hello_djangonaut_bootstrapped.png "tumbling programmer's django project boilerplate bootstrapped home page")
+
+As you can see, `bootstrap` works properly.
 
 Let's commit and call our commitment `"finish bootstrap, add base.html"`.
 
@@ -1112,7 +1115,7 @@ Let's edit the `global.js` file as follows:
     // global js code goes here
     alert("js is working");
 
-If we linked the `global.js` file properly, we should see an alert generated by javascript as soon as the page loads.  The final step to link our static files is to introduce `{% load staticfiles %}`, 
+If we link the `global.js` file properly, we should see an alert generated by javascript as soon as the page loads.  The final step to link our static files is to introduce `{% load staticfiles %}`, the following block of code 
 
     <link rel="stylesheet" href="{% static 'css/global.css' %}"/>
     {% bootstrap_javascript %}
@@ -1148,11 +1151,11 @@ and `<script src="{% static 'js/global.js' %}"></script>` to the code within `ba
 
 If we run our django server, we should get the following, which show that we have successfully linked `global.js` and `global.css`, and that they are ready to receive and serve code.
 
-{{ js picture }}
+![tumbling programmer's django project boilerplate home page with javascript working](https://www.tumblingprogrammer.com/media/2017/06/hello_djangonaut_js_works.png "tumbling programmer's django project boilerplate home page with javascript working")
 
 Our `centered-text` class in `home.html` now works.
 
-{{ css picture }}
+![tumbling programmer's django project boilerplate home page with css working](https://www.tumblingprogrammer.com/media/2017/06/hello_djangonaut_css_is_properly_linked.png "tumbling programmer's django project boilerplate home page with css working")
 
 Let's go ahead and comment out line `alert("js is working");` in our `global.js` file (you can later use this line to further test your environment and to make sure that things are working properly, if in doubt).
 
@@ -1160,9 +1163,9 @@ Let's commit and call our commitment `"link javascript and css; link staticfiles
 
 ### Getting `django-livereload-server` up and running
 _____
-`django-livereload-server` (more info here {{ad link }}) watches for changes on the files that make up your app, including `html`, `css`, `javascript`, and django files.  Once it catches the changes, it reloads your browser automatically so you don't have to constantly hit reload on it.
+`django-livereload-server` (more info [here](https://github.com/tjwalch/django-livereload-server) watches for changes on the files that make up your app, including `html`, `css`, `javascript`, and django files.  Once it catches the changes, it reloads your browser automatically so you don't have to constantly hit reload on it.
 
-First, let's install it.  As usual, we will follow the workflow that we described under section {{ }}. This will be a local only package, and we are starting with a fresh commitment (you can verify that by running `git status`, which should result in a `nothing to commit, working tree clean` statement on your terminal {{ move this above and don't repeat it here }}.
+First, let's install it.  As usual, we will follow the workflow that we described under section **_Distinguishing between django, local, and third party applications_**. This will be a local only package, and we are starting with a fresh commitment.
 
 With our `djangoboilerplate` virtual environment activated, let's run `pip install django-livereload-server==0.2.3`.
 
@@ -1211,17 +1214,17 @@ Let's open our `home.html` file and add the following block of code right below 
     
 As soon as you save the changes on your `home.html` file, you should automatically see the changes on your browser, which should look as follows:
 
-{{ image }}
+![tumbling programmer's django project boilerplate home page livereload demo](https://www.tumblingprogrammer.com/media/2017/06/hello_djangonaut_livereload.png "tumbling programmer's django project boilerplate home page livereload demo")
 
 Let's commit and call the commitment `"add django-livereload-server"`.
 
 ### Getting `django-fontawesome` up and running
 _____
-I usually find myself needing more icons than the ones that twitter bootstrap's glyphicons offer.  Fontawesome {{ link }} comes to the rescue.
+I usually find myself needing more icons than what twitter bootstrap's glyphicons offer.  [django-fontawesome](https://github.com/redouane/django-fontawesome) comes to the rescue.
 
 This package will go into the `base.txt` requirements file.
 
-First, we activate our virtual environment (if not already activated), and run `pip install django-fontawesome==0.3.1`. `pip` will install it, along with `PyYAML==3.12`, which is required by `django-fontawesome`.
+As usual, we activate our virtual environment (if not already activated), and run `pip install django-fontawesome==0.3.1`. `pip` will install it, along with `PyYAML==3.12`, which is required by `django-fontawesome`.
 
 Once we update it, our `requirements/base.txt` should read as follows:
 
@@ -1277,8 +1280,9 @@ In our `home.html` file, let's add `{% load fontawesome %}` and some html to tes
         <p class="centered-text">If you can see a user icon {% fontawesome_icon 'user' %} here, font awesome works!</p>
     ...
 
-If everything goes well, your home page will show the following at the bottom of it:
-{{ link to image }}
+If everything goes well, our home page will show the following at the bottom of it:
+
+![tumbling programmer's django project boilerplate home page with font awesome](https://www.tumblingprogrammer.com/media/2017/06/hello_djangonaut_fontawesome_works.png "tumbling programmer's django project boilerplate home page with font awesome")
 
 Let's commit and call our commitment `"add fontawesome"`.
 
@@ -1298,30 +1302,15 @@ Let's add one handy model to our `main` app models. Edit `main/models.py` so it 
 
 As the comment above explains, if we were to extend this model (as in `class Entry(DatesBaseModel):`), the "extension" model (`Entry`, in our example) will automatically have the fields `created_date` and `modified_date`.  Handy indeed.  We could use the same approach if, for instance, we had models that had address fields in common.  In general, we look for common denominators, throw those denominators into a base model, and extend that base model as needed.
 
-At this point, we don't need to make migrations or migrate because we have used the `abstract = True` (more info on that here https://docs.djangoproject.com/en/1.11/topics/db/models/#abstract-base-classes {{ add link }}).
+At this point, we don't need to make migrations or migrate because we have used the `abstract = True` statement (more info on that [here](https://docs.djangoproject.com/en/1.11/topics/db/models/#abstract-base-classes).
 
 Let's commit and call our commitment `"add DatesBaseModel"`.
 
 ### Serving `media` and `static` files
 _____
-Let's edit our `base.py` file from:
+We still have homework to do to finish off serving of media and static files.
 
-{{ delete the below? }}
-
-    ...
-    MEDIA_ROOT = str(os.path.join(APPS_DIR,'media'))
-    ...
-
-to
-
-    ...
-    MEDIA_DIR = str(os.path.join(APPS_DIR,'media'))
-    MEDIA_ROOT = MEDIA_DIR
-    ...
-
-{{ need to expand on this }}
-
-Let's add `"django.template.context_processors.media",` to our list of context processors in `settings/base.py` file, like so:
+Let's edit our `base.py` file and add `"django.template.context_processors.media",` to our list of context processors in `settings/base.py` file, like so:
 
     TEMPLATES = [
         {
@@ -1369,7 +1358,7 @@ to
     if DJANGO_EXECUTION_ENVIRONMENT == 'LOCAL':
         urlpatterns = urlpatterns + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
-Let's edit our `home.html` file as follows:
+Also, let's edit our `home.html` file as follows:
 
     {% extends "base.html" %}
     {% load bootstrap3 %}
@@ -1396,161 +1385,15 @@ Adding `"django.template.context_processors.media"` to our list of context proce
 
 If all goes well, you should see the below info at the bottom of your home page:
 
-{{ link to screenshot }}
+![tumbling programmer's django project boilerplate home page with static and media files](https://www.tumblingprogrammer.com/media/2017/06/serving_media_and_static_files.png "tumbling programmer's django project boilerplate home page with static and media files")
 
 Let's commit and call our commitment `"finalize and test media and static file serving "`.
 
-
-
-{{ add note about images here or above [they are ignored by git ] }}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-"find path -print | sed -e 's;[^/]*/;|____;g;s;____|; |;g'"
-
-
-
-
-
-
-
-
-
-
-
-
-
-What we have done so far is pretty standard boilerplate django.  We will now get into tailoring the structure and the setup to make it more secure and deployment friendlier.
-
-### Our target structure
+### `gitignore` and png files
 _____
-Once we are done with the reconfiguration, we should have a structure that resembles the below:
+By default, my `.gitignore` file includes `png` (and other image extensions, for that matter) so they stay out of version control.  I realized, though, that I need to include them in the `git` [repository](https://github.com/tumblingprogrammer/djangoboilerplate "tumbling programmer's django project boilerplate tutorial files"), so readers get everything that is needed to follow the tutorial.  So, I excluded the `png` files from the git `.gitignore` file, and committed the changes; I called the commitment `"modify .gitignore to exclude png files"`. Below is what got committed:
 
-	placeholder for resulting structure
-
-### Workflow
-_____
-
-### django configuration
-_____
-
-Let's refactor the **_djangoboilerplate_** folder and rename it as **_config_**. 
-
-Here is where an IDE is really helpful.  The IDE could tell you in advance the places that the refactoring would affect, and would suggest the edits that need to take place.  Without one, if I went ahead and renamed the folder, I would get errors like `ImportError: No module named 'djangoboilerplate'` because django would be looking for info that it wouldn't be able to find.
-
-PyCharm, my preferred IDE, shows the following necessary changes for the refactoring to work:
-
-![PyCharm refactoring results](/media/2017/pycharm_refactor_boilerplate_to_config.png "PyCharm refactoring results").
-
-Let's go ahead and make the necessary changes.  Confirm that running `manage.py runserver` executes OK.
-
-The structure before:
-
-	|____djangoboilerplate
-	| |____djangoboilerplate
-	| | |______init__.py
-	| | |____settings.py
-	| | |____urls.py
-	| | |____wsgi.py
-	| |____(... other files and folders ...) 
-
-The structure after:
-
-	|____djangoboilerplate
-	| |____config
-	| | |______init__.py
-	| | |____settings.py
-	| | |____urls.py
-	| | |____wsgi.py
-	| |____(... other files and folders ...) 
-
-Note that for brevity and clarity I have omitted the `pycache__` and `.pyc` folder and files. What have we gained? Clarity, for one.  No more confusion with folders of the same name!
-
-Let's go ahead and commit the changes; call this commit as "setup config module".
-
-
-### Further refactoring our layout
-
-This is what our layout looks like at the moment:
-
-    |____djangoboilerplate
-    | |____.init
-    | |____config
-    | | |____ (... config files)
-    | |____db.sqlite3
-    | |____main
-    | | |____(... main  files)
-    | |____manage.py
-    | |____requirements.txt
-
-Let's create a file within the root folder called `apps`. Let's move the folders `config` and `main`, as well as the file `manage.py` into the `apps` folder {{ need to fix the conventions entry and referring to names above }}.
-
-Our layout now should look like:
-
-
-
-### Requirements files
-
-Along with having separate settings for our development and production environments, along with that it is a best practice to have separate requirements files to separate development from production packages.
-
-
-
-
-Let's work on the `base.py` file now.
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+	modified:   ../.gitignore
+	new file:   media/twitter48.png
+	new file:   static/img/twitter48.png
+	
