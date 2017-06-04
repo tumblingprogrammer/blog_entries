@@ -114,7 +114,7 @@ Our layout should now look like the following:
     | |____requirements
     | | |____requirements.txt
 
-Lets' commit the changes: `git add .` + `git status` (reminder: verify!) + `git commit -m "add docs and requirements folders and files"`.
+Let's commit the changes: `git add .` + `git status` (reminder: verify!) + `git commit -m "add docs and requirements folders and files"`.
 
 Let's refactor the second tier `apps` folder and rename it as `config`, which is a more fitting name for that folder.
 
@@ -349,7 +349,7 @@ One of the main reasons we are doing all this refactoring / re-arranging is secu
 
 We now know how to store variables in our environment. This time around, though, we will use a different procedure to accomplish that. We'll see why in a bit.
 
-By now you should be using virtualenv wrapper (highly recommended!). By now I assume also that for every application you setup a different virtual environment (highly recommended too!). We will store django's secret key in our virtual environment.  Go to the bin folder of your `virtualenv`.  For me, the path to the bin folder looks like `/Users/puma/.virtualenvs/djangoboilerplate/bin`.  Within it there is a file called `postactivate`; edit it as follows:
+By now you should be using `virtualenv wrapper` (highly recommended!). By now I assume also that for every application you setup a different virtual environment (highly recommended too!). We will store django's secret key in our virtual environment.  Go to the bin folder of your `virtualenv`.  For me, the path to the bin folder looks like `/Users/puma/.virtualenvs/djangoboilerplate/bin`.  Within it there is a file called `postactivate`; edit it as follows:
 
     #!/bin/bash
     # This hook is sourced after this virtualenv is activated.
@@ -422,11 +422,11 @@ Within the `base.py` file, let's refactor the block of `INSTALLED_APPS` codes as
 
 We have gained clarity and degree of separation between the different apps making up our boilerplate application.
 
-As usual, let's test that django runs OK.  If it runs amoothly, let's commit and call our commitment `"distinguish between django, local, and third party applications"`.
+As usual, let's test that django runs OK.  If it runs smoothly, let's commit and call our commitment `"distinguish between django, local, and third party applications"`.
 
 ### Distinguishing between development and production requirements
 _____
-Similar to what we did with `settings.py`, we will refactor our `requirements.txt` in such a way that we keep track of and use the right packages for our development and production enviroments.
+Similar to what we did with `settings.py`, we will refactor our `requirements.txt` in such a way that we keep track of and use the right packages for our development and production environments.
 
 Let's add the following files to the `requirements` folder: `base.txt`, `local.txt`, and `production.txt`.
 
@@ -447,7 +447,7 @@ As far as figuring out where packages belong, the logic that we applied to refac
 Let's install `django-bootstrap3` to illustrate the workflow, which is as follows:
 
 1. Start with a fresh git commitment (i.e., no changes yet to be committed);
-2. Start with a baseline file `requirements.txt`, which resides under folder `requirements`; it's imperative that it's kept up to date (i.e., follow step 4 below everytime that a new package is installed); at the moment, the contents of our `requirements.txt` haven't changed:
+2. Start with a baseline file `requirements.txt`, which resides under folder `requirements`; it's imperative that it's kept up to date (i.e., follow step 4 below every time that a new package is installed); at the moment, the contents of our `requirements.txt` haven't changed:
 
         appdirs==1.4.3
         Django==1.11.1
@@ -489,59 +489,6 @@ Let's add `-r base.txt` at the top of the contents of both the `local.txt` and `
 We now have the backbone to distinguish between local, production, and common packages. We'll be adding packages later as we complete our boilerplate, and we will see the workflow in action again.
 
 For now, let's commit and call the commitment `"separate base, local, and production packages"`.
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 ### Setting up the `main` app
 _____
@@ -733,7 +680,7 @@ to
     STATICFILES_DIRS = [STATIC_DIR, ]
     ...
 
-Most of the code above is self-explanatory.  Basically, we are telling django where stuff will reside, including static files, media files (which is normally made up of files uploaded by users), as well as the full path (including the file name) of our database file (in our case, we are using SQLite).
+Most of the code above is self-explanatory.  Basically, we are telling django where stuff will reside, including static files, media files (which is normally made up of files uploaded by users), as well as the full path (including the filename) of our database file (in our case, we are using SQLite).
 
 Worth noticing is line `ROOT_DIR = str(environ.Path(__file__) - 4)`, by which we tell django to use the directory four levels above the `base.py` file as the `ROOT_DIR` (or our `djangoboilerplate` directory), which becomes the basis of all subsequent directories.
 
@@ -771,7 +718,7 @@ When I execute the script, I get the following:
     /Users/puma/Desktop/projects/articles/final/djangoboilerplate/apps/db.sqlite3
     /Users/puma/Desktop/projects/articles/final/djangoboilerplate/staticfiles
 
-Which is excatly what I need.
+Which is exactly what I need.
 
 We can now edit the `base.py`, like so:
 
@@ -857,7 +804,7 @@ It's time to commit our changes.  Let's call this commitment `"add templates_dir
 
 ### A home page
 _____
-It's time to setup our home page.  Under the `templates` folder, lets add a folder called `main` to host our `main` app templates. Within the `main` folder, let's add a `home.html` file.  For now, let's just add the following code to it:
+It's time to set up our home page.  Under the `templates` folder, let's add a folder called `main` to host our `main` app templates. Within the `main` folder, let's add a `home.html` file.  For now, let's just add the following code to it:
 
     <!DOCTYPE html>
     <html lang="en">
@@ -1392,7 +1339,7 @@ By default, my `.gitignore` file includes `png` (and other image extensions, for
 	
 ### Adding error pages
 _____
-We need to add html templates to let users know that errors have ocurred. Under the `templates` folder, add the following files; the respective code for each is listed following the file name.
+We need to add html templates to let users know that errors have occurred. Under the `templates` folder, add the following files; the respective code for each is listed following the file name.
 
 `403_csrf.html`:
 
@@ -1516,6 +1463,3 @@ Below is what the resulting layout looks like:
 _____
 
 Although extensive, this tutorial covered only a fraction of all that is required to have a ready-to-be-deployed django project boilerplate.  Issues like testing, cron jobs, python helpers / utilities, user registration, the django debug toolbar, further security considerations, as well as others that will come along the way, may be worth studying and implementing, depending on the application's needs.
-
-  
-	
