@@ -1,28 +1,21 @@
-On this tutorial we will setup a django project boilerplate that we can quickly use to develop and deploy django applications.  Among other things, we will  go beyond the default project layout structure that `django-admin startproject [project_name]` creates when we execute that command.  
-
-By doing that, we will be going after the following objectives:
-
-1. Objective 1
-
-2. etc.
-
-### Summary
+### Introduction
 _____
 
+Through this tutorial we will setup a django project boilerplate that we can quickly use to develop and deploy django applications.  Among other things, we will  go beyond the default project layout structure that `django-admin startproject [project_name]` creates when we execute that command.  the objective is to develop a layout that is ready for deployment, with security and a clear separation of configuration / settings for development and production environments.
+
+The source code and the files needed to complete the tutorial can be found @ [github](https://github.com/tumblingprogrammer/djangoboilerplate "tumbling programmer's django project boilerplate git repository").
+
+This tutorial follows the best practices laid out on the book [two scoops of django](https://www.twoscoopspress.com/products/two-scoops-of-django-1-8), [the django project's documentation](https://docs.djangoproject.com/en/1.11/), as well my own experience in dealing with the subject.
 
 ### Conventions throughout this tutorial
 _____
 
-Please review the [conventions page](http://www.tumblingprogrammer.com/blog/edit-entry/conventions-used-in-tumbling-programmer-dot-com/ "tumbling programmer's conventions page"), which will help you understand how I communicate with you through this blog.
+Please review the [conventions page](http://www.tumblingprogrammer.com/conventions-used-on-tumbling-programmer-dot-com/ "tumbling programmer's conventions page"), which will help you understand how I communicate with you through this blog.
 
 Let's dive in.
 
-### The project
-_____
-Let's call our project `djangoboilerplate`.  Note: we will be using pythonanywhere.com to host the boilerplate project to make sure that it runs fine, and to test our deployment strategy.
-
 ### Assumptions
-______
+_____
 
 This tutorial assumes that you have at least completed the [django turorial](https://docs.djangoproject.com/en/1.11/intro/tutorial01/), and are familiar with the following:
 
@@ -1389,11 +1382,140 @@ If all goes well, you should see the below info at the bottom of your home page:
 
 Let's commit and call our commitment `"finalize and test media and static file serving "`.
 
-### `gitignore` and png files
+### `.gitignore` and png files
 _____
 By default, my `.gitignore` file includes `png` (and other image extensions, for that matter) so they stay out of version control.  I realized, though, that I need to include them in the `git` [repository](https://github.com/tumblingprogrammer/djangoboilerplate "tumbling programmer's django project boilerplate tutorial files"), so readers get everything that is needed to follow the tutorial.  So, I excluded the `png` files from the git `.gitignore` file, and committed the changes; I called the commitment `"modify .gitignore to exclude png files"`. Below is what got committed:
 
 	modified:   ../.gitignore
 	new file:   media/twitter48.png
 	new file:   static/img/twitter48.png
+	
+### Adding error pages
+_____
+We need to add html templates to let users know that errors have ocurred. Under the `templates` folder, add the following files; the respective code for each is listed following the file name.
+
+`403_csrf.html`:
+
+	{% extends "base.html" %}
+	
+	{% block title %}Forbidden (403){% endblock %}
+	
+	{% block content %}
+	    <div class="container-fluid">
+	        <h1>Forbidden (403)</h1>
+	        <p>CSRF verification failed. Request aborted.</p>
+	    </div>
+	{% endblock content %}	
+	
+`404.html`:
+
+	{% extends 'base.html' %}
+	
+	{% block title %}Page not found{% endblock %}
+	
+	{% block content %}
+	    <div class="container-fluid">
+	        <h1>Page not found</h1>
+	        <p>Sorry but we couldn't find the page that you are looking for.</p>
+	        <p>Try refreshing the page, or go to our <a href="{% url 'home' %}">home page</a></p>
+	    </div>
+	{% endblock content %}
+
+`500.html`:
+
+	{% extends "base.html" %}
+	
+	{% block title %}Server Error{% endblock %}
+	
+	{% block content %}
+	    <div class="container-fluid">
+	        <h1>Ooops!!! 500</h1>
+	        <h3>Looks like something went wrong!</h3>
+	        <p>Try refreshing the page, or go to our <a href="{% url 'home' %}">home page</a></p>
+	        <p>We track these errors automatically, but if the problem persists feel free to contact us.</p>
+	    </div>
+	{% endblock content %}
+
+Let's commit and call our commitment `"add error templates"`.
+
+### The resulting layout
+_____
+Below is what the resulting layout looks like:
+
+***At a High level***
+
+	|____djangoboilerplate
+	| |____apps
+	| | |____config
+	| | |____db.sqlite3
+	| | |____main
+	| | |____manage.py
+	| | |____media
+	| | |____static
+	| | |____templates
+	| |____docs
+	| | |____readme.md
+	| |____requirements
+	| | |____base.txt
+	| | |____local.txt
+	| | |____production.txt
+	| | |____requirements.txt
+	| |____staticfiles
+
+***All the gory details***
+
+	|____djangoboilerplate
+	| |____apps
+	| | |____config
+	| | | |______init__.py
+	| | | |____settings
+	| | | | |______init__.py
+	| | | | |____base.py
+	| | | | |____local.py
+	| | | | |____production.py
+	| | | |____urls.py
+	| | | |____wsgi.py
+	| | |____db.sqlite3
+	| | |____main
+	| | | |______init__.py
+	| | | |____admin.py
+	| | | |____apps.py
+	| | | |____migrations
+	| | | | |______init__.py
+	| | | |____models.py
+	| | | |____tests.py
+	| | | |____urls.py
+	| | | |____views.py
+	| | |____manage.py
+	| | |____media
+	| | | |____twitter48.png
+	| | |____static
+	| | | |____css
+	| | | | |____global.css
+	| | | |____img
+	| | | | |____twitter48.png
+	| | | |____js
+	| | | | |____global.js
+	| | |____templates
+	| | | |____403_csrf.html
+	| | | |____404.html
+	| | | |____500.html
+	| | | |____base.html
+	| | | |____main
+	| | | | |____home.html
+	| |____docs
+	| | |____readme.md
+	| |____requirements
+	| | |____base.txt
+	| | |____local.txt
+	| | |____production.txt
+	| | |____requirements.txt
+	| |____staticfiles
+	
+### Where to take from here
+_____
+
+Although extensive, this tutorial covered only a fraction of all that is required to have a ready-to-be-deployed django project boilerplate.  Issues like testing, cron jobs, python helpers / utilities, user registration, the django debug toolbar, further security considerations, as well as others that will come along the way, may be worth studying and implementing, depending on the application's needs.
+
+  
 	
