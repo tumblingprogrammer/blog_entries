@@ -1,18 +1,32 @@
 ### Introduction
 _____
 
-Through this tutorial we will setup a django project boilerplate that we can quickly use to develop and deploy django applications.  Among other things, we will  go beyond the default project layout structure that `django-admin startproject [project_name]` creates when we execute that command.  the objective is to develop a layout that is ready for deployment, with security and a clear separation of configuration / settings for development and production environments.
+Through this tutorial we will setup a django project boilerplate that we can use to develop and deploy django applications.  Among other things, we will  go beyond the default project layout structure that `django-admin startproject [project_name]` creates when we execute that command.  The objective is to develop a layout that is ready for deployment, with security at the forefront, and a clear separation of configuration / settings for development and production environments.
 
 The source code and the files needed to complete the tutorial can be found @ [github](https://github.com/tumblingprogrammer/djangoboilerplate "tumbling programmer's django project boilerplate git repository").
 
 This tutorial follows the best practices laid out on the book [two scoops of django](https://www.twoscoopspress.com/products/two-scoops-of-django-1-8), [the django project's documentation](https://docs.djangoproject.com/en/1.11/), as well my own experience in dealing with the subject.
 
+### What you will learn / Concepts we will cover
+_____
+1. Using virtual environments.
+2. git.
+3. Tailoring django settings to match development or production needs.
+4. Setting environment variables - system-wide scope and virtual environment scope.
+5. Hiding django's SECRET_KEY.
+6. Programmatically telling django whether the environment is development or production.
+7. Segregating and keeping track of production-only, development-only, and common django packages.
+8. Installing django-bootstrap, django-livereload-server, django-fontawesome.   
+9. Setting up and serving static and media files.
+10. Setting up django apps.
+11. Creating a base model from which models can inherit fields / properties.
+12. Setting up and extending django templates.
+13. Developing a project layout based on best practices. 
+
 ### Conventions throughout this tutorial
 _____
 
 Please review the [conventions page](http://www.tumblingprogrammer.com/conventions-used-on-tumbling-programmer-dot-com/ "tumbling programmer's conventions page"), which will help you understand how I communicate with you through this blog.
-
-Let's dive in.
 
 ### Assumptions
 _____
@@ -23,6 +37,8 @@ This tutorial assumes that you have at least completed the [django turorial](htt
 2. Setting up a virtual environment, and more spicifically, [virtualenvwrapper](http://virtualenvwrapper.readthedocs.io/en/latest/install.html).
 3. Running commands from the CLI (command line interface), or the terminal; more specifically, throughout this tutorial, when I ask you to execute `manage.py runserver` on the terminal, please be aware that there are several ways to do that, depending on how your environment is setup; for example, in my system (Mac OS), I have it setup so I only have to type `./manage.py runserver`; you may have to type `python manage.py runserver` on yours.
 4. Installing and working with the [git](https://git-scm.com/) distributed version control system (or similar). 
+
+Let's dive in.
 
 ### Installing our virtual environment and django
 _____
@@ -487,6 +503,8 @@ Let's install `django-bootstrap3` to illustrate the workflow, which is as follow
 Let's add `-r base.txt` at the top of the contents of both the `local.txt` and `production.txt` files, which will tell `pip` to extend the requirements found in the `base.txt` file.  That's all we have in those two files, for now.
 
 We now have the backbone to distinguish between local, production, and common packages. We'll be adding packages later as we complete our boilerplate, and we will see the workflow in action again.
+
+As far as installing packages from a `txt` file, we would run `pip install -r local.txt` in our development environment, or `pip install -r production.txt` in our production environment.
 
 For now, let's commit and call the commitment `"separate base, local, and production packages"`.
 
@@ -974,9 +992,14 @@ So far we have installed `bootstrap` on our virtual environment, but we haven't 
         },
     }
 
-I tend to put `bootstrap` settings toward the end of the `settings/base.py` file.  Note that you don't have to have all the above settings in the `settings/base.py` file.   
+I tend to put `bootstrap` settings toward the end of the `settings/base.py` file.  Note that you don't have to have all the above settings in the `settings/base.py` file.
 
-You can find out more about `django-bootstrap` [here](https://django-bootstrap3.readthedocs.io/en/latest/settings.html). 
+A couple of things worth noting about the above settings:
+
+1. Per the [documentation](https://django-bootstrap3.readthedocs.io/en/latest/settings.html), the default setting for `jquery_url` is `//code.jquery.com/jquery.min.js`, which points to an old version of `jquery`.  `//code.jquery.com/jquery-3.1.1.min.js` points to a newer one, which is what we have used on our boilerplate.
+2. The setting `theme_url` points to the theme that `django-bootstrap` will use. `none` is the default.  [Bootswatch](http://bootswatch.com/) features quite a few, including [readable](http://bootswatch.com/readable/), which is the one I use on [tumblingprogrammer.com](https://www.tumblingprogrammer.com).
+
+You can find out more about `django-bootstrap` [here](https://django-bootstrap3.readthedocs.io/). 
 
 `bootstrap` should be good to go.  To fully take advantage of it, let's add a base template that inherits from `bootstrap` base template.
 
@@ -1463,3 +1486,5 @@ Below is what the resulting layout looks like:
 _____
 
 Although extensive, this tutorial covered only a fraction of all that is required to have a ready-to-be-deployed django project boilerplate.  Issues like testing, cron jobs, python helpers / utilities, user registration, the django debug toolbar, further security considerations, as well as others that will come along the way, may be worth studying and implementing, depending on the application's needs.
+
+As far as deployment, that's the next article that I will write. Stay tuned.
