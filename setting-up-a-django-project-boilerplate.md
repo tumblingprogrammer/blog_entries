@@ -7,7 +7,7 @@ The source code and the files needed to complete the tutorial can be found @ [gi
 
 This tutorial follows the best practices laid out on the book [two scoops of django](https://www.twoscoopspress.com/products/two-scoops-of-django-1-8), [the django project's documentation](https://docs.djangoproject.com/en/1.11/), as well my own experience in dealing with the subject.
 
-### What you will learn / Concepts we will cover
+### What you will learn / concepts we will cover
 _____
 1. Using virtual environments.
 2. git.
