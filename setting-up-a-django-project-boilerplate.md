@@ -80,8 +80,8 @@ Let's go back into the root folder, and let's initialize a `git` repository by e
 
 Once we get the above we are ready to do our first commit, by executing the following:
 
-1. 'git add .'
-2. 'git status' - always verify what's being committed. In my case, I get the following output:
+1. `git add .`
+2. `git status` - always verify what's being committed. In my case, I get the following output:
 
         Changes to be committed:
           (use "git rm --cached <file>..." to unstage)
