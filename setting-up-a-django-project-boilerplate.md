@@ -3,7 +3,7 @@ _____
 
 Through this tutorial we will setup a django project boilerplate that we can use to develop and deploy django applications.  Among other things, we will  go beyond the default project layout structure that `django-admin startproject [project_name]` creates when we execute that command.  The objective is to develop a layout that is ready for deployment, with security at the forefront, and a clear separation of configuration / settings for development and production environments.
 
-The source code and the files needed to complete the tutorial can be found @ [github](https://github.com/tumblingprogrammer/djangoboilerplate "tumbling programmer's django project boilerplate git repository").
+The source code and the files needed to complete the tutorial can be found on [github](https://github.com/tumblingprogrammer/djangoboilerplate "tumbling programmer's django project boilerplate git repository").
 
 This tutorial follows the best practices laid out on the book [two scoops of django](https://www.twoscoopspress.com/products/two-scoops-of-django-1-8), [the django project's documentation](https://docs.djangoproject.com/en/1.11/), as well my own experience in dealing with the subject.
 
