@@ -1,3 +1,7 @@
+### Home for this artcile
+_____
+This article lives @ [http://tumblingprogrammer.com](http://www.tumblingprogrammer.com/setting-up-a-django-project-boilerplate/).  Please refer to the site for the latest updates.
+
 ### Introduction
 _____
 
