@@ -1,3 +1,10 @@
+### Home for this artcile
+_____
+This article lives @ [http://tumblingprogrammer.com](http://www.tumblingprogrammer.com/setting-environment-variables/ "tumbling programmer's setting environment variables article").  Please refer to the site for the latest updates.
+
+### Introduction
+_____
+
 Environment variables are quite useful (and needed!) on both development and production environments.  They help us to keep things like django's `SECRET_KEY` secret, as well as a host of other uses like aliases, to keep our fingers from tiring due to excessive typing.
 
 We can set system-wide environment variables that, as the name implies, would be available everywhere our Mac OS / Linux / Unix `bash` terminal lives.  An example of such a variable, in a django application setting, would be to store a variable called `DJANGO_EXECUTION_ENVIRONMENT` with a value that tells django whether we are in `development` mode (in which case its value could be, for example, `LOCAL`), or production mode (in which case its value could be, for example, `PRODUCTION`).
