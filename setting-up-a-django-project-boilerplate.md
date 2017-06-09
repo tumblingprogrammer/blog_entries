@@ -47,7 +47,7 @@ Let's dive in.
 ### Installing our virtual environment and django
 _____
 
-Let's install our virtual environment and call it `djangoboilerplate` : `mkvirtualenv --python=python3.5.2 djangoboilerplate`. Once it runs, make sure that your newly created environment is activated (if not already activated) by executing `workon djangoboilerplate`. 
+Let's install our virtual environment and call it `djangoboilerplate` : `mkvirtualenv --python==python3.5.2 djangoboilerplate`. Once it runs, make sure that your newly created environment is activated (if not already activated) by executing `workon djangoboilerplate`. 
 
 Now, let's install django by running `pip install django=1.11.1`.
 
