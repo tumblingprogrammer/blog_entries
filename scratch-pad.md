@@ -22,13 +22,13 @@ If you don't have one, opening an account at pythonanywhere is easy, and you can
 
 So far my experience with pythonanywhere (PAW) has been great.  Their customer support really shines, and their giving back to the community is great.
 
-If you haven't done that, go ahead and [sign up for a beginner account](https://www.pythonanywhere.com/registration/register/beginner/). 
+If you haven't done that, go ahead and [sign up for a beginner account](https://www.pythonanywhere.com/registration/register/beginner/)
 
 ### Getting your project files to PAW
 _____
 To accomplish this, let's go ahead and open a `bash` console. We do that by looking for the PAW dashboard, and then by clicking on the link shown below.
 
-[shot]()
+![tumbling programmer's deploying the boilerplate app to pythonanywhere - PAW dashboard - opening a bash console](https://www.tumblingprogrammer.com/media/2017/06/pythonanywhere-opening-a-bash-console.png "tumbling programmer's deploying the boilerplate app to pythonanywhere - PAW dashboard - opening a bash console")
 
 By dedault, your bash console will start your session on your home directory (you will see something like `04:22 ~ $` on the terminal.  If you run `pwd` (the `print working directory` command) at the terminal, it will output something like `/home/[your_username]`.  In my case, it outputs `/home/djangoboilerplate`.  If I run `ls` (list files command), I only get `README.txt`, which is a file that PAW installs there by default.  
 
