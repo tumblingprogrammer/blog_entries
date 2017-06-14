@@ -96,7 +96,13 @@ Go back to the terminal and make sure to deactivate your `djangoboilerplate` vir
 
 Once your `djangoboilerplate` virtual environment has been reactivated, run `echo $DJANGO_SECRET_KEY`, after which the terminal should output your secret key.
 
-Go back to your PAW's dashboard.  Navigate to your home directory until you find your `.bashrc` profile.  Click to open it, and add the following at the bottom of the file.
+Go back to your PAW's dashboard.  Navigate to your home directory until you find your `.bashrc` profile.
+
+TIP! You can also use PAW’s to get there, as shown below.
+
+![tumbling programmer's deploying the boilerplate app to pythonanywhere - getting to the bashrc file](https://www.tumblingprogrammer.com/media/2017/06/pythonanywhere-getting-to-the-bashrc-file.png "tumbling programmer's deploying the boilerplate app to pythonanywhere - getting to the bashrc file")
+
+Click to open it, and add the following at the bottom of the file.
 
     export DJANGO_EXECUTION_ENVIRONMENT="PRODUCTION"
 
@@ -106,11 +112,11 @@ Save the file and go back to the terminal.  Once on it, run `source ~/.bashrc`, 
 
 ### Installing our requirements
 _____
-On the terminal, navigate to the `requirements` folder of the application.  The path for it should look like `/home/[your_username]/djangoboilerplate/requirements`.  
+On the terminal, navigate to the `requirements` folder of the application.  The path for it should look like `/home/[your_username]/djangoboilerplate/requirements`.
 
 **TIP!** You can also use PAW's to get there, as shown below.
 
-![tumbling programmer's deploying the boilerplate app to pythonanywhere - getting to the bashrc file](https://www.tumblingprogrammer.com/media/2017/06/pythonanywhere-getting-to-the-bashrc-file.png "tumbling programmer's deploying the boilerplate app to pythonanywhere - getting to the bashrc file")
+![tumbling programmer's deploying the boilerplate app to pythonanywhere - opening a terminal session on the requirements folder](https://www.tumblingprogrammer.com/media/2017/06/pythonanywhere-opening-a-terminal-session-on-the-requirements-folder.png "tumbling programmer's deploying the boilerplate app to pythonanywhere - opening a terminal session on the requirements folder")
 
 Once your terminal session is open, make sure to activate the `djangoboilerplate` virtual environment. Once that's done, let's execute `pip install -r production.txt` to install the packages required by the application.  The process should run smoothly and should take a little while.  Once it's done, if we run `pip freeze` we should get the following listing:
 
@@ -127,17 +133,23 @@ Once your terminal session is open, make sure to activate the `djangoboilerplate
 
 ### Setting up the web app
 _____
-Go to the `Web` tab of your dashboard, click on the `Add a new web app` button, click `next` and select the `Manual configuration (including virtualenvs)` option on the next window. Select `Python 3.5`, then `next`on the `Manual Configuration...` window. After a while, PWA should show the `Web` tab of your application.  A partial screenshot of what mine looks like follows:
+Go to the `Web` tab of your dashboard, click on the `Add a new web app` button, click `next` and select the `Manual configuration (including virtualenvs)` option on the next window. Select `Python 3.5`, then `next`on the `Manual Configuration...` window. After a while, PAW should show the `Web` tab of your application.  A partial screenshot of what mine looks like follows:
 
-![shot]
+![tumbling programmer's deploying the boilerplate app to pythonanywhere - djangoboilerplate's web tab](https://www.tumblingprogrammer.com/media/2017/06/pythonanywhere-djangoboilerplate-web-tab.png "tumbling programmer's deploying the boilerplate app to pythonanywhere - djangoboilerplate's web tab")
 
 Once that's done, let's enter the name of our virtualenv in the Virtualenv section on the web tab and click OK. We would enter `djangoboilerplate` (or whatever name your virtual environment has), and it will automatically complete to its full path in `/home/username/.virtualenvs`.
 
 After doing it, mine looks like so:
 
-![shot]
+![tumbling programmer's deploying the boilerplate app to pythonanywhere - specifying the name of our virtual environment](https://www.tumblingprogrammer.com/media/2017/06/pythonanywhere-specifying-the-name-of-our-virtual-environment.png "tumbling programmer's deploying the boilerplate app to pythonanywhere - specifying the name of our virtual environment")
 
-Now let's edit the WSGI file (found under the `Code` section of the `Web` tab).  Let's delete everything in it, and edit it so it reads as follows:
+Now let's edit the WSGI file (found under the `Code` section of the `Web` tab).  
+
+**TIP!**|You can find the `/var/www/www_my_domain_com_wsgi.py` portion of the above command under the `Code` section of the `Web` tab of your application. Mine looks like so:
+
+![tumbling programmer's deploying the boilerplate app to pythonanywhere - editing the WSGI file](https://www.tumblingprogrammer.com/media/2017/06/pythonanywhere-editing-the-wsgi-file.png "tumbling programmer's deploying the boilerplate app to pythonanywhere - editing the WSGI file")
+
+Let's delete everything in it, and edit it so it reads as follows:
 
     import os
     import sys
@@ -154,13 +166,9 @@ Now let's edit the WSGI file (found under the `Code` section of the `Web` tab). 
     from django.contrib.staticfiles.handlers import StaticFilesHandler
     application = StaticFilesHandler(get_wsgi_application())
 
-Notice that even though we had already set the `DJANGO_SECRET_KEY` and `DJANGO_EXECUTION_ENVIRONMENT` environment variables, we have to also include them in our PAW's WSGI file as well.  That's a PAW requirement (refer to their help page on the topic [here](https://help.pythonanywhere.com/pages/environment-variables-for-web-apps/)).
+Notice that even though we had already set the `DJANGO_SECRET_KEY` and `DJANGO_EXECUTION_ENVIRONMENT` variables, we also have to include them in our PAW's WSGI file.  That's a PAW requirement (refer to their help page on the topic [here](https://help.pythonanywhere.com/pages/environment-variables-for-web-apps/)).
 
 You can test that your `WSGI` file works OK by running `python -i /var/www/www_my_domain_com_wsgi.py` on the terminal.  Make sure to activate the virtual environment first.  If this shows any errors and won't even load python (e.g., syntax errors), you'll need to fix them. Please visit PAW's excellent [help pages](https://help.pythonanywhere.com/pages/) to troubleshoot any issues that you may encounter.
-
-**TIP!**|You can find the `/var/www/www_my_domain_com_wsgi.py` portion of the above command under the `Code` section of the `Web` tab of your application. Mine looks like so:
-
-![shot]
 
 ### Enabling PAW as our django host
 _____
