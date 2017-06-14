@@ -98,7 +98,35 @@ Go back to your PAW's dashboard.  Navigate to your home directory until you find
 
 Save the file and go back to the terminal.  Once on it, run `source ~/.bashrc`, which will run commands in the `.bashrc` file will load functions contained in the file into our `bash` shell script, including making our `DJANGO_EXECUTION_ENVIRONMENT` available.  We can test this by running `echo $DJANGO_EXECUTION_ENVIRONMENT` on the terminal, which should output `PRODUCTION`.
 
-**TIP!**| Once we run `source ~/.bashrc`, one of the things that it will do is deactivate our virtual environment.  We will need to reactivate it if in the future we want to execute commands that are directly related to our relevant python environment. 
+**TIP!**| Once we run `source ~/.bashrc`, one of the things that it will do is deactivate our virtual environment.  We will need to reactivate it if in the future we want to execute commands that are directly related to our relevant python environment.
+
+### Installing our requirements
+_____
+On the terminal, navigate to the `requirements` folder of the application.  The path for it should look like `/home/[your_username]/djangoboilerplate/requirements`.  
+
+**TIP!** You can also use PAW's to get there, as shown below.
+
+![shot]
+
+Once your terminal session is open, make sure to activate the `djangoboilerplate` virtual environment. Once that's done, let's execute `pip install -r production.txt`.  The process should run smoothly and should take a little while.  Once it's done, if we run `pip freeze` we should get the following listing:
+
+    appdirs==1.4.3
+    Django==1.11.1
+    django-bootstrap3==8.2.3
+    django-environ==0.4.3
+    django-fontawesome==0.3.1
+    packaging==16.8
+    pyparsing==2.2.0
+    pytz==2017.2
+    PyYAML==3.12
+    six==1.10.0
+
+
+
+
+
+
+
 
 
 
