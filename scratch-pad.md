@@ -67,7 +67,19 @@ Which means that our virtual environment is active.
 ### Setting our environment variables
 _____
 
-As part of making our application more secure, and to programmatically tell django that we are in a production environment, we will need to setup two variables: `DJANGO_SECRET_KEY`, which will be limited to the scope of our `djangoboilerplate` virtual environment, and 
+As part of making our application more secure, and to programmatically tell django that we are in a production environment, we will need to setup two variables: `DJANGO_SECRET_KEY`, which will be limited to the scope of our `djangoboilerplate` virtual environment, and `DJANGO_EXECUTION_ENVIRONMENT`, which can be set system-wide so all our django apps running on PAW know that they are operating in production and that they need to use production settings.
+
+Read [http://www.tumblingprogrammer.com/setting-environment-variables/](http://www.tumblingprogrammer.com/setting-environment-variables/ "tumbling programmer's setting environment variables article")to learn more about the why and how of setting environment variables.
+
+On your PAW dashboard, use the `files` tab to navigate to the `postactivate` file of your `djangoboilerplate` virtual environment, and go ahead and clik on it, to edit it (PAW's default editor will open it up).
+
+Edit it so it reads as follows:
+
+    #!/bin/bash
+    # This hook is sourced after this virtualenv is activated.
+    
+    export DJANGO_SECRET_KEY='your_django_secret_key_goes_here’
+
 
 
 
