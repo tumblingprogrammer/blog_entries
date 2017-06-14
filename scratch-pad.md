@@ -78,7 +78,23 @@ Edit it so it reads as follows:
     #!/bin/bash
     # This hook is sourced after this virtualenv is activated.
     
-    export DJANGO_SECRET_KEY='your_django_secret_key_goes_here’
+    export DJANGO_SECRET_KEY="your_django_secret_key_goes_here"
+    
+To generate a value for your `DJANGO_SECRET_KEY` you can use [this site](http://www.miniwebtool.com/django-secret-key-generator/) or, better yet, program your own python script to do it.
+
+Once you edit the file, click on the `save` button on the top right corner of the window, or press 'ctrl` + `l` simultaneously.
+
+Go back to the terminal and make sure to deactivate your `djangoboilerplate` virtual environment (if it is active) by running `deactivate djangoboilerplate` and re-activating it by running `workon djangoboilerplate`.
+
+**TIP!** | Make sure to use opening and closing quotes (`" "`) on line `DJANGO_SECRET_KEY="your_django_secret_key_goes_here"`.
+
+Once your `djangoboilerplate` virtual environment has been reactivated, run `echo $DJANGO_SECRET_KEY`, after which the terminal should output your secret key.
+
+
+
+
+
+
 
 
 
