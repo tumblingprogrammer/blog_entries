@@ -1,9 +1,9 @@
-
 ### Introduction
 _____
 This tutorial is a follow up to a previous one where we setup a django project boilerplate focused on security and separation of environments (i.e., local development versus production), as well as other best practices (link to that tutorial: [Setting up a django project boilerplate](http://www.tumblingprogrammer.com/setting-up-a-django-project-boilerplate/ "tumbling programmer's setting up a django project boilerplate tutorial")).
 
 On this tutorial we will learn how to get the boilerplate up and running on [pythonanywhere.com](http://pythonanywhere.com).  We will learn about:
+
 1. Cloning a repository from github into pythonanywhere (PAW)
 2. Creating virtual environments
 3. Setting environment variables
@@ -71,7 +71,7 @@ _____
 
 As part of making our application more secure, and to programmatically tell django that we are in a production environment, we will need to setup two variables: `DJANGO_SECRET_KEY`, which will be limited to the scope of our `djangoboilerplate` virtual environment, and `DJANGO_EXECUTION_ENVIRONMENT`, which can be set system-wide so all our django apps running on PAW know that they are operating in production and that they need to use production settings.
 
-Read [http://www.tumblingprogrammer.com/setting-environment-variables/](http://www.tumblingprogrammer.com/setting-environment-variables/ "tumbling programmer's setting environment variables article")to learn more about why and how to set environment variables.
+Read [http://www.tumblingprogrammer.com/setting-environment-variables/](http://www.tumblingprogrammer.com/setting-environment-variables/ "tumbling programmer's setting environment variables article") to learn more about why and how to set environment variables.
 
 On your PAW dashboard, use the `files` tab to navigate to the `postactivate` file of your `djangoboilerplate` virtual environment, and go ahead and clik on it to edit it (PAW's default editor will open it up). The screenshot below shows how to get there.
 
