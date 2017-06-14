@@ -133,7 +133,48 @@ After doing it, mine looks like so:
 
 ![shot]
 
-Now let's edit the WSGI file (found under the `Code` section of the `Web` tab.  Let's delete everything in it, and edit it so it reads as follows:
+Now let's edit the WSGI file (found under the `Code` section of the `Web` tab).  Let's delete everything in it, and edit it so it reads as follows:
+
+    import os
+    import sys
+    
+    path = '/home/[your_username_goes_here]/djangoboilerplate/apps/'
+    if path not in sys.path:
+        sys.path.append(path)
+    
+    os.environ['DJANGO_SETTINGS_MODULE'] = 'config.settings.production'
+    os.environ['DJANGO_SECRET_KEY'] = 'YOUR_SECRET_KEY_GOES_HERE'
+    os.environ['DJANGO_EXECUTION_ENVIRONMENT'] = 'PRODUCTION'
+    
+    from django.core.wsgi import get_wsgi_application
+    from django.contrib.staticfiles.handlers import StaticFilesHandler
+    application = StaticFilesHandler(get_wsgi_application())
+
+Notice that even though we had already set the `DJANGO_SECRET_KEY` and `DJANGO_EXECUTION_ENVIRONMENT` environment variables, we have to also include them in our PAW's WSGI file as well.  That's a PAW requirement (refer to their help page on the topic [here](https://help.pythonanywhere.com/pages/environment-variables-for-web-apps/)).
+
+You can test that your `WSGI` file works OK by running `python -i /var/www/www_my_domain_com_wsgi.py` on the terminal.  Make sure to activate the virtual environment first.  If this shows any errors and won't even load python (e.g., syntax errors), you'll need to fix them. Please visit PAW's excellent [help pages](https://help.pythonanywhere.com/pages/) to troubleshoot any issues that you may encounter.
+
+**TIP!**|You can find the `/var/www/www_my_domain_com_wsgi.py` portion of the above command under the `Code` section of the `Web` tab of your application. Mine looks like so:
+
+![shot]
+
+### Enabling PAW as our django host
+_____
+We now need to check that PAW is enabled as a host for our django app. We do that by opening our `../settings/production.py` file and edit it appropriately.
+
+I access such file as shown below.
+
+![shot]
+
+Let's make sure that the file reads as follows:
+
+    from .base import *
+    ALLOWED_HOSTS = ['.pythonanywhere.com']
+
+Save your changes.
+
+
+
 
 
 
