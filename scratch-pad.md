@@ -149,7 +149,7 @@ Now let's edit the WSGI file (found under the `Code` section of the `Web` tab).
 
 ![tumbling programmer's deploying the boilerplate app to pythonanywhere - editing the WSGI file](https://www.tumblingprogrammer.com/media/2017/06/pythonanywhere-editing-the-wsgi-file.png "tumbling programmer's deploying the boilerplate app to pythonanywhere - editing the WSGI file")
 
-Let's delete everything in it, and edit it so it reads as follows:
+Let's open it and delete everything in it, and edit it so it reads as follows:
 
     import os
     import sys
