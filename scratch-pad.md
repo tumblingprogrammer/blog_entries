@@ -108,7 +108,7 @@ On the terminal, navigate to the `requirements` folder of the application.  The 
 
 ![shot]
 
-Once your terminal session is open, make sure to activate the `djangoboilerplate` virtual environment. Once that's done, let's execute `pip install -r production.txt`.  The process should run smoothly and should take a little while.  Once it's done, if we run `pip freeze` we should get the following listing:
+Once your terminal session is open, make sure to activate the `djangoboilerplate` virtual environment. Once that's done, let's execute `pip install -r production.txt` to install the packages required by the application.  The process should run smoothly and should take a little while.  Once it's done, if we run `pip freeze` we should get the following listing:
 
     appdirs==1.4.3
     Django==1.11.1
@@ -120,6 +120,23 @@ Once your terminal session is open, make sure to activate the `djangoboilerplate
     pytz==2017.2
     PyYAML==3.12
     six==1.10.0
+
+### Setting up the web app
+_____
+Go to the `Web` tab of your dashboard, click on the `Add a new web app` button, click `next` and select the `Manual configuration (including virtualenvs)` option on the next window. Select `Python 3.5`, then `next`on the `Manual Configuration...` window. After a while, PWA should show the `Web` tab of your application.  A partial screenshot of what mine looks like follows:
+
+![shot]
+
+Once that's done, let's enter the name of our virtualenv in the Virtualenv section on the web tab and click OK. We would enter `djangoboilerplate` (or whatever name your virtual environment has), and it will automatically complete to its full path in `/home/username/.virtualenvs`.
+
+After doing it, mine looks like so:
+
+![shot]
+
+
+
+
+
 
 
 
