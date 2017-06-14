@@ -6,6 +6,9 @@ _____
 + Typical approach
 
 * kkss
+* 
+
+This is a follow up article to article blah blah blah 
 
 
 
@@ -27,7 +30,11 @@ To accomplish this, let's go ahead and open a `bash` console. We do that by look
 
 By dedault, your bash console will start your session on your home directory (you will see something like `04:22 ~ $` on the terminal.  If you run `pwd` (the `print working directory` command) at the terminal, it will output something like `/home/[your_username]`.  In my case, it outputs `/home/djangoboilerplate`.  If I run `ls` (list files command), I only get `README.txt`, which is a file that PAW installs there by default.  
 
-The source code for the django project boilerplate lives at [https://github.com/tumblingprogrammer/djangoboilerplate](https://github.com/tumblingprogrammer/djangoboilerplate).  On our home directory (i.e., `/home/[your_username]`), let's run `git clone https://github.com/tumblingprogrammer/djangoboilerplate.git`. You should see a listing on your terminal as shown below:
+The source code for the django project boilerplate lives at [https://github.com/tumblingprogrammer/djangoboilerplate](https://github.com/tumblingprogrammer/djangoboilerplate).  On our home directory (i.e., `/home/[your_username]`), let's run...
+
+    git clone https://github.com/tumblingprogrammer/djangoboilerplate.git
+    
+Your terminal will output a listing as shown below:
 
     Cloning into 'djangoboilerplate'...
     remote: Counting objects: 182, done.
@@ -40,7 +47,32 @@ The source code for the django project boilerplate lives at [https://github.com/
     
 If we run `ls`, we should see the following output:
 
-`README.txt  djangoboilerplate`
+    README.txt  djangoboilerplate
+    
+Notice the new `djangoboilerplate` folder, which is the root folder of the boilerplate.
+
+### Creating our virtual environment
+_____
+
+PAW is setup with [virtual environment wrapper](http://virtualenvwrapper.readthedocs.io/en/latest/), which is great as we don't have to deal with getting it installed.  We'll use `djangoboilerplate` as the name of our virtual environemnt.  Let's go ahead and run the following command:
+
+    mkvirtualenv djangoboilerplate --python=/usr/bin/python3.5
+
+After a little while, our terminla prompt should display the name our virtual environment, like so:
+
+    (djangoboilerplate) 05:11 ~ $ 
+
+Which means that our virtual environment is active.
+
+### Setting our environment variables
+_____
+
+As part of making our application more secure, and to programmatically tell django that we are in a production environment, we will need to setup two variables: `DJANGO_SECRET_KEY`, which will be limited to the scope of our `djangoboilerplate` virtual environment, and 
+
+
+
+
+
 
 
 
