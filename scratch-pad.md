@@ -174,9 +174,9 @@ You can test that your `WSGI` file works OK by running `python -i /var/www/www_m
 _____
 We now need to check that PAW is enabled as a host for our django app. We do that by opening our `../settings/production.py` file and editing it appropriately.
 
-I access such file as shown below.
+On my end, I can access such file as shown below.
 
-![shot]
+![tumbling programmer's deploying the boilerplate app to pythonanywhere - editing the production.py file](https://www.tumblingprogrammer.com/media/2017/06/pythonanywhere-editing-the-production-py-file.png "tumbling programmer's deploying the boilerplate app to pythonanywhere - editing the production.py file")
 
 Let's make sure that the file reads as follows:
 
