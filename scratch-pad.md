@@ -191,7 +191,7 @@ Save your changes.
 _____
 We now need to tell PAW about the path where our `media` files will be served from. We do that under the `Static files` section of the `Web` tab. Here is what mine looks like:
 
-![shot]
+![tumbling programmer's deploying the boilerplate app to pythonanywhere - setting the media path](https://www.tumblingprogrammer.com/media/2017/06/pythonanywhere-setting-the-media-path.png "tumbling programmer's deploying the boilerplate app to pythonanywhere - setting the media path")
 
 Make sure to edit yours accordingly.
 
@@ -199,15 +199,15 @@ Make sure to edit yours accordingly.
 _____
 We are now ready to run our app.  We do that by clicking the button and link shown below, and in the order indicated.
 
-![shot]
+![tumbling programmer's deploying the boilerplate app to pythonanywhere - running the app](https://www.tumblingprogrammer.com/media/2017/06/pythonanywhere-running-the-app.png "tumbling programmer's deploying the boilerplate app to pythoaanywhere - running the app")
 
 If everything goes well, your browser should look like the below.
 
-![shot]
+![tumbling programmer's deploying the boilerplate app to pythonanywhere - live app](https://www.tumblingprogrammer.com/media/2017/06/pythonanywhere-the-live-app.png "tumbling programmer's deploying the boilerplate app to pythoaanywhere - live app")
 
 You can see the live site [here](http://djangoboilerplate.pythonanywhere.com/ "tumbling programmer - django project boilerplate on pythonanywhere").
 
-This completes our tutorial.  Congratulations! You now know quite a bit about deploying django apps on PAW!
+This completes our tutorial.  Congratulations! You now know quite a bit about deploying django apps on PAW, including setting and retrieving environment variables!
 
 
 
