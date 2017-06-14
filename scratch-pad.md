@@ -86,10 +86,17 @@ Once you edit the file, click on the `save` button on the top right corner of th
 
 Go back to the terminal and make sure to deactivate your `djangoboilerplate` virtual environment (if it is active) by running `deactivate djangoboilerplate` and re-activating it by running `workon djangoboilerplate`.
 
-**TIP!** | Make sure to use opening and closing quotes (`" "`) on line `DJANGO_SECRET_KEY="your_django_secret_key_goes_here"`.
+**WARNING!** | Make sure to use opening and closing quotes (`" "`) on line `DJANGO_SECRET_KEY="your_django_secret_key_goes_here"`. Otherwise, `bash` will complain that it can't find a proper `EOF` closing.
+
+**TIP!**| to make my life easier, I usually have a tab on my browser pointing to PAW's dashboard, and another one with an up-and-running `bash` terminal.
 
 Once your `djangoboilerplate` virtual environment has been reactivated, run `echo $DJANGO_SECRET_KEY`, after which the terminal should output your secret key.
 
+Go back to your PAW's dashboard.  Navigate to your home directory until you find your `.bashrc` profile.  Click to open it, and add the following at the bottom of the file.
+
+    export DJANGO_EXECUTION_ENVIRONMENT="PRODUCTION"
+
+Save the file and go back to the terminal.  Once on it, run `source ~/.bashrc`, which will run commands in the `.bashrc` file will load functions contained in the file into our `bash` shell script, including making our `DJANGO_EXECUTION_ENVIRONMENT` available.  We can test this by running `echo $DJANGO_EXECUTION_ENVIRONMENT` on the terminal, which should output `PRODUCTION`.
 
 
 
