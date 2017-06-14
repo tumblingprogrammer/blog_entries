@@ -3,24 +3,26 @@
 
 ### Introduction
 _____
-+ Typical approach
+This tutorial is a follow up to a previous one where we setup a django project boilerplate focused on security and separation of environments (i.e., local development versus production), as well as other best practices (link to that tutorial: [Setting up a django project boilerplate](http://www.tumblingprogrammer.com/setting-up-a-django-project-boilerplate/ "tumbling programmer's setting up a django project boilerplate tutorial")).
 
-* kkss
-* 
+On this tutorial we will learn how to get the boilerplate up and running on [pythonanywhere.com](http://pythonanywhere.com).  We will learn about:
+1. Cloning a repository from github into pythonanywhere (PAW)
+2. Creating virtual environments
+3. Setting environment variables
+4. Installing requirements / dependencies to run our application
+5. Setting up and running the web application
 
-This is a follow up article to article blah blah blah 
-
-
-
-
+### Conventions throughout this tutorial
+_____
+Please review the [conventions page](http://www.tumblingprogrammer.com/conventions-used-on-tumbling-programmer-dot-com/ "tumbling programmer's conventions page"), which will help you understand how I communicate with you through this blog.
 
 ### Opening an account at [pythonanywhere.com](http://pythonanywhere.com)
 _____
-If you don't have one, opening an account at pythonanywhere is easy, and you can start with a [beginner account](https://www.pythonanywhere.com/pricing/), which is free. I have opened one to host the [django project boilerplate app](http://www.tumblingprogrammer.com/setting-up-a-django-project-boilerplate/ "tumbling programmer - setting up a django project boilerplate"), and was lucky enough to find out that the username `djangoboilerplate` wasn't taken, so I took it.
+If you don't have one, opening an account at PAW is easy, and you can start with a [beginner account](https://www.pythonanywhere.com/pricing/), which is free. I have opened one to host the [django project boilerplate app](http://www.tumblingprogrammer.com/setting-up-a-django-project-boilerplate/ "tumbling programmer - setting up a django project boilerplate"), and was lucky enough to find out that the username `djangoboilerplate` wasn't taken, so I took it.
 
 **Tip!** | For a beginner account, your username will also be the subdomain where your app will live.  In my case, for example, the app can be reached at  [http://djangoboilerplate.pythonanywhere.com](http://djangoboilerplate.pythonanywhere.com "tumbling programmer - django project boilerplate app at pythonanywhere.com")
 
-So far my experience with pythonanywhere (PAW) has been great.  Their customer support really shines, and their giving back to the community is great.
+So far my experience with PAW has been great.  Their customer support really shines, and their giving back to the community is great.
 
 If you haven't done that, go ahead and [sign up for a beginner account](https://www.pythonanywhere.com/registration/register/beginner/)
 
