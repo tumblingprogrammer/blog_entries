@@ -160,7 +160,7 @@ You can test that your `WSGI` file works OK by running `python -i /var/www/www_m
 
 ### Enabling PAW as our django host
 _____
-We now need to check that PAW is enabled as a host for our django app. We do that by opening our `../settings/production.py` file and edit it appropriately.
+We now need to check that PAW is enabled as a host for our django app. We do that by opening our `../settings/production.py` file and editing it appropriately.
 
 I access such file as shown below.
 
@@ -171,7 +171,35 @@ Let's make sure that the file reads as follows:
     from .base import *
     ALLOWED_HOSTS = ['.pythonanywhere.com']
 
+If you have your own domain, your domain would replace the `.pythonanywhere.com` portion (as in `'.tumblingprogrammer.com'`).
+
 Save your changes.
+
+### Setting our `media` files path
+_____
+We now need to tell PAW about the path where our `media` files will be served from. We do that under the `Static files` section of the `Web` tab. Here is what mine looks like:
+
+![shot]
+
+Make sure to edit yours accordingly.
+
+### Running our app
+_____
+We are now ready to run our app.  We do that by clicking the button and link shown below, and in the order indicated.
+
+![shot]
+
+If everything goes well, your browser should look like the below.
+
+![shot]
+
+You can see the live site [here](http://djangoboilerplate.pythonanywhere.com/ "tumbling programmer - django project boilerplate on pythonanywhere").
+
+This completes our tutorial.  Congratulations! You now know quite a bit about deploying django apps on PAW!
+
+
+
+
 
 
 
