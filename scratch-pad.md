@@ -133,6 +133,8 @@ After doing it, mine looks like so:
 
 ![shot]
 
+Now let's edit the WSGI file (found under the `Code` section of the `Web` tab.  Let's delete everything in it, and edit it so it reads as follows:
+
 
 
 
