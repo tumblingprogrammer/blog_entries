@@ -98,6 +98,8 @@ Go back to your PAW's dashboard.  Navigate to your home directory until you find
 
 Save the file and go back to the terminal.  Once on it, run `source ~/.bashrc`, which will run commands in the `.bashrc` file will load functions contained in the file into our `bash` shell script, including making our `DJANGO_EXECUTION_ENVIRONMENT` available.  We can test this by running `echo $DJANGO_EXECUTION_ENVIRONMENT` on the terminal, which should output `PRODUCTION`.
 
+**TIP!**| Once we run `source ~/.bashrc`, one of the things that it will do is deactivate our virtual environment.  We will need to reactivate it if in the future we want to execute commands that are directly related to our relevant python environment. 
+
 
 
 
