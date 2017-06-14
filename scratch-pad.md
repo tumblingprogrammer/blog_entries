@@ -77,8 +77,6 @@ On your PAW dashboard, use the `files` tab to navigate to the `postactivate` fil
 
 ![tumbling programmer's deploying the boilerplate app to pythonanywhere - editing the postactivate file](https://www.tumblingprogrammer.com/media/2017/06/pythonanywhere-editing-the-postactivate-file.png "tumbling programmer's deploying the boilerplate app to pythonanywhere - editing the postactivate file")
 
-
-
 Edit it so it reads as follows:
 
     #!/bin/bash
@@ -88,13 +86,13 @@ Edit it so it reads as follows:
     
 To generate a value for your `DJANGO_SECRET_KEY` you can use [this site](http://www.miniwebtool.com/django-secret-key-generator/) or, better yet, program your own python script to do it.
 
-Once you edit the file, click on the `save` button on the top right corner of the window, or press 'ctrl` + `l` simultaneously.
+Once you edit the file, click on the `save` button on the top right corner of the window, or press `ctrl` + `l` simultaneously.
 
 Go back to the terminal and make sure to deactivate your `djangoboilerplate` virtual environment (if it is active) by running `deactivate djangoboilerplate` and re-activating it by running `workon djangoboilerplate`.
 
 **WARNING!** | Make sure to use opening and closing quotes (`" "`) on line `DJANGO_SECRET_KEY="your_django_secret_key_goes_here"`. Otherwise, `bash` will complain that it can't find a proper `EOF` closing.
 
-**TIP!**| to make my life easier, I usually have a tab on my browser pointing to PAW's dashboard, and another one with an up-and-running `bash` terminal.
+**TIP!**| To make my life easier, I usually have a tab on my browser pointing to PAW's dashboard, and another one with an up-and-running `bash` terminal.
 
 Once your `djangoboilerplate` virtual environment has been reactivated, run `echo $DJANGO_SECRET_KEY`, after which the terminal should output your secret key.
 
@@ -102,7 +100,7 @@ Go back to your PAW's dashboard.  Navigate to your home directory until you find
 
     export DJANGO_EXECUTION_ENVIRONMENT="PRODUCTION"
 
-Save the file and go back to the terminal.  Once on it, run `source ~/.bashrc`, which will run commands in the `.bashrc` file will load functions contained in the file into our `bash` shell script, including making our `DJANGO_EXECUTION_ENVIRONMENT` available.  We can test this by running `echo $DJANGO_EXECUTION_ENVIRONMENT` on the terminal, which should output `PRODUCTION`.
+Save the file and go back to the terminal.  Once on it, run `source ~/.bashrc`, which will run commands in the `.bashrc` file and will load functions contained in the file into our `bash` shell script, including making our variable `DJANGO_EXECUTION_ENVIRONMENT` available for our django app to use.  We can test this by running `echo $DJANGO_EXECUTION_ENVIRONMENT` on the terminal, which should output `PRODUCTION`.
 
 **TIP!**| Once we run `source ~/.bashrc`, one of the things that it will do is deactivate our virtual environment.  We will need to reactivate it if in the future we want to execute commands that are directly related to our relevant python environment.
 
@@ -112,7 +110,7 @@ On the terminal, navigate to the `requirements` folder of the application.  The 
 
 **TIP!** You can also use PAW's to get there, as shown below.
 
-![shot]
+![tumbling programmer's deploying the boilerplate app to pythonanywhere - getting to the bashrc file](https://www.tumblingprogrammer.com/media/2017/06/pythonanywhere-getting-to-the-bashrc-file.png "tumbling programmer's deploying the boilerplate app to pythonanywhere - getting to the bashrc file")
 
 Once your terminal session is open, make sure to activate the `djangoboilerplate` virtual environment. Once that's done, let's execute `pip install -r production.txt` to install the packages required by the application.  The process should run smoothly and should take a little while.  Once it's done, if we run `pip freeze` we should get the following listing:
 
