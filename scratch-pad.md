@@ -186,18 +186,3 @@ Similarly, I can run `mkvirtualenv --python='C:\Python27\python.exe' python27env
     /C/Users/jose.pumar/.virtualenvs/python27env/Scripts/python
     
 This concludes our tutorial. Your Windows system should be an inch closer to being the platform on which great python apps are developed.
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-![ tumbling programmer's deploying the boilerplate app to pythonanywhere - PAW dashboard - opening a bash console ]( https://www.tumblingprogrammer.com/media/2017/06/pythonanywhere-opening-a-bash-console.png " tumbling programmer's deploying the boilerplate app to pythonanywhere - PAW dashboard - opening a bash console ")
