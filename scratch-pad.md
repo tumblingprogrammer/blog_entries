@@ -33,15 +33,17 @@ Ignore the red font and the warning (unless you are an advanced user of the wind
 
 ![ tumbling programmer - setting windows for python development - git - configuring extra options ]( https://www.tumblingprogrammer.com/media/2017/06/git-configuring-extra-options.png " tumbling programmer - setting windows for python development - git - configuring extra options ")
 
-
-
-
-
-
+Learning to use git or configuring it is beyond the scope of this tutorial.  There is plenty of info out there, including [Getting Started - Git Basics](https://git-scm.com/book/en/v2/Getting-Started-Git-Basics), [Getting Started - First-Time Git Setup](https://git-scm.com/book/en/v2/Getting-Started-First-Time-Git-Setup) and [Customizing Git - Git Configuration](https://git-scm.com/book/en/v2/Customizing-Git-Git-Configuration).
 
 ### Install python 2
 _____
 
+
+Below are the options that I chose when I installed it on my system.
+
+![ tumbling programmer - setting windows for python development - python 2 - select scope of installation ]( https://www.tumblingprogrammer.com/media/2017/06/python2-select-scope-of-installation.png " tumbling programmer - setting windows for python development - python 2 - select scope of installation ")
+
+![ tumbling programmer - setting windows for python development - python 2 - customize python ]( https://www.tumblingprogrammer.com/media/2017/06/python2-customize-python.png " tumbling programmer - setting windows for python development - python 2 - customize python ")
 
 ### Install virtual environment
 ______
