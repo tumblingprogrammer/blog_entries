@@ -1,14 +1,8 @@
 ### Introduction
 _____
-This tutorial is a follow up to a previous one where we setup a django project boilerplate focused on security and separation of environments (i.e., local development versus production), as well as other best practices (link to that tutorial: [Setting up a django project boilerplate](http://www.tumblingprogrammer.com/setting-up-a-django-project-boilerplate/ "tumbling programmer's setting up a django project boilerplate tutorial")).
+Windows 7
 
-On this tutorial we will learn how to get the boilerplate up and running on [pythonanywhere.com](http://pythonanywhere.com).  We will learn about:
 
-1. Cloning a repository from github into pythonanywhere (PAW)
-2. Creating virtual environments
-3. Setting environment variables
-4. Installing requirements / dependencies to run our application
-5. Setting up and running the web application
 
 ### Conventions throughout this tutorial
 _____
@@ -17,6 +11,30 @@ Please review the [conventions page](http://www.tumblingprogrammer.com/conventio
 
 ### Install git
 _____
+Let's install [git for windows](https://git-scm.com/download/win). As of this writing, the latest version is 2.13.1.
+
+Below are the screenshots of the options that I chose during the installation process:
+
+![ tumbling programmer - setting windows for python development - git - select components ]( https://www.tumblingprogrammer.com/media/2017/06/git-select-components.png " tumbling programmer - setting windows for python development - git - select components ")
+
+From the above, it's critical to select the `Git Bash Here` option.
+
+![ tumbling programmer - setting windows for python development - git - adjusting your path environment ]( https://www.tumblingprogrammer.com/media/2017/06/git-adjusting-your-path-environment.png " tumbling programmer - setting windows for python development - git - adjusting your path environment ")
+
+![ tumbling programmer - setting windows for python development - git - choosing the ssh executable ]( https://www.tumblingprogrammer.com/media/2017/06/git-choosing-the-ssh-executable.png " tumbling programmer - setting windows for python development - git - choosing the ssh executable ")
+
+![ tumbling programmer - setting windows for python development - git - choosing https transport backend ]( https://www.tumblingprogrammer.com/media/2017/06/git-choosing-https-transport-backend.png " tumbling programmer - setting windows for python development - git - choosing https transport backend ")
+
+![ tumbling programmer - setting windows for python development - git - configuring the line ending conventions ]( https://www.tumblingprogrammer.com/media/2017/06/git-configuring-the-line-ending-conventions.png " tumbling programmer - setting windows for python development - git - configuring the line ending conventions ")
+
+![ tumbling programmer - setting windows for python development - git - configuring the terminal emulator to use with git bash ]( https://www.tumblingprogrammer.com/media/2017/06/git-configuring-the-terminal-emulator-to-use-with-git-bash.png " tumbling programmer - setting windows for python development - git - configuring the terminal emulator to use with git bash ")
+
+![ tumbling programmer - setting windows for python development - git - configuring extra options ]( https://www.tumblingprogrammer.com/media/2017/06/git-configuring-extra-options.png " tumbling programmer - setting windows for python development - git - configuring extra options ")
+
+
+
+
+
 
 
 ### Install python 2
@@ -27,3 +45,5 @@ _____
 ______
 pip install vi
 
+
+![ tumbling programmer's deploying the boilerplate app to pythonanywhere - PAW dashboard - opening a bash console ]( https://www.tumblingprogrammer.com/media/2017/06/pythonanywhere-opening-a-bash-console.png " tumbling programmer's deploying the boilerplate app to pythonanywhere - PAW dashboard - opening a bash console ")
