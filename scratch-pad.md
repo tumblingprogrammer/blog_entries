@@ -35,6 +35,14 @@ Ignore the red font and the warning (unless you are an advanced user of the wind
 
 Learning to use git or configuring it is beyond the scope of this tutorial.  There is plenty of info out there, including [Getting Started - Git Basics](https://git-scm.com/book/en/v2/Getting-Started-Git-Basics), [Getting Started - First-Time Git Setup](https://git-scm.com/book/en/v2/Getting-Started-First-Time-Git-Setup) and [Customizing Git - Git Configuration](https://git-scm.com/book/en/v2/Customizing-Git-Git-Configuration).
 
+You now should be in a position to open a `bash` terminal by right-clicking on any Windows Explorer folder, and selecting the option shown below.
+
+![ tumbling programmer - setting windows for python development - git - git bash here ]( https://www.tumblingprogrammer.com/media/2017/06/git-git-bash-here.png " tumbling programmer - setting windows for python development - git - git bash here ")
+
+![ tumbling programmer - setting windows for python development - git - git bash here ]( https://www.tumblingprogrammer.com/media/2017/06/git-git-bash-here.png " tumbling programmer - setting windows for python development - git - git bash here ")
+
+**TIP!** | When on Windows, I usually start working on my projects by right-clicking on the python project folder, and selecting the `Git Bash Here` option.  
+
 ### Install python 2
 _____
 
@@ -44,6 +52,27 @@ Below are the options that I chose when I installed it on my system.
 ![ tumbling programmer - setting windows for python development - python 2 - select scope of installation ]( https://www.tumblingprogrammer.com/media/2017/06/python2-select-scope-of-installation.png " tumbling programmer - setting windows for python development - python 2 - select scope of installation ")
 
 ![ tumbling programmer - setting windows for python development - python 2 - customize python ]( https://www.tumblingprogrammer.com/media/2017/06/python2-customize-python.png " tumbling programmer - setting windows for python development - python 2 - customize python ")
+
+Make sure to select the `Add python.exe to Path` so you can run python directly from the bash terminal (or the windows command prompt) without having to provide the whole path (i.e., this will allow you to run... 
+
+`./python name_of_your_python_script.py` 
+
+as opposed to...
+
+`/c/Python27/python name_of_your_python_script.py`
+
+Notice that for the above example I used `bash` notation, which includes forward-slash for directory separators.
+
+Let's test that python works OK by opening a `bash` terminal anywhere and by running `which python` and `python --version`.  On my system I get the following:
+
+    jose.pumar@host ~
+    $ which python
+    /c/Python27/pytho
+    
+    jose.pumar@host ~
+    $ python --version
+    Python 2.7.13
+
 
 ### Install virtual environment
 ______
