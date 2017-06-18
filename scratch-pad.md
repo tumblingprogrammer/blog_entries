@@ -9,7 +9,7 @@ _____
 Please review the [conventions page](http://www.tumblingprogrammer.com/conventions-used-on-tumbling-programmer-dot-com/ "tumbling programmer's conventions page"), which will help you understand how I communicate with you through this blog.
 
 
-### Install git
+### Installing git
 _____
 Let's install [git for windows](https://git-scm.com/download/win). As of this writing, the latest version is 2.13.1.
 
@@ -43,7 +43,7 @@ You now should be in a position to open a `bash` terminal by right-clicking on a
 
 **TIP!** | When on Windows, I usually start working on my projects by right-clicking on the python project folder, and selecting the `Git Bash Here` option.  
 
-### Install python 2
+### Installing python 2
 _____
 
 
@@ -73,10 +73,82 @@ Let's test that python works OK by opening a `bash` terminal anywhere and by run
     $ python --version
     Python 2.7.13
 
-
-### Install virtual environment
+### Installing virtual environment and virtual environment wrapper
 ______
-pip install vi
+While on the `bash` terminal, let's install `virtualenv` and `virtualenvwrapper`.  Below is what it looked like for me:
+
+**virtualenv**
+
+    $ pip install virtualenv
+    Collecting virtualenv
+      Using cached virtualenv-15.1.0-py2.py3-none-any.whl
+    Installing collected packages: virtualenv
+    Successfully installed virtualenv-15.1.0
+
+**virtualenvwrapper**   
+
+    $ pip install virtualenvwrapper
+    Collecting virtualenvwrapper
+      Using cached virtualenvwrapper-4.7.2.tar.gz
+    Requirement already satisfied: virtualenv in c:\python27\lib\site-packages (from
+     virtualenvwrapper)
+    Collecting virtualenv-clone (from virtualenvwrapper)
+      Using cached virtualenv-clone-0.2.6.tar.gz
+    Collecting stevedore (from virtualenvwrapper)
+      Using cached stevedore-1.23.0-py2.py3-none-any.whl
+    Collecting six>=1.9.0 (from stevedore->virtualenvwrapper)
+      Using cached six-1.10.0-py2.py3-none-any.whl
+    Collecting pbr!=2.1.0,>=2.0.0 (from stevedore->virtualenvwrapper)
+      Using cached pbr-3.0.1-py2.py3-none-any.whl
+    Installing collected packages: virtualenv-clone, six, pbr, stevedore, virtualenv
+    wrapper
+      Running setup.py install for virtualenv-clone ... done
+      Running setup.py install for virtualenvwrapper ... done
+    Successfully installed pbr-3.0.1 six-1.10.0 stevedore-1.23.0 virtualenv-clone-0.
+    2.6 virtualenvwrapper-4.7.2
+    
+Once `virtualenvwrapper` is installed, let's add the `virtualenvwrapper.sh` script to our `.bashrc` file by running:
+
+    echo "source virtualenvwrapper.sh" >> ~/.bashrc
+    
+Let's source our `.bashrc` by running:
+
+    source ~/.bashrc
+
+Below is the output that I got:
+
+    virtualenvwrapper.user_scripts creating C:\Users\jose.pumar\.virtualenvs\premkproject
+    virtualenvwrapper.user_scripts creating C:\Users\jose.pumar\.virtualenvs\postmkproject
+    virtualenvwrapper.user_scripts creating C:\Users\jose.pumar\.virtualenvs\initialize
+    virtualenvwrapper.user_scripts creating C:\Users\jose.pumar\.virtualenvs\premkvirtualenv
+    virtualenvwrapper.user_scripts creating C:\Users\jose.pumar\.virtualenvs\postmkvirtualenv
+    virtualenvwrapper.user_scripts creating C:\Users\jose.pumar\.virtualenvs\prermvirtualenv
+    virtualenvwrapper.user_scripts creating C:\Users\jose.pumar\.virtualenvs\postrmvirtualenv
+    virtualenvwrapper.user_scripts creating C:\Users\jose.pumar\.virtualenvs\predeactivate
+    virtualenvwrapper.user_scripts creating C:\Users\jose.pumar\.virtualenvs\postdeactivate
+    virtualenvwrapper.user_scripts creating C:\Users\jose.pumar\.virtualenvs\preactivate
+    virtualenvwrapper.user_scripts creating C:\Users\jose.pumar\.virtualenvs\postactivate
+    virtualenvwrapper.user_scripts creating C:\Users\jose.pumar\.virtualenvs\get_env_details
+
+We are ready to test if `virtualenvwrapper` works by running `mkvirtualenv test`, which createst a virtual environment called `test`, and which is stored under `C:\Users\[your_user_name]\.virtualenvs\`. All your virtual environments will be stored there. Once the script is finished running, my terminal outputs the following:
+
+    (test)
+    jose.pumar@host MINGW64 ~
+    $
+
+Notice the name of the virtual environment that we just created (i.e., `(test)`), which signifies that our virtual environment is active.
+
+Let's go ahead and deactivate and delete the virtual environment by running `deactivate test` and `rmvirtualenv test`.  Another useful command is `lsvirtualenv`, which lists all virtual environments in your system.
+
+### Installing python 3
+_____
+
+![ tumbling programmer - setting windows for python development - python 3 - install python ]( https://www.tumblingprogrammer.com/media/2017/06/python3-install-python.png " tumbling programmer - setting windows for python development - python 3 - install python ")
+
+![ tumbling programmer - setting windows for python development - python 3 - advanced installation options ]( https://www.tumblingprogrammer.com/media/2017/06/python3-advanced-installation-options.png " tumbling programmer - setting windows for python development - python 3 - advanced installation options ")
+
+
+
 
 
 ![ tumbling programmer's deploying the boilerplate app to pythonanywhere - PAW dashboard - opening a bash console ]( https://www.tumblingprogrammer.com/media/2017/06/pythonanywhere-opening-a-bash-console.png " tumbling programmer's deploying the boilerplate app to pythonanywhere - PAW dashboard - opening a bash console ")
