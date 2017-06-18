@@ -147,9 +147,50 @@ _____
 
 ![ tumbling programmer - setting windows for python development - python 3 - advanced installation options ]( https://www.tumblingprogrammer.com/media/2017/06/python3-advanced-installation-options.png " tumbling programmer - setting windows for python development - python 3 - advanced installation options ")
 
-Note that on my setup I had already chosen to add python 2 to my Path in windows.  Because of that, adding Python 3 to the `PATH`, as shown above, doesn't make much sense - you should only have either python 2 or python 3 but not both for one of them will not work anyways.  That's where having `virtualenvwrapper` is handy, for when we create a virtual env we can specify which python version to use, and our virtual environment will remeber that for us.
+Note that on my setup I had already chosen to add python 2 to my Path in windows.  Because of that, adding Python 3 to the `PATH`, as shown above, doesn't make much sense - you should only have either python 2 or python 3 but not both for one of them will not work anyways.  That's where having `virtualenvwrapper` is handy, for when we create a virtual environment we can specify which python version to use, and our virtual environment will remember that for us.
 
 Note also the path I chose to install python 3 under.  The default that the installer picks is buried deep in a typical windows user app folder.  I purposedly chose an easier path, similar to the one that the python 2 installer picked.
+
+### Specifying which python to use on our virtual environments with `virtualenvwrapper`
+_____
+The command to tell `virtualenvwrapper` which python to use is as follows:
+
+    mkvirtualenv --python='[path_to_your_python]' [name_of_environment]
+    
+Example:    
+    
+    mkvirtualenv --python='C:\Python36\python.exe' python36env
+    
+Below is what I get after the script is finished, and I test for version and which python is being used.
+
+    (python36env)
+    jose.pumar@host MINGW64 /c
+    $ python --version
+    Python 3.6.1
+    (python36env)
+    jose.pumar@host MINGW64 /c
+    $ which python
+    /C/Users/jose.pumar/.virtualenvs/python36env/Scripts/python
+
+Go ahead and deactivate and delete the `python36env` we just created.
+
+Similarly, I can run `mkvirtualenv --python='C:\Python27\python.exe' python27env` to create a python 2 virtual environment.  Below is the output that I get when I test for version and which python is being used.
+
+    (python27env)
+    jose.pumar@host MINGW64 ~
+    $ python --version
+    Python 2.7.13
+    (python27env)
+    jose.pumar@host MINGW64 ~
+    $ which python
+    /C/Users/jose.pumar/.virtualenvs/python27env/Scripts/python
+    
+This concludes our tutorial. Your Windows system should be an inch closer to being the platform on which great python apps are developed.
+
+
+
+
+
 
 
 
