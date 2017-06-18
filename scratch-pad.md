@@ -17,9 +17,11 @@ Below are the screenshots of the options that I chose during the installation pr
 
 ![ tumbling programmer - setting windows for python development - git - select components ]( https://www.tumblingprogrammer.com/media/2017/06/git-select-components.png " tumbling programmer - setting windows for python development - git - select components ")
 
-From the above, it's critical to select the `Git Bash Here` option.
+From the above, it's critical to select the `Git Bash Here` option.  It will give you the ability to run *nix like bash commands on windows (like `ls`, `grep`, etc.).
 
 ![ tumbling programmer - setting windows for python development - git - adjusting your path environment ]( https://www.tumblingprogrammer.com/media/2017/06/git-adjusting-your-path-environment.png " tumbling programmer - setting windows for python development - git - adjusting your path environment ")
+
+Ignore the red font and the warning (unless you are an advanced user of the windows command prompt; most people aren't).
 
 ![ tumbling programmer - setting windows for python development - git - choosing the ssh executable ]( https://www.tumblingprogrammer.com/media/2017/06/git-choosing-the-ssh-executable.png " tumbling programmer - setting windows for python development - git - choosing the ssh executable ")
 
