@@ -147,6 +147,12 @@ _____
 
 ![ tumbling programmer - setting windows for python development - python 3 - advanced installation options ]( https://www.tumblingprogrammer.com/media/2017/06/python3-advanced-installation-options.png " tumbling programmer - setting windows for python development - python 3 - advanced installation options ")
 
+Note that on my setup I had already chosen to add python 2 to my Path in windows.  Because of that, adding Python 3 to the `PATH`, as shown above, doesn't make much sense - you should only have either python 2 or python 3 but not both for one of them will not work anyways.  That's where having `virtualenvwrapper` is handy, for when we create a virtual env we can specify which python version to use, and our virtual environment will remeber that for us.
+
+Note also the path I chose to install python 3 under.  The default that the installer picks is buried deep in a typical windows user app folder.  I purposedly chose an easier path, similar to the one that the python 2 installer picked.
+
+
+
 
 
 
