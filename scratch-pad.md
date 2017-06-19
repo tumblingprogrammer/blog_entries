@@ -4,6 +4,8 @@ This tutorial will teach you how to set up your Windows system for python develo
 
 The tutorial is demonstrated with Windows 7 but with a little bit of google help the reader can apply the concepts to different versions of Windows.
 
+I assume that the reader would want to install both python 2 and python 3 on the same system, which is quite typical for python developers.  Some readers may even need to install more than one version of the same python (e.g., python 3.5 and python 3.6) but that's beyond the scope of this tutorial ([relatively easy to do, though](https://stackoverflow.com/questions/2547554/official-multiple-python-versions-on-the-same-machine)).  
+
 ### Conventions throughout this tutorial
 _____
 Please review the [conventions page](http://www.tumblingprogrammer.com/conventions-used-on-tumbling-programmer-dot-com/ "tumbling programmer's conventions page"), which will help you understand how I communicate with you through this blog.
