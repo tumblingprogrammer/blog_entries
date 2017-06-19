@@ -1,10 +1,10 @@
 ### Introduction
 _____
-This tutorial will teach you how to set up your Windows system for python development using virtual environments and, more specifically, [virtualenvwrapper](http://virtualenvwrapper.readthedocs.io/en/latest/), a versatile tool that greatly facilitates the process of dealing with virtual environments.
+This tutorial will show you how to set up your Windows system for python development using git, a bash terminal, virtual environments and virtual environment wrapper (`virtualenvwrapper`), a versatile tool that greatly facilitates the process of dealing with virtual environments.
 
-The tutorial is demonstrated with Windows 7 but with a little bit of google help the reader can apply the concepts to different versions of Windows.
+The tutorial is demonstrated with Windows 7; with a little bit of google help the reader can apply the concepts to different versions of Windows.
 
-I assume that the reader would want to install both python 2 and python 3 on the same system, which is quite typical for python developers.  Some readers may even need to install more than one version of the same python (e.g., python 3.5 and python 3.6) but that's beyond the scope of this tutorial ([relatively easy to do, though](https://stackoverflow.com/questions/2547554/official-multiple-python-versions-on-the-same-machine)).  
+I assume that the reader would want to install both python 2 and python 3 on the same system, which is quite typical for python developers.  Some readers may even need to install more than one version of the same python (e.g., python 3.5 and python 3.6) but that's beyond the scope of this tutorial ([relatively easy to do, though](https://stackoverflow.com/questions/2547554/official-multiple-python-versions-on-the-same-machine)). If you only wanted to install just one major release of python, the tutorial would work too (just tailor your reading accordingly).
 
 ### Conventions throughout this tutorial
 _____
@@ -41,13 +41,10 @@ You now should be in a position to open a `bash` terminal by right-clicking on a
 
 ![ tumbling programmer - setting windows for python development - git - git bash here ]( https://www.tumblingprogrammer.com/media/2017/06/git-git-bash-here.png " tumbling programmer - setting windows for python development - git - git bash here ")
 
-![ tumbling programmer - setting windows for python development - git - git bash here ]( https://www.tumblingprogrammer.com/media/2017/06/git-git-bash-here.png " tumbling programmer - setting windows for python development - git - git bash here ")
-
 **TIP!** | When on Windows, I usually start working on my projects by right-clicking on the python project folder, and selecting the `Git Bash Here` option.  
 
 ### Installing python 2
 _____
-
 
 Below are the options that I chose when I installed it on my system.
 
@@ -55,7 +52,7 @@ Below are the options that I chose when I installed it on my system.
 
 ![ tumbling programmer - setting windows for python development - python 2 - customize python ]( https://www.tumblingprogrammer.com/media/2017/06/python2-customize-python.png " tumbling programmer - setting windows for python development - python 2 - customize python ")
 
-Make sure to select the `Add python.exe to Path` so you can run python directly from the bash terminal (or the windows command prompt) without having to provide the whole path (i.e., this will allow you to run... 
+Make sure to select the `Add python.exe to Path` so you can run python directly from the bash terminal (or the windows command prompt) without having to provide the whole path to the python executable file.  This will allow you to run... 
 
 `./python name_of_your_python_script.py` 
 
@@ -132,6 +129,8 @@ Below is the output that I got:
     virtualenvwrapper.user_scripts creating C:\Users\jose.pumar\.virtualenvs\postactivate
     virtualenvwrapper.user_scripts creating C:\Users\jose.pumar\.virtualenvs\get_env_details
 
+By sourcing our `.bashrc` file we are making a set of scripts available on our bash terminal prompt, scripts that allow us to create, list, and delete virtual environments.  More info on `virtualenvwrapper` can be found [here](http://virtualenvwrapper.readthedocs.io/en/latest/).
+
 We are ready to test if `virtualenvwrapper` works by running `mkvirtualenv test`, which createst a virtual environment called `test`, and which is stored under `C:\Users\[your_user_name]\.virtualenvs\`. All your virtual environments will be stored there. Once the script is finished running, my terminal outputs the following:
 
     (test)
@@ -144,18 +143,20 @@ Let's go ahead and deactivate and delete the virtual environment by running `dea
 
 ### Installing python 3
 _____
+Let's go ahead and install python 3.  Below are the options that I chose when I did it:
 
 ![ tumbling programmer - setting windows for python development - python 3 - install python ]( https://www.tumblingprogrammer.com/media/2017/06/python3-install-python.png " tumbling programmer - setting windows for python development - python 3 - install python ")
+Note that on my setup I had already chosen to add python 2 to my Path in windows.  Because of that, adding Python 3 to the `PATH`, as shown above, doesn't make much sense - you should only have either python 2 or python 3 but not both for one of them will not work anyways. Don't worry about the PATH issue. That's where having `virtualenvwrapper` is handy, for when we create a virtual environment we can specify which python version to use, and our virtual environment will remember that for us. 
+
+**TIP!** | If you are installing only one python (i.e., python 2 or python 3), do make sure to select the `Add Python X.Y to PATH` option. 
 
 ![ tumbling programmer - setting windows for python development - python 3 - advanced installation options ]( https://www.tumblingprogrammer.com/media/2017/06/python3-advanced-installation-options.png " tumbling programmer - setting windows for python development - python 3 - advanced installation options ")
-
-Note that on my setup I had already chosen to add python 2 to my Path in windows.  Because of that, adding Python 3 to the `PATH`, as shown above, doesn't make much sense - you should only have either python 2 or python 3 but not both for one of them will not work anyways.  That's where having `virtualenvwrapper` is handy, for when we create a virtual environment we can specify which python version to use, and our virtual environment will remember that for us.
 
 Note also the path I chose to install python 3 under.  The default that the installer picks is buried deep in a typical windows user app folder.  I purposedly chose an easier path, similar to the one that the python 2 installer picked.
 
 ### Specifying which python to use on our virtual environments with `virtualenvwrapper`
 _____
-The command to tell `virtualenvwrapper` which python to use is as follows:
+When we create virtual environments, we can tell `virtualenvwrapper` to use a particular python, like so:
 
     mkvirtualenv --python='[path_to_your_python]' [name_of_environment]
     
