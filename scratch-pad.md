@@ -1,8 +1,8 @@
 ### Introduction
 _____
-Windows 7
+This tutorial will teach you how to set up your Windows system for python development using virtual environments and, more specifically, [virtualenvwrapper](http://virtualenvwrapper.readthedocs.io/en/latest/), a versatile tool that greatly facilitates the process of dealing with virtual environments.
 
-
+The tutorial is demonstrated with Windows 7 but with a little bit of google help the reader can apply the concepts to different versions of Windows.
 
 ### Conventions throughout this tutorial
 _____
@@ -186,3 +186,13 @@ Similarly, I can run `mkvirtualenv --python='C:\Python27\python.exe' python27env
     /C/Users/jose.pumar/.virtualenvs/python27env/Scripts/python
     
 This concludes our tutorial. Your Windows system should be an inch closer to being the platform on which great python apps are developed.
+
+### References
+_____
+
+This tutorial is a blend of curated information from the below sources. Many thanks to them.
+
+1. [Obey the Testing Goat - Pre-requisites and Assumptions](http://www.obeythetestinggoat.com/book/pre-requisite-installations.html)
+2. [Timmy Reilly's Blog - Python, Pip, virtualenv installation on Windows](http://timmyreilly.azurewebsites.net/python-pip-virtualenv-installation-on-windows/)
+3. [Timmy Reilly's Blog - Setup a virtualenv for Python 3 on Windows](http://timmyreilly.azurewebsites.net/setup-a-virtualenv-for-python-3-on-windows/)
+
