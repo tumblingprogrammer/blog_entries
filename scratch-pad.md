@@ -1,6 +1,6 @@
 ### Introduction
 _____
-This tutorial will show you how to set up your Windows system for python development using git, a bash terminal, virtual environments and virtual environment wrapper (`virtualenvwrapper`), a versatile tool that greatly facilitates the process of dealing with virtual environments.
+This tutorial will show you how to set up your Windows system for python development using python 2, python 3, git, a bash terminal, virtual environments and virtual environment wrapper (`virtualenvwrapper`), a versatile tool that greatly facilitates the process of dealing with virtual environments.
 
 The tutorial is demonstrated with Windows 7; with a little bit of google help the reader can apply the concepts to different versions of Windows.
 
