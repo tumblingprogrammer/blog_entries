@@ -1486,7 +1486,7 @@ Below is what the resulting layout looks like:
 	| | |____requirements.txt
 	| |____staticfiles
 	
-### Where to take from here
+### Where to take it from here
 _____
 
 Although extensive, this tutorial covered only a fraction of all that is required to have a ready-to-be-deployed django project boilerplate.  Issues like testing, cron jobs, python helpers / utilities, user registration, the django debug toolbar, further security considerations, as well as others that will come along the way, may be worth studying and implementing, depending on the application's needs.
